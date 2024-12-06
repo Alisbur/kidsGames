@@ -1,6 +1,5 @@
 import styles from './NavBlock.module.scss'
 import { NavigateButton } from '../../shared/ui/navigate-button/navigate-button'
-import { ReactNode } from 'react';
 
 type NavBlockProps = {
   onNext: ()=>void;

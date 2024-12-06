@@ -15,12 +15,8 @@
   border: none;
   cursor: pointer;
 
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:active {
-    outline: none;
+  @media (hover: hover) {
+    &:hover {opacity: 0.8;}
   }
 
   &:disabled {

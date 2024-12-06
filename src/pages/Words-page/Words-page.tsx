@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import styles from "./Words-page.module.scss";
 import { NavBlock } from "../../components/NavBlock/NavBlock";
 import { ImageCard } from "../../shared/ui/Image-card/Image-card";
 import { WordPartsBlock } from "../../components/WordPartsBlock/WordPartsBlock";
-import { Header } from "../../components/Header/Header";
 import { WORDS } from "../../shared/constants/words";
 
 export function WordsPage() {

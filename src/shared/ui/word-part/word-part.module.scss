@@ -1,0 +1,27 @@
+@use "@styles/colors.scss" as c;
+@use "@styles/mixins.scss" as m;
+@use "@styles/variables.scss" as v;
+
+.container {
+  display: inline-block;
+  background-color: c.$normalBtn;
+  border-radius: 3px;
+  cursor: pointer;
+  @include m.setFont(22px, c.$whiteText, 400, 120%, v.$font-raleway);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  opacity: 0.9;
+
+  &_active {
+    background-color: c.$activeItem;
+  }
+
+  &_big {
+    width: 100%;
+    max-height: calc(100vh / 8);
+    padding: 20px;
+    @include m.setFont(calc(100vh / 10), c.$whiteText, 600, 120%, v.$font-raleway);
+  }
+}

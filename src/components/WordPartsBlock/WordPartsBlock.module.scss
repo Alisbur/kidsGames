@@ -1,0 +1,26 @@
+.container {
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-areas: 
+  "top"
+  "bottom";
+  row-gap: 10px;
+}
+
+.top {
+  grid-area: top;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: calc(100% / 10) 0;
+}
+
+.bottom {
+  grid-area: bottom;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,19 @@
+@import "@styles/global.scss";
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  place-items: center;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+}

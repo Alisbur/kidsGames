@@ -1,0 +1,34 @@
+@use "@styles/colors.scss" as c;
+@use "@styles/mixins.scss" as m;
+@use "@styles/variables.scss" as v;
+
+.button {
+  width: 100%;
+  height: 50px;
+  background-color: c.$normalBtn;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: c.$disabledBtn;
+    pointer-events: none;
+  }
+}
+
+.buttonText {
+  @include m.setFont(12px, c.$whiteText, 400, 120%, v.$font-raleway);
+}

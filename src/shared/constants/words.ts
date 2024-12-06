@@ -43,4 +43,10 @@ export const WORDS: TWordItem[] = [
     parts: ["СА", "МО", "ЛЁТ"],
     image: "plane",
   },
+  {
+    id: 8,
+    word: "ВЕЛОСИПЕД",
+    parts: ["ВЕ", "ЛО", "СИ", "ПЕД"],
+    image: "bicycle",
+  },  
 ];

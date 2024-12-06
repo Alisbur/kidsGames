@@ -30,5 +30,5 @@
 }
 
 .buttonText {
-  @include m.setFont(12px, c.$whiteText, 400, 120%, v.$font-raleway);
+  @include m.setFont(18px, c.$whiteText, 400, 120%, v.$font-raleway);
 }

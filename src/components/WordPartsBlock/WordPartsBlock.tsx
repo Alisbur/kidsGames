@@ -4,14 +4,21 @@ import { WordPart } from "../../shared/ui/word-part/word-part";
 
 type WordPartsBlockProps = {
   parts: string[];
+  onDone: ()=>void;
 };
 
-export function WordPartsBlock({ parts }: WordPartsBlockProps) {
+export function WordPartsBlock({ parts, onDone }: WordPartsBlockProps) {
   const [activePart, setActivePart] = useState(0);
+  const [visitedParts, setVisitedParts] = useState(new Set<number>([0]));
 
   useEffect(() => {
     setActivePart(0);
+    setVisitedParts(new Set<number>([0]))
   }, [parts]);
+
+  useEffect(() => {
+    if(visitedParts.size === parts.length) onDone();
+  }, [visitedParts.size]);
 
   return (
     <div className={styles.container}>
@@ -24,6 +31,7 @@ export function WordPartsBlock({ parts }: WordPartsBlockProps) {
             active={idx === activePart}
             onClick={() => {
               setActivePart(idx);
+              setVisitedParts(state => state.add(idx));
             }}
           />
         ))}

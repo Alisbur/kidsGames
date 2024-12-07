@@ -4,14 +4,15 @@ import { TImageItem } from "../../types/types";
 
 type ImageCardProps = {
   name: TImageItem;
+  onClick: ()=>void;
 };
 
-export function ImageCard({ name }: ImageCardProps) {
+export function ImageCard({ name, onClick }: ImageCardProps) {
   const imageItem = pics[name];
 
   return (
     <div className={styles.container}>
-      <img className={styles.image} src={imageItem} />
+      <img className={styles.image} src={imageItem} onClick={onClick}/>
     </div>
   );
 }

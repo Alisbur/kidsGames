@@ -7,14 +7,19 @@ import { WORDS } from "../../shared/constants/words";
 import { MenuButton } from "../../shared/ui/menu-button/menu-button";
 import { TImageItem } from "../../shared/types/types";
 
+const getRandomPic = (): number => Math.floor(Math.random() * WORDS.length);
+
 export function WordsPage() {
-  const [currentWord, setCurrentWord] = useState(0);
+  const firstItem = 0;
+  const [currentWord, setCurrentWord] = useState(firstItem);
   const [allPartsAreOpen, setAllPartsAreOpen] = useState(false);
-  const [currentPic, setCurrentPic] = useState<TImageItem>("question")
+  const [currentPic, setCurrentPic] = useState<TImageItem>("question");
+  const [lastItems, setLastItems] = useState<number[]>([])
 
   useEffect(()=>{
     setAllPartsAreOpen(false);
     setCurrentPic("question");
+    setLastItems(state => state.length > 4 ? [...state.slice(1), currentWord] : [...state, currentWord]);
   },[currentWord])
 
   const backHandler = () => {
@@ -26,7 +31,11 @@ export function WordsPage() {
   };
 
   const randomHandler = () => {
-    setCurrentWord(Math.floor(Math.random() * WORDS.length));
+    let newRandom: number = getRandomPic();
+    while(WORDS.length > 1 && lastItems.includes(newRandom)){
+      newRandom = getRandomPic();
+    }
+    setCurrentWord(newRandom);
   };
 
   const handleDone = () => {

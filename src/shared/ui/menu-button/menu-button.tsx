@@ -3,7 +3,7 @@ import styles from "./menu-button.module.scss";
 
 type MenuButtonProps = {
   onClick: () => void;
-  text: string;
+  text?: string;
   disabled?: boolean;
 } & HTMLAttributes<HTMLButtonElement>;
 

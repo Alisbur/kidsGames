@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./XO-page.module.scss";
 import { XOField } from "../../components/XOField/XOField";
 import xFigure from "../../assets/icons/x-figure.svg";

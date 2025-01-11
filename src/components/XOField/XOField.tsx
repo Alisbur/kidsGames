@@ -1,4 +1,4 @@
-import React from "react";
+
 import styles from "./XOField.module.scss";
 import xFigure from "../../assets/icons/x-figure.svg";
 import oFigure from "../../assets/icons/o-figure.svg";

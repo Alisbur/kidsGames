@@ -1,6 +1,6 @@
 import { useReducer, useState } from "react";
 import { Example } from "../../components/Count/ui/example/example";
-import styles from "./Count.module.scss";
+import styles from "./count.module.scss";
 import { CountSettings } from "./ui/count-settings/count-settings";
 import { TSettings } from "./types/settings.type";
 import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "./enums/set-settings-actions.enum";

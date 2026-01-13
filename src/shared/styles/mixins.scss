@@ -1,11 +1,11 @@
-@mixin setFont($size: false, $colour: false, $weight: false, $lh: false, $ff: false) {
+@mixin setFont($size: null, $color: null, $weight: null, $lh: null, $ff: null) {
   @if $size {
     font-size: $size;
   }
 
-  @if $colour {
-    color: $colour;
-  }
+  @if $color {
+    color: $color;
+  } 
 
   @if $weight {
     font-weight: $weight;

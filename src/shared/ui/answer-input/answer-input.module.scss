@@ -1,0 +1,47 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.wraper {
+  padding: 5px;
+  border-radius: $border-radius-m;
+  border: 1px solid $borderColorRGBA;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input {
+  min-width: 60px;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 5px;
+  border: none;
+  outline: none;
+  border-radius: $border-radius-m;
+  pointer-events: none;
+  @include setFont(32px, $blackText, 600, 120%, $font-raleway);
+  background-color: $whiteBg;
+  text-align: center;
+
+  &_correct {
+    background-color: $inputCorrect;
+    pointer-events: none;
+    color: $whiteText;
+    font-size: 26px;
+    border: none;
+  }
+
+  &_incorrect {
+    background-color: $inputIncorrect;
+    color: $whiteText;
+    font-size: 26px;
+    border: none;
+  }
+
+  &:focus {
+    border: 1px solid $borderColorRGBA;
+    background-color: $whiteBg;
+    color: $exampleColor;
+  }
+}

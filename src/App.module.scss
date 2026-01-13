@@ -1,8 +1,9 @@
 .App {
-  width: 100vw;
+  width: 100%;
+  margin: 0 auto;
   max-width: 600px;
-  /* height: 100vh; */
   padding: 0 20px 20px 20px;
+  overflow-x: hidden;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

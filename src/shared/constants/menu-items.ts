@@ -6,7 +6,7 @@ export const MENU_ITEMS = [
   },
   {
     id: 1,
-    name: "Слоги",
+    name: "Читаем по слогам",
     alias: "/words",
   },
   {
@@ -14,4 +14,14 @@ export const MENU_ITEMS = [
     name: "Крестики-нолики",
     alias: "/xo",
   },
+  {
+    id: 3,
+    name: "Пятнашка",
+    alias: "/pjatnashka",
+  },
+  {
+    id: 4,
+    name: "Учимся считать",
+    alias: "/count",
+  },  
 ]

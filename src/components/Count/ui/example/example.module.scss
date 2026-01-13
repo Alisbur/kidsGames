@@ -1,0 +1,75 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 2px solid rgba(128, 128, 128, 0.2);
+  border-radius: $border-radius-m;
+  cursor: pointer;
+
+  &_correct {
+    border: 2px solid $inputCorrect;
+    border-radius: $border-radius-m;
+  }
+
+  &_incorrect {
+    border: 2px solid $inputIncorrect;
+    border-radius: $border-radius-m;
+  }
+
+  &:has(input:focus) {
+    border: none;
+    box-shadow: 0 0 10px 5px $exampleBorderColorRGBA;
+  }
+}
+
+.example {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.part {
+  @include setFont(26px, $whiteText, 600, 120%, $font-raleway);
+  color: $exampleColor;
+
+  &_accent {
+    color: $inputIncorrect;
+  }
+
+  &_ok {
+    color: $inputCorrect;
+  }
+
+  @media (max-width: $screen-xs){
+    font-size: 20px;
+  }
+}
+
+.controls {
+  position: relative;
+  padding-inline: 8px;
+}
+
+.button {
+  width: fit-content;
+}
+
+.hint {
+  width: 100%;
+  overflow-wrap: normal;
+  text-align: right;
+
+  @media (max-width: $screen-xs) {
+    font-size: 14px;
+  }
+}

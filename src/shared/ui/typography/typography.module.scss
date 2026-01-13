@@ -1,0 +1,97 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.view_button,
+.view_title,
+.view_p-44,
+.view_p-32,
+.view_p-20,
+.view_p-18,
+.view_p-16,
+.view_p-14 {
+  
+  @include setFont($weight: $fw-400, $ff: $font-raleway);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+}
+
+.view_button {
+  @include setFont($size: $fs-18, $lh: "120%");
+}
+
+.view_title {
+  @include setFont($size: $fs-24, $weight: $fw-700, $lh: $lh-36);
+}
+
+.view_subtitle {
+  @include setFont($size: $fs-18, $weight: $fw-700, $lh: $lh-24);
+}
+
+.view_p-44 {
+  @include setFont($size: $fs-44, $lh: $lh-48);
+}
+
+.view_p-32 {
+  @include setFont($size: $fs-32, $lh: $lh-36);
+}
+
+.view_p-20 {
+  @include setFont($size: $fs-20, $lh: $lh-24);
+}
+
+.view_p-18 {
+  @include setFont($size: $fs-18, $lh: $lh-22);
+}
+
+.view_p-16 {
+  @include setFont($size: $fs-16, $lh: $lh-20);
+}
+
+.view_p-14 {
+  @include setFont($size: $fs-14, $lh: $lh-18);
+}
+
+.clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.text {
+  &_primary {
+    color: $blackText;
+  }
+
+  &_secondary {
+    color: $whiteText;
+  }
+
+  &_accent {
+    color: $exampleColor;
+  }
+
+  &_success {
+    color: $inputCorrect;
+  }
+
+  &_error {
+    color: $inputIncorrect;
+  }
+
+  &_normal {
+    @include setFont($weight: $fw-400);
+  }
+
+  &_medium {
+    @include setFont($weight: $fw-500);
+  }
+
+  &_semibold {
+    @include setFont($weight: $fw-600);
+  }
+
+  &_bold {
+    @include setFont($weight: $fw-700);
+  }
+}

@@ -1,0 +1,48 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.resultsItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  &__header {
+    @include setFont(20px, $blackText, 600, 120%, $font-raleway);
+  }
+
+  &__value {
+    @include setFont(48px, $blackText, 600, 120%, $font-raleway);
+
+    &_solved {
+      color: $inputCorrect;
+      font-size: 44px;
+    }
+
+    &_wrong {
+      color: $inputIncorrect;
+      font-size: 44px;
+    }
+  }
+
+  &__result {
+    @include setFont(26px, $blackText, 600, 120%, $font-raleway);
+
+    &_good {
+      color: $inputCorrect;
+    }
+
+    &_bad {
+      color: $inputIncorrect;
+    }
+  }
+}

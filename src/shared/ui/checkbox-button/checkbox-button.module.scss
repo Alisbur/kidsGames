@@ -1,0 +1,26 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.button {
+  box-sizing: border-box;
+  border-radius: $border-radius-m;
+  background-color: $exampleColor;
+  border: none;
+  outline: none;;
+  cursor: pointer;
+  padding: 10px;
+  display: grid;
+  place-content: center;
+  position: relative;
+  @include setFont(16px, $whiteText, 400, 120%, $font-raleway);
+
+  &_fullWidth {
+    width: 100%;
+  }
+
+  &_checked {
+    font-weight: 600;
+    background-color: $inputCorrect;
+  }
+}

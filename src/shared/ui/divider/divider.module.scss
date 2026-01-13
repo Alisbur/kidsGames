@@ -1,0 +1,10 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.divider {
+  width: 100%;
+  background-color: $borderColorRGBA;
+  height: 1px;
+  border: none;
+}

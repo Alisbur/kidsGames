@@ -24,4 +24,9 @@ export const MENU_ITEMS = [
     name: "Учимся считать",
     alias: "/count",
   },  
+  {
+    id: 5,
+    name: "Светофор",
+    alias: "/balls",
+  },    
 ]

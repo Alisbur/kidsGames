@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FC, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   TBall,
   TBallsEmptySlot,
@@ -38,7 +38,7 @@ export const EmtySlotLayer: FC<TEmptySlotLayerProps> = ({
 
   const { deltaX } = useSwipeDrag(layerRef, {
     thresholdX: (layerWrapperRef.current?.clientWidth || 300) / 20,
-    maxDeltaX: (layerWrapperRef.current?.clientWidth || 300) / 5,
+    maxDeltaX: (layerWrapperRef.current?.clientWidth || 300) / maxItems,
     onSwipeX,
   });
 
@@ -89,6 +89,18 @@ export const EmtySlotLayer: FC<TEmptySlotLayerProps> = ({
     };
   }, [direction]);
 
+  const layerPosition = useMemo(() => {
+    let res = `translateX(calc(-50% + ${deltaX}px`;
+    if (direction === "Left") {
+      res = `translateX(calc(-50% - (100% / (${ballsExtended.length / 1.05})) + ${deltaX}px`;
+    }
+    if (direction === "Right") {
+      res = `translateX(calc(-50% + (100% / (${ballsExtended.length / 1.05})) + ${deltaX}px`;
+    }
+    console.log("RES", res)
+    return res;
+  }, [direction, position, deltaX]);
+
   if (!ballsExtended) {
     return null;
   }
@@ -105,13 +117,15 @@ export const EmtySlotLayer: FC<TEmptySlotLayerProps> = ({
         <div
           className={classNames(styles.layer, {
             [styles.layer_withTransition]: direction,
-            [styles.layer_left]: direction === "Left",
-            [styles.layer_right]: direction === "Right",
+            // [styles.layer_left]: direction === "Left",
+            // [styles.layer_right]: direction === "Right",
           })}
           ref={layerRef}
           style={{
-            transform:
-              deltaX !== 0 ? `translateX(calc(-50% + ${deltaX}px))` : undefined,
+            width: `${(100 / maxItems) * (maxItems + 2)}%`,
+            transform: layerPosition,
+              // deltaX !== 0 ? `translateX(calc(-50% + ${deltaX}px))` : undefined,
+            gridTemplateColumns: `repeat(${maxItems + 2}, 1fr)`,
           }}
         >
           {ballsExtended.map((b, i) => (

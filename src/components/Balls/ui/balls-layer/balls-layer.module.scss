@@ -15,18 +15,19 @@
   border-top: 2px solid $blackBg;
   border-bottom: 2px solid $blackBg;
   overflow: hidden;
+  padding-inline: 10px;
 }
 
 .layer {
   position: relative;
-  width: 140%;
+  // width: 140%;
   top: 0;
   left: 50%;
   padding: 0;
   transform: translateX(-50%);
   
   column-gap: 5%;
-  grid-template-columns: repeat(7, 1fr);
+  // grid-template-columns: repeat(7, 1fr);
   display: grid;
 
   &_withTransition {

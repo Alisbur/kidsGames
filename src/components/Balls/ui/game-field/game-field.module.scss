@@ -1,5 +1,9 @@
+@use "@styles/colors.scss" as *;
+
 .wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 40px 0;
+  background-color: rgb(62,62,62);
 }

@@ -1,0 +1,13 @@
+import { SHUFFLE_OPTIONS_ENUM } from "../enum/shuffle-options.enum"
+
+export const SHUFFLE_OPTIONS_NAMES = {
+  [SHUFFLE_OPTIONS_ENUM.HARD]: "Сильно",
+  [SHUFFLE_OPTIONS_ENUM.MEDIUM]: "Средне",
+  [SHUFFLE_OPTIONS_ENUM.LIGHT]: "Слабо",
+}
+
+export const SHUFFLE_OPTIONS = {
+  [SHUFFLE_OPTIONS_ENUM.HARD]: 15,
+  [SHUFFLE_OPTIONS_ENUM.MEDIUM]: 10,
+  [SHUFFLE_OPTIONS_ENUM.LIGHT]: 5,
+}

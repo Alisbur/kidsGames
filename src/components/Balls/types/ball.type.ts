@@ -8,11 +8,12 @@ export type TBallsLayer = Array<TBall | null>;
 
 export type TBallsStack = Array<TBall | null>;
 
-export type TBallsFieldState = Array<TBallsStack>;
-
-export type TBallsRotateDirection = "Left" | "Right";
-
 export type TBallsEmptySlot = {
   ball: TBall | null;
   position: number;
 };
+
+export type TBallsFieldState = {fieldState: Array<TBallsStack>; emptySlot: TBallsEmptySlot}
+
+export type TBallsRotateDirection = "Left" | "Right";
+

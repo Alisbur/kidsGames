@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 import styles from "./balls.module.scss";
 
@@ -20,192 +20,72 @@ import {
 } from "./types/ball.type";
 import { GameField } from "./ui/game-field/game-field";
 import { EmtySlotLayer } from "./ui/empty-slot-layer/empty-slot-layer";
+import {
+  generateInitFieldState,
+  getLayersFromFieldState,
+  onBallClick,
+  rotateLayer,
+} from "./helpers/helpers";
+import { TBallsSettings } from "./types/settings.type";
+import { TGameSettingsActions } from "./types/game-settings-actions.type";
+import { settingsReducer } from "./helpers/settings-reducer";
+import { INIT_SETTINGS } from "./config/init-settings";
+import { TGameActions } from "./types/game-actions.type";
+import { fieldStateReducer } from "./helpers/field-state-reducer";
+import { GAME_ACTIONS_ENUM } from "./enum/game-actions.enum";
+import { BallsSettings } from "./ui/balls-settings/balls-settings";
+import { FIELD_OPTIONS_SIZES } from "./config/field-options";
 
 // const convertFieldStateToLayers
 const STACKS_QUANTITY = Object.keys(BALLS_COLOR_ENUM).length;
 const BALLS_IN_STACK = Object.keys(BALLS_COLOR_ENUM).length;
 
-const generateInitFieldState = (): TBallsFieldState => {
-  const result: TBallsFieldState = [];
-
-  Object.values(BALLS_COLOR_ENUM).forEach((color) => {
-    const newStack: TBallsStack = [];
-    for (let i = 0; i < BALLS_IN_STACK; i++) {
-      newStack.push({ color });
-    }
-    result.push(newStack);
-  });
-
-  return result;
-};
-
 export function Balls() {
-  const getLayersFromFieldState = (field: TBallsFieldState): TBallsLayer[] => {
-    const layersArr: TBallsLayer[] = [];
-
-    for (let j = 0; j < field[0].length; j++) {
-      const layer: TBallsLayer = [];
-      for (let i = 0; i < field.length; i++) {
-        layer.push(field[i][j]);
-      }
-      layersArr.push(layer);
-    }
-    return layersArr;
-  };
-
-  const getFieldStateFromLayers = (layers: TBallsLayer[]): TBallsFieldState => {
-    const newFieldState: TBallsFieldState = new Array(layers[0].length)
-      .fill(null)
-      .map(() => []);
-    layers.forEach((layer) => {
-      layer.forEach((b, i) => {
-        newFieldState[i].push(b);
-      });
-    });
-    return newFieldState;
-  };
-
-  const rotateLayer = ({
-    field,
-    direction,
-    layerIdx,
-  }: {
-    field: TBallsFieldState;
-    direction: TBallsRotateDirection;
-    layerIdx: number;
-  }): TBallsFieldState => {
-    const layers: TBallsLayer[] = getLayersFromFieldState(field);
-
-    const rotateLeft = (): TBallsLayer[] => {
-      layers[layerIdx] = [
-        ...layers[layerIdx].slice(1, layers.length),
-        layers[layerIdx][0],
-      ];
-      return layers;
-    };
-
-    const rotateRight = (): TBallsLayer[] => {
-      layers[layerIdx] = [
-        layers[layerIdx][layers[layerIdx].length - 1],
-        ...layers[layerIdx].slice(0, layers[layerIdx].length - 1),
-      ];
-      return layers;
-    };
-    const newLayers = direction === "Right" ? rotateRight() : rotateLeft();
-    const newFieldState = getFieldStateFromLayers(newLayers);
-    return newFieldState;
-  };
-
-  const onBallClick = ({
-    fieldState,
-    stackIdx,
-    ballIdx,
-    emptySlot,
-  }: {
-    fieldState: TBallsFieldState;
-    stackIdx: number;
-    ballIdx: number | null;
-    emptySlot: TBallsEmptySlot;
-  }): { fieldState: TBallsFieldState; emptySlot: TBallsEmptySlot } => {
-    if (!emptySlot.ball?.color && stackIdx !== emptySlot.position)
-      return { fieldState, emptySlot };
-
-    if (ballIdx && fieldState[stackIdx][ballIdx] === null)
-      return { fieldState, emptySlot };
-
-    const extStack = [emptySlot.ball, ...fieldState[stackIdx]];
-    const extStackBallIdx = ballIdx === null ? 0 : ballIdx + 1;
-
-    let emptySlotIdx = null;
-    let inc = 0;
-
-    for (let i = 0; i < extStack.length; i++) {
-      if (extStack[i] === null) {
-        if (i > extStackBallIdx) {
-          inc = -1;
-        } else if (i < extStackBallIdx) {
-          inc = 1;
-        }
-        if (inc !== 0) {
-          emptySlotIdx = i;
-          break;
-        }
-      }
-    }
-
-    if (inc === 0 || emptySlotIdx === null) return { fieldState, emptySlot };
-
-    for (let i = emptySlotIdx; i !== extStackBallIdx; i += inc) {
-      extStack[i] = extStack[i + inc];
-    }
-
-    extStack[extStackBallIdx] = null;
-    const newEmptySlotState: TBallsEmptySlot = {
-      ...emptySlot,
-      ball: extStack[0],
-    };
-    const newStack = extStack.slice(1);
-    const newFieldState = [...fieldState];
-    newFieldState[stackIdx] = newStack;
-
-    return { fieldState: newFieldState, emptySlot: newEmptySlotState };
-  };
-
   const [step, setStep] = useState<STEP>(STEP.INIT);
-  const [fieldState, setFieldState] = useState<TBallsFieldState>(
-    generateInitFieldState()
-  );
-  const [layers, setLayers] = useState<TBallsLayer[]>(
-    getLayersFromFieldState(fieldState) ?? []
-  );
-  const [emptySlot, setEmptySlot] = useState<TBallsEmptySlot>({
-    ball: null,
-    position: Math.round(STACKS_QUANTITY / 2 - 1),
+
+  const [settings, settingsDispatch] = useReducer<
+    (state: TBallsSettings, action: TGameSettingsActions) => TBallsSettings
+  >(settingsReducer, INIT_SETTINGS);
+
+  const [fieldState, fieldStateDispatch] = useReducer<
+    (state: TBallsFieldState, action: TGameActions) => TBallsFieldState
+  >(fieldStateReducer, {
+    fieldState: [],
+    emptySlot: { position: 0, ball: null },
   });
 
-  const handleRotateEmptySlotLayer = (direction: TBallsRotateDirection) => {
-    let newPosition = emptySlot.position;
-
-    if (direction === "Right") {
-      newPosition =
-        emptySlot.position < STACKS_QUANTITY - 1 ? emptySlot.position + 1 : 0;
-    }
-    if (direction === "Left") {
-      newPosition =
-        emptySlot.position > 0 ? emptySlot.position - 1 : STACKS_QUANTITY - 1;
-    }
-    if (newPosition !== emptySlot.position)
-      setEmptySlot((prev) => ({ ...prev, position: newPosition }));
-  };
+  // const [fieldState, setFieldState] = useState<TBallsFieldState>(
+  //   generateInitFieldState(BALLS_IN_STACK)
+  // );
+  const [layers, setLayers] = useState<TBallsLayer[]>(
+    // getLayersFromFieldState(fieldState) ?? []
+    []
+  );
+  // const [emptySlot, setEmptySlot] = useState<TBallsEmptySlot>({
+  //   ball: null,
+  //   position: Math.round(STACKS_QUANTITY / 2 - 1),
+  // });
 
   useEffect(() => {
-    console.log(emptySlot);
-  }, [emptySlot]);
-
-  useEffect(() => {
-    if (fieldState.length) {
+    if (fieldState?.fieldState?.length) {
       setLayers(getLayersFromFieldState(fieldState));
     }
   }, [fieldState]);
 
-  const handleRotateLayer = ({
-    layerIdx,
-    direction,
-  }: {
-    layerIdx: number;
-    direction: TBallsRotateDirection;
-  }) => {
-    const newState = rotateLayer({
-      field: fieldState,
-      direction: direction,
-      layerIdx,
-    });
-    setFieldState(newState);
-  };
-
-  useEffect(() => {
-    console.log("NEW EMPTY SLOT");
-  }, [emptySlot]);
+  // const handleRotateLayer = ({
+  //   layerIdx,
+  //   direction,
+  // }: {
+  //   layerIdx: number;
+  //   direction: TBallsRotateDirection;
+  // }) => {
+  //   const newState = rotateLayer({
+  //     field: fieldState,
+  //     direction: direction,
+  //     layerIdx,
+  //   });
+  //   setFieldState(newState);
+  // };
 
   switch (step) {
     case STEP.INIT:
@@ -222,46 +102,28 @@ export function Balls() {
             </Typography>
           }
           mainContent={
-            <GameField
-              // layers={getLayersFromFieldState(fieldState)}
-              layers={layers}
-              emptySlot={
-                <EmtySlotLayer
-                  slot={emptySlot}
-                  maxItems={STACKS_QUANTITY}
-                  handleRotateEmptySlotLayer={handleRotateEmptySlotLayer}
-                  onBallClick={() => {
-                    const { fieldState: fs, emptySlot: es } = onBallClick({
-                      fieldState,
-                      stackIdx: emptySlot.position,
-                      ballIdx: null,
-                      emptySlot,
-                    });
-                    setFieldState(fs);
-                    setEmptySlot(es);
-                  }}
-                />
-              }
-              onBallClick={({
-                layerIdx,
-                ballIdx,
-              }: {
-                layerIdx: number | null;
-                ballIdx: number;
-              }) => {
-                const { fieldState: fs, emptySlot: es } = onBallClick({
-                  fieldState,
-                  stackIdx: ballIdx,
-                  ballIdx: layerIdx,
-                  emptySlot,
-                });
-                setFieldState(fs);
-                setEmptySlot(es);
-              }}
-              handleRotateLayer={({ layerIdx, direction }) =>
-                handleRotateLayer({ layerIdx, direction })
-              }
-            />
+            <>
+              <MenuButton
+                className={styles.button}
+                text={"Играть"}
+                onClick={() => {
+                  // setIsGameStarted(true);
+
+                  fieldStateDispatch({
+                    type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
+                    payload: settings,
+                  });
+
+                  setStep(STEP.GAME);
+                }}
+              />
+
+              <MenuButton
+                className={styles.button}
+                text={"Настройки"}
+                onClick={() => setStep(STEP.SETTINGS)}
+              />
+            </>
           }
         />
       );
@@ -280,14 +142,7 @@ export function Balls() {
             </Typography>
           }
           mainContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
-              Настройки
-            </Typography>
+            <BallsSettings settings={settings} setSettings={settingsDispatch} />
           }
           mainDivider
           footerContent={
@@ -311,10 +166,60 @@ export function Balls() {
               weight={"semibold"}
               color={"primary"}
             >
-              Шаи
+              Игра - головоломка
             </Typography>
           }
-          mainContent={<></>}
+          mainContent={
+            <GameField
+              layers={layers}
+              emptySlot={
+                <EmtySlotLayer
+                  slot={fieldState.emptySlot}
+                  maxItems={
+                    FIELD_OPTIONS_SIZES[settings.fieldSizeType].ballsInStack
+                  }
+                  handleRotateEmptySlotLayer={(
+                    direction: TBallsRotateDirection
+                  ) =>
+                    fieldStateDispatch({
+                      type: GAME_ACTIONS_ENUM.ROTATE_EMPTY_SLOT_LAYER,
+                      payload: direction,
+                    })
+                  }
+                  onBallClick={() =>
+                    fieldStateDispatch({
+                      type: GAME_ACTIONS_ENUM.BALL_CLICK,
+                      payload: {
+                        stackIdx: fieldState.emptySlot.position,
+                        ballIdx: null,
+                      },
+                    })
+                  }
+                />
+              }
+              onBallClick={({
+                layerIdx,
+                ballIdx,
+              }: {
+                layerIdx: number | null;
+                ballIdx: number;
+              }) => {
+                fieldStateDispatch({
+                  type: GAME_ACTIONS_ENUM.BALL_CLICK,
+                  payload: {
+                    stackIdx: ballIdx,
+                    ballIdx: layerIdx,
+                  },
+                });
+              }}
+              handleRotateLayer={({ layerIdx, direction }) =>
+                fieldStateDispatch({
+                  type: GAME_ACTIONS_ENUM.ROTATE_LAYER,
+                  payload: { layerIdx, direction },
+                })
+              }
+            />
+          }
           mainDivider
           footerContent={
             <MenuButton
@@ -339,7 +244,7 @@ export function Balls() {
               Результаты
             </Typography>
           }
-          mainContent={<></>}
+          mainContent={<>Тут будут результаты</>}
           mainDivider
           footerContent={
             <div style={{ width: "100%", display: "flex", gap: "8px" }}>
@@ -347,7 +252,7 @@ export function Balls() {
                 className={styles.button}
                 text={"Главное меню"}
                 onClick={() => {
-                  // setStep(STEP.INIT);
+                  setStep(STEP.INIT);
                 }}
               />
 
@@ -355,11 +260,7 @@ export function Balls() {
                 className={styles.button}
                 text={"Ещё раз"}
                 onClick={() => {
-                  // examplesDispatch({
-                  //   type: EXAMPLE_ACTIONS_ENUM.GENERATE_EXAMPLES,
-                  //   payload: settings,
-                  // });
-                  // setStep(STEP.GAME);
+                setStep(STEP.GAME);
                 }}
               />
             </div>

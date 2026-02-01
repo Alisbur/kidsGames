@@ -6,10 +6,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
 
-  background-color: $blackBg;
+  // background-color: $blackBg;
+  // background-color: white;
+  // background-color: lightgray;
+  padding: 1px;
 
   &_hidden {
+    background-color: transparent;
     visibility: hidden;
   }
 }
@@ -22,7 +27,7 @@
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;  
+  -webkit-tap-highlight-color: transparent;
 
   &_red {
     &::after {

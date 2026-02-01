@@ -6,6 +6,7 @@ import { Header } from "./components/Header/Header";
 import { XOPage } from "./pages/XO-page/XO-page";
 import { PjatnashkaPage } from "./pages/Pjatnashka-page/Pjatnashke-page";
 import { CountPage } from "./pages/Count-page/Count-page";
+import { BallsPage } from "./pages/Balls-page/Balls-page";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/xo" element={<XOPage />} />
         <Route path="/pjatnashka" element={<PjatnashkaPage />} />
         <Route path="/count" element={<CountPage />} />
+        <Route path="/balls" element={<BallsPage />} />
       </Routes>
     </div>
   );

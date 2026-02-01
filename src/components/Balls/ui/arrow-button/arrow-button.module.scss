@@ -1,0 +1,44 @@
+.arrowButton {
+  // height: 100%;
+  width: 40px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: gray;
+  display: grid;
+  place-content: center;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  &_left {
+    &::before {
+      content: "";
+      position: relative;
+      left: 50%;
+      transform: translateX(-60%);
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 12px solid white;
+    }
+  }
+
+  &_right {
+    &::before {
+      content: "";
+      position: relative;
+      right: 50%;
+      transform: translateX(60%);
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 12px solid white;
+    }
+  }
+
+  &:hover {
+    background: #333;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+}

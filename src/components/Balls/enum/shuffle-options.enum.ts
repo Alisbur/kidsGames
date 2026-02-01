@@ -1,0 +1,5 @@
+export enum SHUFFLE_OPTIONS_ENUM {
+  LIGHT = "LIGHT",
+  MEDIUM = "MEDIUM",
+  HARD = "HARD"
+};

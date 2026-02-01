@@ -1,0 +1,51 @@
+@use "@styles/colors.scss" as *;
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.layerWrapper {
+  position: relative;
+  width: 100%;
+  background-color: rgb(62, 62, 62);
+  border-top: 2px solid $blackBg;
+  border-bottom: 2px solid $blackBg;
+  overflow: hidden;
+  padding-inline: 10px;
+}
+
+.layer {
+  position: relative;
+  // width: 140%;
+  top: 0;
+  left: 50%;
+  padding: 0;
+  transform: translateX(-50%);
+  
+  column-gap: 5%;
+  // grid-template-columns: repeat(7, 1fr);
+  display: grid;
+
+  &_withTransition {
+    transition: transform 0.2s ease;
+  }
+
+  &_left {
+    transform: translateX(calc(-50% - (100% / 6.665)));
+  }
+
+  &_right {
+    transform: translateX(calc(-50% + (100% / 6.665)));
+  }
+}
+
+.button {
+  @media (max-width: 800px) {
+    background-color: red !important;
+    display: none !important;
+  }
+}

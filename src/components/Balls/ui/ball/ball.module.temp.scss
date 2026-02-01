@@ -1,0 +1,126 @@
+@use "@styles/colors.scss" as *;
+
+.wrapper {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $blackBg;
+
+  &_hidden {
+    visibility: hidden;
+  }
+}
+
+.ball {
+  position: relative;
+  display: flex;
+  width: 90%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+
+  &_red {
+    background-color: red;
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   width: 120%;
+    //   height: 120%;
+    //   top: -20%;
+    //   right: -20%;
+    //   background: #ffffff;
+    //   background: radial-gradient(
+    //     circle,
+    //     rgba(255, 255, 255, 1) 0%,
+    //     rgba(247, 170, 151, 1) 22%,
+    //     rgba(138, 36, 36, 1) 93%
+    //   );
+    // }
+  }
+
+  &_yellow {
+    background-color: yellow;
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   width: 120%;
+    //   height: 120%;
+    //   top: -20%;
+    //   right: -20%;
+    //   background: #ffffff;
+    //   background: radial-gradient(
+    //     circle,
+    //     rgba(255, 255, 255, 1) 0%,
+    //     rgba(247, 239, 151, 1) 21%,
+    //     rgba(138, 128, 36, 1) 93%
+    //   );
+    // }
+  }
+
+  &_green {
+    background-color: green;
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   width: 120%;
+    //   height: 120%;
+    //   top: -20%;
+    //   right: -20%;
+    //   background: #ffffff;
+    //   background: radial-gradient(
+    //     circle,
+    //     rgba(255, 255, 255, 1) 0%,
+    //     rgba(151, 247, 164, 1) 22%,
+    //     rgba(38, 138, 36, 1) 93%
+    //   );
+    // }
+  }
+
+  &_blue {
+    background-color: blue;
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   width: 120%;
+    //   height: 120%;
+    //   top: -20%;
+    //   right: -20%;
+    //   background: #ffffff;
+    //   background: radial-gradient(
+    //     circle,
+    //     rgba(255, 255, 255, 1) 0%,
+    //     rgba(151, 165, 247, 1) 22%,
+    //     rgba(36, 79, 138, 1) 93%
+    //   );
+    // }
+  }
+
+  &_white {
+    background-color: white;
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   width: 120%;
+    //   height: 120%;
+    //   top: -20%;
+    //   right: -20%;
+    //   background: #ffffff;
+    //   background: radial-gradient(
+    //     circle,
+    //     rgba(255, 255, 255, 1) 0%,
+    //     rgba(237, 237, 237, 1) 22%,
+    //     rgba(171, 171, 171, 1) 93%
+    //   );
+    // }
+  }
+
+  &_empty {
+    background-color: transparent;
+    cursor: auto;
+    pointer-events: none;
+  }
+}

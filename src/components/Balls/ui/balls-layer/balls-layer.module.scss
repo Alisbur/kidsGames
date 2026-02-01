@@ -11,9 +11,11 @@
 .layerWrapper {
   position: relative;
   width: 100%;
-  background-color: rgb(62, 62, 62);
-  border-top: 2px solid $blackBg;
-  border-bottom: 2px solid $blackBg;
+  // background-color: rgb(62, 62, 62);
+  // border-top: 2px solid $blackBg;
+  // border-bottom: 2px solid $blackBg;
+  // border-top: 1px solid $blackBg;
+  // border-bottom: 1px solid $blackBg;  
   overflow: hidden;
   padding-inline: 10px;
 }

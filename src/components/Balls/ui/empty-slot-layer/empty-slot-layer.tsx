@@ -117,14 +117,11 @@ export const EmtySlotLayer: FC<TEmptySlotLayerProps> = ({
         <div
           className={classNames(styles.layer, {
             [styles.layer_withTransition]: direction,
-            // [styles.layer_left]: direction === "Left",
-            // [styles.layer_right]: direction === "Right",
           })}
           ref={layerRef}
           style={{
             width: `${(100 / maxItems) * (maxItems + 2)}%`,
             transform: layerPosition,
-              // deltaX !== 0 ? `translateX(calc(-50% + ${deltaX}px))` : undefined,
             gridTemplateColumns: `repeat(${maxItems + 2}, 1fr)`,
           }}
         >
@@ -142,7 +139,8 @@ export const EmtySlotLayer: FC<TEmptySlotLayerProps> = ({
               }
               onClick={() => {
                 if (b.item?.color) onBallClick();
-              }}
+              }
+            }
             />
           ))}
         </div>

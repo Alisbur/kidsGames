@@ -24,6 +24,7 @@ type TBallsLayerProps = {
   handleRotateLeft: () => void;
   handleRotateRight: () => void;
   onBallClick: (ballIdx: number) => void;
+  command?: { side: TBallsRotateDirection | null };
 };
 
 export const BallsLayer: FC<TBallsLayerProps> = ({
@@ -31,6 +32,7 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
   handleRotateLeft,
   handleRotateRight,
   onBallClick,
+  command = { side: null },
 }) => {
   const [ballsExtended, setBallsExtended] = useState<
     Array<{ key: number; item: TBall | null }>
@@ -41,6 +43,12 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
     null
   );
 
+  useEffect(() => {
+    if (command.side) {
+      rotateLayer(command.side);
+    }
+  }, [command]);
+
   const { deltaX } = useSwipeDrag(layerRef, {
     thresholdX: (layerWrapperRef.current?.clientWidth || 300) / 20,
     maxDeltaX: (layerWrapperRef.current?.clientWidth || 300) / balls.length,
@@ -48,13 +56,9 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
   });
 
   function onSwipeX(deltaX: number) {
-    if (deltaX > 0) setDirection("Right");
-    else if (deltaX < 0) setDirection("Left");
+    if (deltaX > 0) rotateLayer("Right");
+    else if (deltaX < 0) rotateLayer("Left");
   }
-
-  useEffect(() => {
-    console.log("DELTA X", deltaX);
-  }, [deltaX]);
 
   useLayoutEffect(() => {
     const current = layerRef.current;
@@ -80,7 +84,6 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
       if (direction) {
         if (direction === "Left") handleRotateLeft();
         if (direction === "Right") handleRotateRight();
-        // setDirection(null);
       }
     };
 
@@ -93,29 +96,34 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
     };
   }, [direction]);
 
-
   const layerPosition = useMemo(() => {
     let res = `translateX(calc(-50% + ${deltaX}px`;
     if (direction === "Left") {
-      res = `translateX(calc(-50% - (100% / (${ballsExtended.length / 1.05})) + ${deltaX}px`;
+      res = `translateX(calc(-50% - (100% / (${
+        ballsExtended.length / 1.05
+      })) + ${deltaX}px`;
     }
     if (direction === "Right") {
-      res = `translateX(calc(-50% + (100% / (${ballsExtended.length / 1.05})) + ${deltaX}px`;
+      res = `translateX(calc(-50% + (100% / (${
+        ballsExtended.length / 1.05
+      })) + ${deltaX}px`;
     }
-    console.log("RES", res)
     return res;
   }, [direction, balls, deltaX]);
 
-
   if (!ballsExtended) {
     return null;
-  }  
+  }
+
+  function rotateLayer(side: TBallsRotateDirection) {
+    setDirection(side);
+  }
 
   return (
     <div className={styles.wrapper}>
       <ArrowButton
         side="Left"
-        onClick={() => setDirection("Left")}
+        onClick={() => rotateLayer("Left")}
         disabled={!!direction}
         className={styles.button}
       />
@@ -123,17 +131,11 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
         <div
           className={classNames(styles.layer, {
             [styles.layer_withTransition]: direction,
-            // [styles.layer_left]: direction === "Left",
-            // [styles.layer_right]: direction === "Right",
           })}
           ref={layerRef}
           style={{
             width: `${(100 / balls.length) * (balls.length + 2)}%`,
             transform: layerPosition,
-            // transform: `translateX(calc(-50% + ${layerPosition} + ${deltaX}px))`,
-              // deltaX !== 0
-              //   ? `translateX(calc(-50% ${layerPosition} + ${deltaX}px))`
-              //   : undefined,
             gridTemplateColumns: `repeat(${balls?.length + 2}, 1fr)`,
           }}
         >
@@ -149,7 +151,7 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
       </div>
       <ArrowButton
         side="Right"
-        onClick={() => setDirection("Right")}
+        onClick={() => rotateLayer("Right")}
         disabled={!!direction}
         className={styles.button}
       />

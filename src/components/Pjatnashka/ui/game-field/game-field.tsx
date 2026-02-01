@@ -25,24 +25,14 @@ export const GameField: FC<TGameFieldsProps> = ({
   const { elementWidth } = useElementDimensions(fieldRef);
   const [pieceSize, setPieceSize] = useState(80);
   const [isGameActive, setIsGameActive] = useState(false);
+  const [isShuffleDone, setIsShuffleDone] = useState(false);
+  const [shuffleCount, setShuffleCount] = useState(0);
 
   useEffect(() => {
     if (isShuffleDone && isGameActive) {
       if (checkIsGameOver(fieldState)) setIsGameActive(false);
     }
-  }, [fieldState, isGameActive]);
-
-  // useEffect(() => {
-  //   if (isGameActive) {
-  //     fieldStateDispatch({
-  //       type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
-  //       payload: settings,
-  //     });
-  //   }
-  // }, [isGameActive]);
-
-  const [isShuffleDone, setIsShuffleDone] = useState(false);
-  const [shuffleCount, setShuffleCount] = useState(0);
+  }, [fieldState, isGameActive]);  
 
   const positions = new Map<number, { x: number; y: number }>();
 

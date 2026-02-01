@@ -25,4 +25,10 @@ export type TGameActions =
       type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE;
       payload: TBallsSettings;
     }
-  | { type: GAME_ACTIONS_ENUM.SHUFFLE_FIELDSTATE; payload: number };
+  | {
+      type: GAME_ACTIONS_ENUM.SHUFFLE_FIELDSTATE_ONCE;
+    }
+  | {
+      type: GAME_ACTIONS_ENUM.SHUFFLE_STEP;
+      payload: number;
+    };

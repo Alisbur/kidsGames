@@ -1,3 +1,5 @@
+import { getRandomFromArray } from "../../../shared/helpers/get-random-from-array";
+import { FIELD_OPTIONS_SIZES } from "../config/field-options";
 import { BALLS_COLOR_ENUM } from "../enum/ball-colors.enum";
 import {
   TBallsEmptySlot,
@@ -6,6 +8,7 @@ import {
   TBallsRotateDirection,
   TBallsStack,
 } from "../types/ball.type";
+import { TBallsSettings } from "../types/settings.type";
 
 export const generateInitFieldState = ({
   stacks,
@@ -171,4 +174,163 @@ export const onBallClick = (
   newFieldState[stackIdx] = newStack;
 
   return { fieldState: newFieldState, emptySlot: newEmptySlotState };
+};
+
+const getIndexOfStackWithEmptyBall = (f: TBallsFieldState): number | null => {
+  for (let i = 0; i < f.fieldState.length; i++) {
+    for (let j = 0; j < f.fieldState[i].length; j++) {
+      if (f.fieldState[i][j] === null) {
+        return i;
+      }
+    }
+  }
+  return null;
+};
+
+// const rotateRandomLayers = (f: TBallsFieldState): TBallsFieldState => {
+//   const stackItemsCount = f.fieldState[0].length;
+//   let newFieldState = { ...f };
+
+//   // const rotatesCount = Math.floor(Math.random() * stackItemsCount);
+//   const rotatesCount = getRandomValueFromRange({ max: 10 });
+
+//   for (let i = 0; i < rotatesCount; i++) {
+//     const randomLayerIdx: number = getRandomValueFromRange({
+//       max: stackItemsCount - 1,
+//     });
+//     const randomDirection: TBallsRotateDirection =
+//       Math.random() >= 0.5 ? "Right" : "Left";
+//     newFieldState = {
+//       ...rotateLayer(newFieldState, {
+//         layerIdx: randomLayerIdx,
+//         direction: randomDirection,
+//       }),
+//     };
+//   }
+//   return newFieldState;
+// };
+
+// const rotateRandomLayersExceptLowest = (
+//   f: TBallsFieldState
+// ): TBallsFieldState => {
+//   const stackItemsCount = f.fieldState[0].length;
+//   let newFieldState = { ...f };
+
+//   const rotatesCount = getRandomValueFromRange({ max: 10 });
+
+//   for (let i = 0; i < rotatesCount; i++) {
+//     const randomLayerIdx: number = getRandomValueFromRange({
+//       max: stackItemsCount - 2,
+//     });
+//     const randomDirection: TBallsRotateDirection =
+//       Math.random() >= 0.5 ? "Right" : "Left";
+//     newFieldState = {
+//       ...rotateLayer(newFieldState, {
+//         layerIdx: randomLayerIdx,
+//         direction: randomDirection,
+//       }),
+//     };
+//   }
+//   return newFieldState;
+// };
+
+export const getRotateRandomLayersCommand = (
+  settings: TBallsSettings,
+  withLowestLevel: boolean = true
+): Array<{
+  side: TBallsRotateDirection | null;
+}> => {
+  const layersQuantity =
+    FIELD_OPTIONS_SIZES[settings.fieldSizeType].ballsInStack;
+
+  const commands: Array<{ side: TBallsRotateDirection | null }> = new Array(
+    layersQuantity
+  )
+    .fill(null)
+    .map((_, idx) => ({
+      side:
+        !withLowestLevel && idx === layersQuantity - 1
+          ? null
+          : getRandomFromArray([getRandomFromArray<TBallsRotateDirection>(["Left", "Right"]), null]),
+    }));
+
+  return commands;
+};
+
+// const getBallFromRandomStack = (f: TBallsFieldState): TBallsFieldState => {
+//   if (f.emptySlot.ball !== null) return f;
+
+//   const layerItemsCount = f.fieldState.length;
+//   const stackItemsCount = f.fieldState[0].length;
+
+//   const randomStackIdx: number = getRandomValueFromRange({
+//     max: stackItemsCount - 1,
+//   });
+//   const randomLayerIdx: number = getRandomValueFromRange({
+//     max: layerItemsCount - 1,
+//   });
+
+//   const newEmptySlot = { ...f.emptySlot };
+//   newEmptySlot.position = randomStackIdx;
+//   const fs = { fieldState: [...f.fieldState], emptySlot: newEmptySlot };
+
+//   const newFieldState = onBallClick(fs, {
+//     stackIdx: randomStackIdx,
+//     ballIdx: randomLayerIdx,
+//   });
+
+//   return newFieldState;
+// };
+
+const getBallFromStackBelowEmptySlot = (
+  f: TBallsFieldState
+): TBallsFieldState => {
+
+  if (f.emptySlot.ball !== null) return f;
+
+  const stackItemsCount = f.fieldState[0].length;
+  const stackIdx: number = f.emptySlot.position;
+  const layerIdx: number = stackItemsCount - 1;
+
+  const newFieldState = onBallClick(f, {
+    stackIdx: stackIdx,
+    ballIdx: layerIdx,
+  });
+
+  return newFieldState;
+};
+
+const getBallFromEmptySlot = (f: TBallsFieldState): TBallsFieldState => {
+  if (f.emptySlot.ball === null) return f;
+
+  const stackIdx = getIndexOfStackWithEmptyBall(f);
+  if (stackIdx === null) return f;
+
+  const newEmptySlot = { ...f.emptySlot };
+  newEmptySlot.position = stackIdx;
+  const fs = { fieldState: [...f.fieldState], emptySlot: newEmptySlot };
+  const newFieldState = onBallClick(fs, { stackIdx, ballIdx: null });
+
+  return newFieldState;
+};
+
+// export const shuffleOnce = (field: TBallsFieldState): TBallsFieldState => {
+//   const stepOneField = getBallFromStackBelowEmptySlot(field);
+//   const stepTwoField = rotateRandomLayers(stepOneField);
+//   const stepThreeField = getBallFromEmptySlot(stepTwoField);
+//   return stepThreeField;
+// };
+
+export const shuffleStep = (
+  field: TBallsFieldState,
+  step: number
+): TBallsFieldState => {
+  switch (step) {
+    case 1:
+      return getBallFromStackBelowEmptySlot(field);
+    case 2:
+      return getBallFromEmptySlot(field);
+    default:
+      return field;
+  }
 };

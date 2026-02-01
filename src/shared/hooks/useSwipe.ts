@@ -32,6 +32,7 @@ export function useSwipeDrag(
     if (!el) return;
 
     const getPoint = (e: TouchEvent | MouseEvent) => {
+      // e.stopPropagation();
       if ("touches" in e) {
         return e.touches[0] ?? e.changedTouches[0];
       }
@@ -39,6 +40,7 @@ export function useSwipeDrag(
     };
 
     const onStart = (e: TouchEvent | MouseEvent) => {
+      // e.stopPropagation();
       const p = getPoint(e);
       if (!p) return;
 
@@ -48,6 +50,7 @@ export function useSwipeDrag(
     };
 
     const onMove = (e: TouchEvent | MouseEvent) => {
+      // e.stopPropagation();
       if (!isDragging.current) return;
 
       const p = getPoint(e);
@@ -60,13 +63,23 @@ export function useSwipeDrag(
     const onEnd = () => {
       if (!isDragging.current) return;
 
-      if (Math.abs(deltaX) >= thresholdX) {
-        onSwipeX?.(deltaX);
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (Math.abs(deltaX) >= thresholdX) {
+          onSwipeX?.(deltaX);
+        }
+      } else {
+        if (Math.abs(deltaY) >= thresholdY) {
+          onSwipeY?.(deltaY);
+        }
       }
 
-      if (Math.abs(deltaY) >= thresholdY) {
-        onSwipeY?.(deltaY);
-      }
+      // if (Math.abs(deltaX) >= thresholdX) {
+      //   onSwipeX?.(deltaX);
+      // }
+
+      // if (Math.abs(deltaY) >= thresholdY) {
+      //   onSwipeY?.(deltaY);
+      // }
 
       isDragging.current = false;
       setDeltaX(0);

@@ -68,6 +68,7 @@ export const Example: FC<TExampleProps> = ({
           maxLength={example.result.toString().length}
           value={value}
           setValue={setValue}
+          disabled={example.solved}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               handleAnswer(value);

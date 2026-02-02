@@ -10,11 +10,20 @@ type TAnswerInputProps = {
   isCorrect: boolean | null;
   className?: string;
   borderColor?: string;
+  disabled?: boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export const AnswerInput = forwardRef<HTMLInputElement, TAnswerInputProps>(
   (
-    { value = "", setValue, maxLength, isCorrect = null, className, ...rest },
+    {
+      value = "",
+      setValue,
+      maxLength,
+      isCorrect = null,
+      className,
+      disabled = false,
+      ...rest
+    },
     ref
   ) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +41,7 @@ export const AnswerInput = forwardRef<HTMLInputElement, TAnswerInputProps>(
         ref={ref}
         onChange={handleChange}
         style={{ width: `${value.length * 20 + 10}px` }}
+        disabled={disabled}
         className={classNames(
           styles.input,
           {

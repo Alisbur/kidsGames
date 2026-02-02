@@ -42,8 +42,10 @@ export const Example: FC<TExampleProps> = ({
     <div
       onClick={() => {
         if (
-          answer === null ||
-          (answer !== null && canModify === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES)
+          !example.solved &&
+          (answer === null ||
+            (answer !== null &&
+              canModify === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES))
         ) {
           inputRef.current?.focus();
         }

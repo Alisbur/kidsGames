@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { move, shuffle } from "../helpers/helpers";
 import { TFieldState } from "../types/field-state.type";
 
@@ -11,8 +12,7 @@ export const useShuffle = ({
 }) => {
   const [isShuffleDone, setIsShuffleDone] = useState(true);
   const [shuffleCount, setShuffleCount] = useState(times);
-  const [currentFieldState, setCurrentFieldState] =
-    useState<TFieldState>(initFieldState);
+  const [currentFieldState, setCurrentFieldState] = useState<TFieldState>(initFieldState);
 
   const startShuffle = () => {
     setIsShuffleDone(false);
@@ -28,10 +28,7 @@ export const useShuffle = ({
 
         await new Promise((resolve) => setTimeout(resolve, 50));
 
-        const shuffleMovePiece = shuffle(
-          currentFieldState,
-          shuffleCount % 2 ? "HOR" : "VERT"
-        );
+        const shuffleMovePiece = shuffle(currentFieldState, shuffleCount % 2 ? "HOR" : "VERT");
         if (shuffleMovePiece) {
           const newFieldState = move(currentFieldState, shuffleMovePiece);
           setCurrentFieldState(newFieldState);

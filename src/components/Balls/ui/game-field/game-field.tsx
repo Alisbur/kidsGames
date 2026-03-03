@@ -1,20 +1,14 @@
-import { FC, ReactNode, useEffect, useState } from "react";
-import {
-  TBallsFieldState,
-  TBallsLayer,
-  TBallsRotateDirection,
-} from "../../types/ball.type";
-import styles from "./game-field.module.scss";
-import { BallsLayer } from "../balls-layer/balls-layer";
-import {
-  getLayersFromFieldState,
-  getRotateRandomLayersCommand,
-} from "../../helpers/helpers";
-import { TBallsSettings } from "../../types/settings.type";
-import { SHUFFLE_OPTIONS } from "../../config/shuffle-options";
+import { allArrayItemsEqual } from "@shared/helpers/all-array-items-equal";
 import classNames from "classnames";
-import { allArrayItemsEqual } from "../../../../shared/helpers/all-array-items-equal";
+import { FC, ReactNode, useEffect, useState } from "react";
+
 import { FIELD_OPTIONS_SIZES } from "../../config/field-options";
+import { SHUFFLE_OPTIONS } from "../../config/shuffle-options";
+import { getLayersFromFieldState, getRotateRandomLayersCommand } from "../../helpers/helpers";
+import { TBallsFieldState, TBallsLayer, TBallsRotateDirection } from "../../types/ball.type";
+import { TBallsSettings } from "../../types/settings.type";
+import { BallsLayer } from "../balls-layer/balls-layer";
+import styles from "./game-field.module.scss";
 
 type TGameFieldProps = {
   field: TBallsFieldState;
@@ -28,13 +22,7 @@ type TGameFieldProps = {
     layerIdx: number;
     direction: TBallsRotateDirection;
   }) => void;
-  onBallClick: ({
-    layerIdx,
-    ballIdx,
-  }: {
-    layerIdx: number;
-    ballIdx: number;
-  }) => void;
+  onBallClick: ({ layerIdx, ballIdx }: { layerIdx: number; ballIdx: number }) => void;
 };
 
 export const GameField: FC<TGameFieldProps> = ({
@@ -46,7 +34,7 @@ export const GameField: FC<TGameFieldProps> = ({
   onBallClick,
 }) => {
   // const layers: TBallsLayer[] = useMemo(()=>getLayersFromFieldState(field), [settings]);
-  const layers: TBallsLayer[] = getLayersFromFieldState(field)
+  const layers: TBallsLayer[] = getLayersFromFieldState(field);
 
   const [isShuffleDone, setIsShuffleDone] = useState(false);
   const [shuffleCount, setShuffleCount] = useState(0);
@@ -56,7 +44,7 @@ export const GameField: FC<TGameFieldProps> = ({
   >(
     new Array(FIELD_OPTIONS_SIZES[settings.fieldSizeType].ballsInStack)
       .fill(null)
-      .map(() => ({ side: null }))
+      .map(() => ({ side: null })),
   );
 
   useEffect(() => {
@@ -107,9 +95,7 @@ export const GameField: FC<TGameFieldProps> = ({
           key={idx}
           balls={layer}
           command={shuffleCommands[idx]}
-          onBallClick={(ballIdx: number) =>
-            onBallClick({ layerIdx: idx, ballIdx: ballIdx })
-          }
+          onBallClick={(ballIdx: number) => onBallClick({ layerIdx: idx, ballIdx: ballIdx })}
           handleRotateLeft={() => {
             handleRotateLayer({ layerIdx: idx, direction: "Left" });
           }}

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import styles from "./XO-page.module.scss";
-import { XOField } from "../../components/XOField/XOField";
-import xFigure from "../../assets/icons/x-figure.svg";
+
 import oFigure from "../../assets/icons/o-figure.svg";
+import xFigure from "../../assets/icons/x-figure.svg";
+import { XOField } from "../../components/XOField/XOField";
 import { MenuButton } from "../../shared/ui/menu-button/menu-button";
+import styles from "./XO-page.module.scss";
 
 export function XOPage() {
-  const [fieldArr, setFieldArr] = useState<number[]>([
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ]);
+  const [fieldArr, setFieldArr] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [turn, setTurn] = useState<"O" | "X">("X");
   const lines = [
@@ -21,16 +20,12 @@ export function XOPage() {
     [0, 4, 8],
     [6, 4, 2],
   ];
-  const [linesState, setLinesState] = useState<number[]>([
-    0, 0, 0, 0, 0, 0, 0, 0,
-  ]);
+  const [linesState, setLinesState] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
   const [winner, setWinner] = useState<"X" | "O" | "=" | null>(null);
-  const [winLine, setWinLine] = useState<number[]|null>(null);
+  const [winLine, setWinLine] = useState<number[] | null>(null);
 
   useEffect(() => {
-    const newLinesState = lines.map((l) =>
-      l.reduce((acc, el) => acc + fieldArr[el], 0)
-    );
+    const newLinesState = lines.map((l) => l.reduce((acc, el) => acc + fieldArr[el], 0));
     setLinesState(newLinesState);
   }, [fieldArr]);
 
@@ -72,7 +67,7 @@ export function XOPage() {
           } else {
             return f;
           }
-        })
+        }),
       );
       setTurn(turn === "X" ? "O" : "X");
     }
@@ -80,7 +75,7 @@ export function XOPage() {
 
   return (
     <div className={styles.container}>
-      <XOField fieldArr={fieldArr} onMove={handleMove} win={winLine}/>
+      <XOField fieldArr={fieldArr} onMove={handleMove} win={winLine} />
       {isGameStarted && (
         <div className={styles.turnData}>
           {"Ход:  "}

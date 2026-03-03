@@ -1,21 +1,22 @@
+import { PageContentLayout } from "@shared/layouts/page-content-layout/page-content-layout";
+import { MenuButton } from "@shared/ui/menu-button/menu-button";
+import { Typography } from "@shared/ui/typography/typography";
 import { useReducer, useState } from "react";
+
 import { Example } from "../../components/Count/ui/example/example";
-import styles from "./count.module.scss";
-import { CountSettings } from "./ui/count-settings/count-settings";
-import { TSettings } from "./types/settings.type";
-import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "./enums/set-settings-actions.enum";
-import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
-import { EXAMPLE_TYPES_ENUM } from "./enums/example-types.enum";
 import { INIT_SETTINGS } from "./constants/init-settings";
-import { settingsReducer } from "./helpers/settings-reducer";
+import styles from "./count.module.scss";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "./enums/can-modify-answer.enum";
-import { PageContentLayout } from "../../shared/layouts/page-content-layout/page-content-layout";
-import { MenuButton } from "../../shared/ui/menu-button/menu-button";
-import { TExample } from "./types/example.type";
 import { EXAMPLE_ACTIONS_ENUM } from "./enums/example-actions.enum";
+import { EXAMPLE_TYPES_ENUM } from "./enums/example-types.enum";
+import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
+import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "./enums/set-settings-actions.enum";
 import { examplesReducer } from "./helpers/examples-reducer";
+import { settingsReducer } from "./helpers/settings-reducer";
+import { TExample } from "./types/example.type";
+import { TSettings } from "./types/settings.type";
+import { CountSettings } from "./ui/count-settings/count-settings";
 import { Results } from "./ui/results/results";
-import { Typography } from "../../shared/ui/typography/typography";
 
 export function Count() {
   const [settings, settingsDispatch] = useReducer<
@@ -24,7 +25,7 @@ export function Count() {
       action: {
         type: ACTIONS;
         payload: number | EXAMPLE_TYPES_ENUM | CAN_MODIFY_ANSWER_OPTIONS_ENUM;
-      }
+      },
     ) => TSettings
   >(settingsReducer, INIT_SETTINGS);
 
@@ -34,7 +35,7 @@ export function Count() {
       action: {
         type: EXAMPLE_ACTIONS_ENUM;
         payload?: TSettings | number;
-      }
+      },
     ) => TExample[]
   >(examplesReducer, []);
 
@@ -45,12 +46,7 @@ export function Count() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Решаем примеры
             </Typography>
           }
@@ -82,18 +78,11 @@ export function Count() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Настройки
             </Typography>
           }
-          mainContent={
-            <CountSettings settings={settings} setSettings={settingsDispatch} />
-          }
+          mainContent={<CountSettings settings={settings} setSettings={settingsDispatch} />}
           mainDivider
           footerContent={
             <MenuButton
@@ -110,12 +99,7 @@ export function Count() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"subtitle"}
-              tag={"h3"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
               Реши примеры
             </Typography>
           }
@@ -151,12 +135,7 @@ export function Count() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Результаты
             </Typography>
           }

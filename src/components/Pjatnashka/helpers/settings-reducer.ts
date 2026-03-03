@@ -2,10 +2,7 @@ import { GAME_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../enums/game-settings-ac
 import { TGameSettingsActions } from "../types/game-settings-actions.type";
 import { TSettings } from "../types/settings.type";
 
-export const settingsReducer = (
-  state: TSettings,
-  action: TGameSettingsActions
-): TSettings => {
+export const settingsReducer = (state: TSettings, action: TGameSettingsActions): TSettings => {
   switch (action.type) {
     case ACTIONS.SET_FIELD_SIZE: {
       return { ...state, fieldSizeType: action.payload };

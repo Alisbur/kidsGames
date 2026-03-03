@@ -13,7 +13,6 @@ export type TBallsEmptySlot = {
   position: number;
 };
 
-export type TBallsFieldState = {fieldState: Array<TBallsStack>; emptySlot: TBallsEmptySlot}
+export type TBallsFieldState = { fieldState: Array<TBallsStack>; emptySlot: TBallsEmptySlot };
 
 export type TBallsRotateDirection = "Left" | "Right";
-

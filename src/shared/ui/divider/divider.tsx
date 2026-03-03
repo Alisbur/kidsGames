@@ -1,6 +1,7 @@
-import { FC } from "react";
-import styles from "./divider.module.scss";
 import classNames from "classnames";
+import { FC } from "react";
+
+import styles from "./divider.module.scss";
 
 type TDividerProps = {
   color?: string;

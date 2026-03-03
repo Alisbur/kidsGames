@@ -1,5 +1,6 @@
-import * as React from "react";
 import classNames from "classnames";
+import * as React from "react";
+
 import styles from "./typography.module.scss";
 
 export type TextProps = {
@@ -44,7 +45,7 @@ export const Typography: React.FC<TextProps> = ({
         { [styles.clamped]: isClamped },
         { [styles[`text_${color}`]]: color },
         { [styles[`text_${weight}`]]: weight },
-        className
+        className,
       )}
       style={extraStyles}
     >

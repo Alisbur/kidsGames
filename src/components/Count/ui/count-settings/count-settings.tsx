@@ -1,23 +1,15 @@
-import { TSettings } from "../../types/settings.type";
-import styles from "./count-settings.module.scss";
-import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../enums/set-settings-actions.enum";
-import { EXAMPLE_TYPES_ENUM } from "../../enums/example-types.enum";
 import { FC } from "react";
-import {
-  CAN_MODIFY_ANSWER_NAMES,
-  OPERATION_NAMES,
-} from "../../constants/option-names";
+
 import { CheckBoxButton } from "../../../../shared/ui/checkbox-button/checkbox-button";
-import {
-  LIMIT_VARIANTS,
-  QUANTITY_VARIANTS,
-} from "../../constants/settings-options";
-import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../../enums/can-modify-answer.enum";
-import {
-  canModifyAnswerTypeGuard,
-  exampleTypeGuard,
-} from "../../types/typeguards";
 import { Typography } from "../../../../shared/ui/typography/typography";
+import { CAN_MODIFY_ANSWER_NAMES, OPERATION_NAMES } from "../../constants/option-names";
+import { LIMIT_VARIANTS, QUANTITY_VARIANTS } from "../../constants/settings-options";
+import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../../enums/can-modify-answer.enum";
+import { EXAMPLE_TYPES_ENUM } from "../../enums/example-types.enum";
+import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../enums/set-settings-actions.enum";
+import { TSettings } from "../../types/settings.type";
+import { canModifyAnswerTypeGuard, exampleTypeGuard } from "../../types/typeguards";
+import styles from "./count-settings.module.scss";
 
 type TCountSettingsProps = {
   settings: TSettings;
@@ -27,10 +19,7 @@ type TCountSettingsProps = {
   }) => void;
 };
 
-export const CountSettings: FC<TCountSettingsProps> = ({
-  settings,
-  setSettings,
-}) => {
+export const CountSettings: FC<TCountSettingsProps> = ({ settings, setSettings }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.optionsBlock}>
@@ -53,7 +42,7 @@ export const CountSettings: FC<TCountSettingsProps> = ({
               >
                 {OPERATION_NAMES[t] ? OPERATION_NAMES[t] : "Неизвестно"}
               </CheckBoxButton>
-            ) : null
+            ) : null,
           )}
         </div>
       </div>
@@ -124,11 +113,9 @@ export const CountSettings: FC<TCountSettingsProps> = ({
                   });
                 }}
               >
-                {CAN_MODIFY_ANSWER_NAMES[o]
-                  ? CAN_MODIFY_ANSWER_NAMES[o]
-                  : "Неизвестно"}
+                {CAN_MODIFY_ANSWER_NAMES[o] ? CAN_MODIFY_ANSWER_NAMES[o] : "Неизвестно"}
               </CheckBoxButton>
-            ) : null
+            ) : null,
           )}
         </div>
       </div>

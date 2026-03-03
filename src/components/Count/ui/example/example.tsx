@@ -1,12 +1,13 @@
-import { FC, useEffect, useRef, useState } from "react";
-import styles from "./example.module.scss";
 import classNames from "classnames";
-import { MenuButton } from "../../../../shared/ui/menu-button/menu-button";
+import { FC, useEffect, useRef, useState } from "react";
+
 import { AnswerInput } from "../../../../shared/ui/answer-input/answer-input";
+import { MenuButton } from "../../../../shared/ui/menu-button/menu-button";
+import { Typography } from "../../../../shared/ui/typography/typography";
+import { OPERATION_SIGNS } from "../../constants/operation-signs";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../../enums/can-modify-answer.enum";
 import { TExample } from "../../types/example.type";
-import { OPERATION_SIGNS } from "../../constants/operation-signs";
-import { Typography } from "../../../../shared/ui/typography/typography";
+import styles from "./example.module.scss";
 
 type TExampleProps = {
   // type: EXAMPLE_TYPES_ENUM;
@@ -43,9 +44,7 @@ export const Example: FC<TExampleProps> = ({
       onClick={() => {
         if (
           !example.solved &&
-          (answer === null ||
-            (answer !== null &&
-              canModify === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES))
+          (answer === null || (answer !== null && canModify === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES))
         ) {
           inputRef.current?.focus();
         }
@@ -53,7 +52,7 @@ export const Example: FC<TExampleProps> = ({
       className={classNames(
         styles.wrapper,
         { [styles.wrapper_incorrect]: answer !== null && !example.solved },
-        { [styles.wrapper_correct]: example.solved }
+        { [styles.wrapper_correct]: example.solved },
       )}
       style={{ cursor: example.solved ? "auto" : "pointer" }}
     >

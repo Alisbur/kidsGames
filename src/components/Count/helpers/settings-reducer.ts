@@ -1,18 +1,15 @@
-import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../enums/set-settings-actions.enum";
-import {
-  canModifyAnswerTypeGuard,
-  exampleTypeGuard,
-} from "../types/typeguards";
-import { TSettings } from "../types/settings.type";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../enums/can-modify-answer.enum";
 import { EXAMPLE_TYPES_ENUM } from "../enums/example-types.enum";
+import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../enums/set-settings-actions.enum";
+import { TSettings } from "../types/settings.type";
+import { canModifyAnswerTypeGuard, exampleTypeGuard } from "../types/typeguards";
 
 export const settingsReducer = (
   state: TSettings,
   action: {
     type: ACTIONS;
     payload: number | EXAMPLE_TYPES_ENUM | CAN_MODIFY_ANSWER_OPTIONS_ENUM;
-  }
+  },
 ): TSettings => {
   if (action.type === ACTIONS.SET_LIMIT && typeof action.payload === "number") {
     return { ...state, limit: action.payload };
@@ -26,17 +23,11 @@ export const settingsReducer = (
     return { ...state, type: [...state.type, action.payload] };
   }
 
-  if (
-    action.type === ACTIONS.SET_QUANTITY &&
-    typeof action.payload === "number"
-  ) {
+  if (action.type === ACTIONS.SET_QUANTITY && typeof action.payload === "number") {
     return { ...state, quantity: action.payload };
   }
 
-  if (
-    action.type === ACTIONS.SET_CAN_MODIFY_ANSWER &&
-    canModifyAnswerTypeGuard(action.payload)
-  ) {
+  if (action.type === ACTIONS.SET_CAN_MODIFY_ANSWER && canModifyAnswerTypeGuard(action.payload)) {
     return { ...state, canModifyAnswer: action.payload };
   }
 

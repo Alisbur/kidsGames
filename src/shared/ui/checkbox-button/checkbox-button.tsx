@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { forwardRef, HTMLAttributes } from "react";
+
 import styles from "./checkbox-button.module.scss";
 
 type TCheckBoxButtonProps = {
@@ -26,7 +27,7 @@ export const CheckBoxButton = forwardRef<HTMLButtonElement, TCheckBoxButtonProps
       disabled = false,
       ...rest
     },
-    ref
+    ref,
   ) => {
     return (
       <button
@@ -40,7 +41,7 @@ export const CheckBoxButton = forwardRef<HTMLButtonElement, TCheckBoxButtonProps
           },
           unCheckedStyle ? unCheckedStyle : null,
           checkedStyle ? checkedStyle : null,
-          className
+          className,
         )}
         disabled={disabled}
         {...rest}
@@ -48,5 +49,5 @@ export const CheckBoxButton = forwardRef<HTMLButtonElement, TCheckBoxButtonProps
         {children}
       </button>
     );
-  }
+  },
 );

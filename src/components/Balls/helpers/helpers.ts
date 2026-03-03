@@ -35,9 +35,7 @@ export const generateInitFieldState = ({
   };
 };
 
-export const getLayersFromFieldState = (
-  fieldState: TBallsFieldState
-): TBallsLayer[] => {
+export const getLayersFromFieldState = (fieldState: TBallsFieldState): TBallsLayer[] => {
   const layersArr: TBallsLayer[] = [];
   const { fieldState: field } = fieldState;
 
@@ -51,12 +49,8 @@ export const getLayersFromFieldState = (
   return layersArr;
 };
 
-export const getFieldStateFromLayers = (
-  layers: TBallsLayer[]
-): TBallsStack[] => {
-  const newFieldState: TBallsStack[] = new Array(layers[0].length)
-    .fill(null)
-    .map(() => []);
+export const getFieldStateFromLayers = (layers: TBallsLayer[]): TBallsStack[] => {
+  const newFieldState: TBallsStack[] = new Array(layers[0].length).fill(null).map(() => []);
   layers.forEach((layer) => {
     layer.forEach((b, i) => {
       newFieldState[i].push(b);
@@ -73,15 +67,12 @@ export const rotateLayer = (
   }: {
     direction: TBallsRotateDirection;
     layerIdx: number;
-  }
+  },
 ): TBallsFieldState => {
   const layers: TBallsLayer[] = getLayersFromFieldState(fieldState);
 
   const rotateLeft = (): TBallsLayer[] => {
-    layers[layerIdx] = [
-      ...layers[layerIdx].slice(1, layers.length),
-      layers[layerIdx][0],
-    ];
+    layers[layerIdx] = [...layers[layerIdx].slice(1, layers.length), layers[layerIdx][0]];
     return layers;
   };
 
@@ -97,21 +88,16 @@ export const rotateLayer = (
   return { ...fieldState, fieldState: newFieldState };
 };
 
-export const rotateEmptySlotLayer = (
-  field: TBallsFieldState,
-  direction: TBallsRotateDirection
-) => {
+export const rotateEmptySlotLayer = (field: TBallsFieldState, direction: TBallsRotateDirection) => {
   const { emptySlot, fieldState } = field;
 
   let newPosition = emptySlot.position;
 
   if (direction === "Right") {
-    newPosition =
-      emptySlot.position < fieldState.length - 1 ? emptySlot.position + 1 : 0;
+    newPosition = emptySlot.position < fieldState.length - 1 ? emptySlot.position + 1 : 0;
   }
   if (direction === "Left") {
-    newPosition =
-      emptySlot.position > 0 ? emptySlot.position - 1 : fieldState.length - 1;
+    newPosition = emptySlot.position > 0 ? emptySlot.position - 1 : fieldState.length - 1;
   }
   if (newPosition !== emptySlot.position) {
     const newEmptySlot = { ...emptySlot, position: newPosition };
@@ -128,15 +114,13 @@ export const onBallClick = (
   }: {
     stackIdx: number;
     ballIdx: number | null;
-  }
+  },
 ): TBallsFieldState => {
   const { emptySlot, fieldState } = field;
 
-  if (!emptySlot.ball?.color && stackIdx !== emptySlot.position)
-    return { fieldState, emptySlot };
+  if (!emptySlot.ball?.color && stackIdx !== emptySlot.position) return { fieldState, emptySlot };
 
-  if (ballIdx && fieldState[stackIdx][ballIdx] === null)
-    return { fieldState, emptySlot };
+  if (ballIdx && fieldState[stackIdx][ballIdx] === null) return { fieldState, emptySlot };
 
   const extStack = [emptySlot.ball, ...fieldState[stackIdx]];
   const extStackBallIdx = ballIdx === null ? 0 : ballIdx + 1;
@@ -236,22 +220,22 @@ const getIndexOfStackWithEmptyBall = (f: TBallsFieldState): number | null => {
 
 export const getRotateRandomLayersCommand = (
   settings: TBallsSettings,
-  withLowestLevel: boolean = true
+  withLowestLevel: boolean = true,
 ): Array<{
   side: TBallsRotateDirection | null;
 }> => {
-  const layersQuantity =
-    FIELD_OPTIONS_SIZES[settings.fieldSizeType].ballsInStack;
+  const layersQuantity = FIELD_OPTIONS_SIZES[settings.fieldSizeType].ballsInStack;
 
-  const commands: Array<{ side: TBallsRotateDirection | null }> = new Array(
-    layersQuantity
-  )
+  const commands: Array<{ side: TBallsRotateDirection | null }> = new Array(layersQuantity)
     .fill(null)
     .map((_, idx) => ({
       side:
         !withLowestLevel && idx === layersQuantity - 1
           ? null
-          : getRandomFromArray([getRandomFromArray<TBallsRotateDirection>(["Left", "Right"]), null]),
+          : getRandomFromArray([
+              getRandomFromArray<TBallsRotateDirection>(["Left", "Right"]),
+              null,
+            ]),
     }));
 
   return commands;
@@ -282,10 +266,7 @@ export const getRotateRandomLayersCommand = (
 //   return newFieldState;
 // };
 
-const getBallFromStackBelowEmptySlot = (
-  f: TBallsFieldState
-): TBallsFieldState => {
-
+const getBallFromStackBelowEmptySlot = (f: TBallsFieldState): TBallsFieldState => {
   if (f.emptySlot.ball !== null) return f;
 
   const stackItemsCount = f.fieldState[0].length;
@@ -321,10 +302,7 @@ const getBallFromEmptySlot = (f: TBallsFieldState): TBallsFieldState => {
 //   return stepThreeField;
 // };
 
-export const shuffleStep = (
-  field: TBallsFieldState,
-  step: number
-): TBallsFieldState => {
+export const shuffleStep = (field: TBallsFieldState, step: number): TBallsFieldState => {
   switch (step) {
     case 1:
       return getBallFromStackBelowEmptySlot(field);

@@ -1,12 +1,13 @@
-import { useRef, useState, useEffect, FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
+
 import { useElementDimensions } from "../../../../shared/hooks/useElementDimensions";
+import { FIELD_OPTIONS_SIZES } from "../../constants/field-options";
+import { SHUFFLE_OPTIONS } from "../../constants/shuffle-options";
+import { checkIsGameOver, shuffle } from "../../helpers/helpers";
 import { TFieldState } from "../../types/field-state.type";
+import { TSettings } from "../../types/settings.type";
 import { Piece } from "../Piece/Piece";
 import styles from "./game-field.module.scss";
-import { TSettings } from "../../types/settings.type";
-import { checkIsGameOver, shuffle } from "../../helpers/helpers";
-import { SHUFFLE_OPTIONS } from "../../constants/shuffle-options";
-import { FIELD_OPTIONS_SIZES } from "../../constants/field-options";
 
 const SPAN = 5;
 
@@ -16,11 +17,7 @@ type TGameFieldsProps = {
   setNewFieldState: (key: number) => void;
 };
 
-export const GameField: FC<TGameFieldsProps> = ({
-  settings,
-  fieldState,
-  setNewFieldState,
-}) => {
+export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFieldState }) => {
   const fieldRef = useRef(null);
   const { elementWidth } = useElementDimensions(fieldRef);
   const [pieceSize, setPieceSize] = useState(80);
@@ -32,7 +29,7 @@ export const GameField: FC<TGameFieldsProps> = ({
     if (isShuffleDone && isGameActive) {
       if (checkIsGameOver(fieldState)) setIsGameActive(false);
     }
-  }, [fieldState, isGameActive]);  
+  }, [fieldState, isGameActive]);
 
   const positions = new Map<number, { x: number; y: number }>();
 
@@ -54,10 +51,7 @@ export const GameField: FC<TGameFieldsProps> = ({
 
       if (cancelled) return;
 
-      const shuffleMovePiece = shuffle(
-        fieldState,
-        shuffleCount % 2 ? "HOR" : "VERT"
-      );
+      const shuffleMovePiece = shuffle(fieldState, shuffleCount % 2 ? "HOR" : "VERT");
       if (shuffleMovePiece) {
         setNewFieldState(shuffleMovePiece);
         setShuffleCount((prev) => prev + 1);
@@ -71,21 +65,27 @@ export const GameField: FC<TGameFieldsProps> = ({
     };
   }, [shuffleCount]);
 
-  
   let flag = false;
 
   fieldState.forEach((row, y) =>
     row.forEach((el, x) => {
       if (el) {
         positions.set(el, { x, y });
-        console.log("EL=", el, "y=", y, "x=", x, y * FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW + x + 1)
-        if (el !== y * FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW + x + 1)
-          flag = true;
+        console.log(
+          "EL=",
+          el,
+          "y=",
+          y,
+          "x=",
+          x,
+          y * FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW + x + 1,
+        );
+        if (el !== y * FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW + x + 1) flag = true;
       }
-    })
+    }),
   );
 
-  if(!flag && flag !== isGameActive) {
+  if (!flag && flag !== isGameActive) {
     setIsGameActive(flag);
   }
 

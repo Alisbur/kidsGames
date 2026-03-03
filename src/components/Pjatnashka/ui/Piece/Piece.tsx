@@ -1,6 +1,7 @@
-import { HTMLAttributes, useEffect } from "react";
-import styles from "./Piece.module.scss";
 import classNames from "classnames";
+import { HTMLAttributes, useEffect } from "react";
+
+import styles from "./Piece.module.scss";
 
 type PieceProps = {
   idx: number;
@@ -39,7 +40,7 @@ export function Piece({
           [styles.piece_disabled]: disabled,
           [styles.piece_winColor]: winColor,
         },
-        className
+        className,
       )}
       style={{
         transform: `translate(${(size + span) * x}px, ${(size + span) * y}px)`,

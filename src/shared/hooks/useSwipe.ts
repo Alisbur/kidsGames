@@ -18,7 +18,7 @@ export function useSwipeDrag(
     thresholdY = 50,
     maxDeltaX = 50,
     maxDeltaY = 50,
-  }: UseSwipeDragOptions
+  }: UseSwipeDragOptions,
 ) {
   const startX = useRef(0);
   const startY = useRef(0);
@@ -110,9 +110,7 @@ export function useSwipeDrag(
   }, [ref, deltaX, deltaY, onSwipeX, onSwipeY, thresholdX, thresholdY]);
 
   return {
-    deltaX:
-      Math.abs(deltaX) < maxDeltaX ? deltaX : Math.sign(deltaX) * maxDeltaX,
-    deltaY:
-      Math.abs(deltaY) < maxDeltaY ? deltaY : Math.sign(deltaY) * maxDeltaY,
+    deltaX: Math.abs(deltaX) < maxDeltaX ? deltaX : Math.sign(deltaX) * maxDeltaX,
+    deltaY: Math.abs(deltaY) < maxDeltaY ? deltaY : Math.sign(deltaY) * maxDeltaY,
   };
 }

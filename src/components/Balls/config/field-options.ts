@@ -9,7 +9,7 @@ export const FIELD_OPTIONS_NAMES: Record<FIELD_SIZES_ENUM, string> = {
 
 export const FIELD_OPTIONS_SIZES: Record<
   FIELD_SIZES_ENUM,
-  { stacks: number, ballsInStack: number }
+  { stacks: number; ballsInStack: number }
 > = {
   [FIELD_SIZES_ENUM.SMALL]: { stacks: 3, ballsInStack: 3 },
   [FIELD_SIZES_ENUM.MEDIUM]: { stacks: 4, ballsInStack: 4 },

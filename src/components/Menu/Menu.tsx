@@ -1,21 +1,24 @@
-import styles from './Menu.module.scss'
-import { MenuButton } from '../../shared/ui/menu-button/menu-button';
-import { useNavigate } from 'react-router-dom'
-import { TMenuItem } from '../../shared/types/types';
+import { useNavigate } from "react-router-dom";
+
+import { TMenuItem } from "../../shared/types/types";
+import { MenuButton } from "../../shared/ui/menu-button/menu-button";
+import styles from "./Menu.module.scss";
 
 type MenuProps = {
   menuItems: TMenuItem[];
-}
+};
 
-export function Menu({menuItems}:MenuProps) {
-
+export function Menu({ menuItems }: MenuProps) {
   const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
-      {menuItems.map((item, idx) => 
-        !!idx && <MenuButton key={item.id} text={item.name} onClick={()=>navigate(item.alias)}/>
+      {menuItems.map(
+        (item, idx) =>
+          !!idx && (
+            <MenuButton key={item.id} text={item.name} onClick={() => navigate(item.alias)} />
+          ),
       )}
     </div>
-  )
+  );
 }

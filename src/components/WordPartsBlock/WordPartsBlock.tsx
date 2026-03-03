@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
-import styles from "./WordPartsBlock.module.scss";
+import { useEffect, useState } from "react";
+
 import { WordPart } from "../../shared/ui/word-part/word-part";
+import styles from "./WordPartsBlock.module.scss";
 
 type WordPartsBlockProps = {
   parts: string[];
-  onDone: ()=>void;
+  onDone: () => void;
 };
 
 export function WordPartsBlock({ parts, onDone }: WordPartsBlockProps) {
@@ -13,11 +14,11 @@ export function WordPartsBlock({ parts, onDone }: WordPartsBlockProps) {
 
   useEffect(() => {
     setActivePart(0);
-    setVisitedParts(new Set<number>([0]))
+    setVisitedParts(new Set<number>([0]));
   }, [parts]);
 
   useEffect(() => {
-    if(visitedParts.size === parts.length) onDone();
+    if (visitedParts.size === parts.length) onDone();
   }, [visitedParts.size]);
 
   return (
@@ -31,7 +32,7 @@ export function WordPartsBlock({ parts, onDone }: WordPartsBlockProps) {
             active={idx === activePart}
             onClick={() => {
               setActivePart(idx);
-              setVisitedParts(state => state.add(idx));
+              setVisitedParts((state) => state.add(idx));
             }}
           />
         ))}

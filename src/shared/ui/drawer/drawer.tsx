@@ -13,12 +13,7 @@ type TDrawerProps = {
   children?: ReactNode;
 };
 
-export const Drawer: FC<TDrawerProps> = ({
-  isOpen,
-  onClose,
-  closeBreakpoint,
-  children,
-}) => {
+export const Drawer: FC<TDrawerProps> = ({ isOpen, onClose, closeBreakpoint, children }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -38,11 +33,7 @@ export const Drawer: FC<TDrawerProps> = ({
     if (!mounted) return;
 
     const onResize = () => {
-      if (
-        typeof closeBreakpoint === "number" &&
-        window.innerWidth >= closeBreakpoint &&
-        isOpen
-      ) {
+      if (typeof closeBreakpoint === "number" && window.innerWidth >= closeBreakpoint && isOpen) {
         onClose();
       }
     };
@@ -59,7 +50,7 @@ export const Drawer: FC<TDrawerProps> = ({
 
   if (!mounted) return null;
 
-  const portal = document.getElementById("portal");
+  const portal = document.getElementById("modals");
 
   if (!portal) return null;
 
@@ -80,6 +71,6 @@ export const Drawer: FC<TDrawerProps> = ({
         {children}
       </aside>
     </>,
-    document.body
+    document.body,
   );
 };

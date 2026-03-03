@@ -1,10 +1,10 @@
-import styles from "./Image-card.module.scss";
 import pics from "../../../assets/images";
 import { TImageItem } from "../../types/types";
+import styles from "./Image-card.module.scss";
 
 type ImageCardProps = {
   name: TImageItem;
-  onClick: ()=>void;
+  onClick: () => void;
 };
 
 export function ImageCard({ name, onClick }: ImageCardProps) {
@@ -12,7 +12,7 @@ export function ImageCard({ name, onClick }: ImageCardProps) {
 
   return (
     <div className={styles.container}>
-      <img className={styles.image} src={imageItem} onClick={onClick}/>
+      <img className={styles.image} src={imageItem} onClick={onClick} />
     </div>
   );
 }

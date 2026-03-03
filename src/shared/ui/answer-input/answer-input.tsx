@@ -1,6 +1,7 @@
-import { forwardRef, InputHTMLAttributes } from "react";
-import styles from "./answer-input.module.scss";
 import classNames from "classnames";
+import { forwardRef, InputHTMLAttributes } from "react";
+
+import styles from "./answer-input.module.scss";
 
 type TAnswerInputProps = {
   initValue?: string;
@@ -15,16 +16,8 @@ type TAnswerInputProps = {
 
 export const AnswerInput = forwardRef<HTMLInputElement, TAnswerInputProps>(
   (
-    {
-      value = "",
-      setValue,
-      maxLength,
-      isCorrect = null,
-      className,
-      disabled = false,
-      ...rest
-    },
-    ref
+    { value = "", setValue, maxLength, isCorrect = null, className, disabled = false, ...rest },
+    ref,
   ) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.value === "" || !isNaN(parseInt(e.target.value))) {
@@ -48,10 +41,10 @@ export const AnswerInput = forwardRef<HTMLInputElement, TAnswerInputProps>(
             [styles.input_correct]: isCorrect,
             [styles.input_incorrect]: isCorrect !== null && !isCorrect,
           },
-          className
+          className,
         )}
         {...rest}
       />
     );
-  }
+  },
 );

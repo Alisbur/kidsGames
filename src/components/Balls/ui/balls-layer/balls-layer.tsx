@@ -1,23 +1,14 @@
 "use client";
 
-import {
-  FC,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  TBall,
-  TBallsLayer,
-  TBallsRotateDirection,
-} from "../../types/ball.type";
+import classNames from "classnames";
+import { FC, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+
+import { useSwipeDrag } from "@/shared/hooks/useSwipe";
+
+import { TBall, TBallsLayer, TBallsRotateDirection } from "../../types/ball.type";
+import { ArrowButton } from "../arrow-button/arrow-button";
 import { Ball } from "../ball/ball";
 import styles from "./balls-layer.module.scss";
-import classNames from "classnames";
-import { ArrowButton } from "../arrow-button/arrow-button";
-import { useSwipeDrag } from "../../../../shared/hooks/useSwipe";
 
 type TBallsLayerProps = {
   balls: TBallsLayer;
@@ -34,14 +25,12 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
   onBallClick,
   command = { side: null },
 }) => {
-  const [ballsExtended, setBallsExtended] = useState<
-    Array<{ key: number; item: TBall | null }>
-  >([]);
+  const [ballsExtended, setBallsExtended] = useState<Array<{ key: number; item: TBall | null }>>(
+    [],
+  );
   const layerRef = useRef<HTMLDivElement>(null);
   const layerWrapperRef = useRef<HTMLDivElement>(null);
-  const [direction, setDirection] = useState<TBallsRotateDirection | null>(
-    null
-  );
+  const [direction, setDirection] = useState<TBallsRotateDirection | null>(null);
 
   useEffect(() => {
     if (command.side) {
@@ -49,9 +38,13 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
     }
   }, [command]);
 
+  const MIN_WRAPPER_WIDTH = 300;
+  const THRESHOLD_BALANCING_VALUE = 20;
+
   const { deltaX } = useSwipeDrag(layerRef, {
-    thresholdX: (layerWrapperRef.current?.clientWidth || 300) / 20,
-    maxDeltaX: (layerWrapperRef.current?.clientWidth || 300) / balls.length,
+    thresholdX:
+      (layerWrapperRef.current?.clientWidth || MIN_WRAPPER_WIDTH) / THRESHOLD_BALANCING_VALUE,
+    maxDeltaX: (layerWrapperRef.current?.clientWidth || MIN_WRAPPER_WIDTH) / balls.length,
     onSwipeX,
   });
 
@@ -99,14 +92,10 @@ export const BallsLayer: FC<TBallsLayerProps> = ({
   const layerPosition = useMemo(() => {
     let res = `translateX(calc(-50% + ${deltaX}px`;
     if (direction === "Left") {
-      res = `translateX(calc(-50% - (100% / (${
-        ballsExtended.length / 1.05
-      })) + ${deltaX}px`;
+      res = `translateX(calc(-50% - (100% / (${ballsExtended.length / 1.05})) + ${deltaX}px`;
     }
     if (direction === "Right") {
-      res = `translateX(calc(-50% + (100% / (${
-        ballsExtended.length / 1.05
-      })) + ${deltaX}px`;
+      res = `translateX(calc(-50% + (100% / (${ballsExtended.length / 1.05})) + ${deltaX}px`;
     }
     return res;
   }, [direction, balls, deltaX]);

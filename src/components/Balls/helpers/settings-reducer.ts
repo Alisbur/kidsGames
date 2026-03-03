@@ -4,7 +4,7 @@ import { TBallsSettings } from "../types/settings.type";
 
 export const settingsReducer = (
   state: TBallsSettings,
-  action: TGameSettingsActions
+  action: TGameSettingsActions,
 ): TBallsSettings => {
   switch (action.type) {
     case ACTIONS.SET_FIELD_SIZE: {

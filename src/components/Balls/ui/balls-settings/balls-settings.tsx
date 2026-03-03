@@ -1,29 +1,22 @@
-import { TBallsSettings } from "../../types/settings.type";
-import styles from "./balls-settings.module.scss";
-import { GAME_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../enum/game-settings-actions.enum";
 import { FC } from "react";
+
 import { CheckBoxButton } from "../../../../shared/ui/checkbox-button/checkbox-button";
 import { Typography } from "../../../../shared/ui/typography/typography";
-import { FIELD_SIZES_ENUM } from "../../enum/field-sizes.enum";
 import { FIELD_OPTIONS_NAMES } from "../../config/field-options";
-import { SHUFFLE_OPTIONS_ENUM } from "../../enum/shuffle-options.enum";
 import { SHUFFLE_OPTIONS_NAMES } from "../../config/shuffle-options";
+import { FIELD_SIZES_ENUM } from "../../enum/field-sizes.enum";
+import { GAME_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../enum/game-settings-actions.enum";
+import { SHUFFLE_OPTIONS_ENUM } from "../../enum/shuffle-options.enum";
 import { TGameSettingsActions } from "../../types/game-settings-actions.type";
+import { TBallsSettings } from "../../types/settings.type";
+import styles from "./balls-settings.module.scss";
 
 type TBallsSettingsProps = {
   settings: TBallsSettings;
   setSettings: (value: TGameSettingsActions) => void;
-
-  // setSettings: (value: {
-  //   type: ACTIONS;
-  //   payload: FIELD_SIZES_ENUM | SHUFFLE_OPTIONS_ENUM;
-  // }) => void;
 };
 
-export const BallsSettings: FC<TBallsSettingsProps> = ({
-  settings,
-  setSettings,
-}) => {
+export const BallsSettings: FC<TBallsSettingsProps> = ({ settings, setSettings }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.optionsBlock}>

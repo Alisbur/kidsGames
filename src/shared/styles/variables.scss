@@ -8,6 +8,10 @@ $screen-s: 600px;
 $screen-m: 768px;
 $screen-l: 1024px;
 
+//Modals
+$z-index-backdrop: 100;
+$z-index-modal: 110;
+
 //Spaces
 $space-xxxl: 48px;
 $space-xxl: 32px;
@@ -30,6 +34,8 @@ $fs-20: 20px;
 $fs-18: 18px;
 $fs-16: 16px;
 $fs-14: 14px;
+$fs-10: 10px;
+$fs-8: 8px;
 
 $fw-400: 400;
 $fw-500: 500;

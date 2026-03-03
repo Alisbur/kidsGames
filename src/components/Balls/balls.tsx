@@ -1,25 +1,22 @@
+import { PageContentLayout } from "@shared/layouts/page-content-layout/page-content-layout";
+import { MenuButton } from "@shared/ui/menu-button/menu-button";
+import { Typography } from "@shared/ui/typography/typography";
 import { useEffect, useReducer, useState } from "react";
 
 import styles from "./balls.module.scss";
-
-import { GAME_STEPS as STEP } from "./enum/game-steps.enum";
-
-import { PageContentLayout } from "../../shared/layouts/page-content-layout/page-content-layout";
-import { MenuButton } from "../../shared/ui/menu-button/menu-button";
-
-import { Typography } from "../../shared/ui/typography/typography";
-import { TBallsFieldState, TBallsRotateDirection } from "./types/ball.type";
-import { GameField } from "./ui/game-field/game-field";
-import { EmtySlotLayer } from "./ui/empty-slot-layer/empty-slot-layer";
-import { TBallsSettings } from "./types/settings.type";
-import { TGameSettingsActions } from "./types/game-settings-actions.type";
-import { settingsReducer } from "./helpers/settings-reducer";
-import { INIT_SETTINGS } from "./config/init-settings";
-import { TGameActions } from "./types/game-actions.type";
-import { fieldStateReducer } from "./helpers/field-state-reducer";
-import { GAME_ACTIONS_ENUM } from "./enum/game-actions.enum";
-import { BallsSettings } from "./ui/balls-settings/balls-settings";
 import { FIELD_OPTIONS_SIZES } from "./config/field-options";
+import { INIT_SETTINGS } from "./config/init-settings";
+import { GAME_ACTIONS_ENUM } from "./enum/game-actions.enum";
+import { GAME_STEPS as STEP } from "./enum/game-steps.enum";
+import { fieldStateReducer } from "./helpers/field-state-reducer";
+import { settingsReducer } from "./helpers/settings-reducer";
+import { TBallsFieldState, TBallsRotateDirection } from "./types/ball.type";
+import { TGameActions } from "./types/game-actions.type";
+import { TGameSettingsActions } from "./types/game-settings-actions.type";
+import { TBallsSettings } from "./types/settings.type";
+import { BallsSettings } from "./ui/balls-settings/balls-settings";
+import { EmtySlotLayer } from "./ui/empty-slot-layer/empty-slot-layer";
+import { GameField } from "./ui/game-field/game-field";
 
 export function Balls() {
   const [step, setStep] = useState<STEP>(STEP.INIT);
@@ -49,12 +46,7 @@ export function Balls() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Шарики
             </Typography>
           }
@@ -82,18 +74,11 @@ export function Balls() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Настройки
             </Typography>
           }
-          mainContent={
-            <BallsSettings settings={settings} setSettings={settingsDispatch} />
-          }
+          mainContent={<BallsSettings settings={settings} setSettings={settingsDispatch} />}
           mainDivider
           footerContent={
             <MenuButton
@@ -110,12 +95,7 @@ export function Balls() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"subtitle"}
-              tag={"h3"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
               Расставь шарики в столбики по цветам
             </Typography>
           }
@@ -133,12 +113,8 @@ export function Balls() {
                 emptySlot={
                   <EmtySlotLayer
                     slot={fieldState.emptySlot}
-                    maxItems={
-                      FIELD_OPTIONS_SIZES[settings.fieldSizeType].stacks
-                    }
-                    handleRotateEmptySlotLayer={(
-                      direction: TBallsRotateDirection
-                    ) =>
+                    maxItems={FIELD_OPTIONS_SIZES[settings.fieldSizeType].stacks}
+                    handleRotateEmptySlotLayer={(direction: TBallsRotateDirection) =>
                       fieldStateDispatch({
                         type: GAME_ACTIONS_ENUM.ROTATE_EMPTY_SLOT_LAYER,
                         payload: direction,
@@ -194,12 +170,7 @@ export function Balls() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Результаты
             </Typography>
           }

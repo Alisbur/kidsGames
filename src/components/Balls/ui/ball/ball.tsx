@@ -1,7 +1,8 @@
+import classNames from "classnames";
 import { FC } from "react";
+
 import { BALLS_COLOR_ENUM } from "../../enum/ball-colors.enum";
 import styles from "./ball.module.scss";
-import classNames from "classnames";
 
 type TBallProps = {
   color?: BALLS_COLOR_ENUM;
@@ -10,12 +11,7 @@ type TBallProps = {
   onClick?: () => void;
 };
 
-export const Ball: FC<TBallProps> = ({
-  color = null,
-  isEmpty,
-  isHidden = false,
-  onClick,
-}) => {
+export const Ball: FC<TBallProps> = ({ color = null, isEmpty, isHidden = false, onClick }) => {
   return (
     <div
       className={classNames(styles.wrapper, {

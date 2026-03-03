@@ -1,21 +1,21 @@
-import cat from "./cat.jpg";
+import apple from "./apple.jpg";
+import bicycle from "./bicycle.jpg";
 import car from "./car.jpg";
+import cat from "./cat.jpg";
+import cup from "./cup.jpg";
 import dog from "./dog.jpg";
 import drum from "./drum.jpg";
-import tractor from "./tractor.jpg";
-import tree from "./tree.jpg";
+import fish from "./fish.jpg";
+import frog from "./frog.jpg";
+import pencils from "./pencils.jpg";
+import phone from "./phone.jpg";
 import plane from "./plane.jpg";
-import bicycle from "./bicycle.jpg";
+import plate from "./plate.jpg";
+import pot from "./pot.jpg";
 import question from "./question.jpg";
 import questionHand from "./question-hand.jpg";
-import fish from "./fish.jpg";
-import plate from "./plate.jpg";
-import pencils from "./pencils.jpg";
-import frog from "./frog.jpg";
-import apple from "./apple.jpg";
-import phone from "./phone.jpg";
-import cup from "./cup.jpg";
-import pot from "./pot.jpg";
+import tractor from "./tractor.jpg";
+import tree from "./tree.jpg";
 
 export default {
   cat,

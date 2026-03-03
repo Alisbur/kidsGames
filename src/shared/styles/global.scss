@@ -1,6 +1,7 @@
-@use "colors" as *;
-@use "variables" as *;
-@use "mixins" as *;
+// @use "colors" as *;
+// @use "variables" as *;
+// @use "mixins" as *;
+@use "./" as *;
 
 * {
   margin: 0;

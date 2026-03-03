@@ -1,7 +1,8 @@
-import { HTMLAttributes, ReactNode } from "react";
-import styles from "./menu-button.module.scss";
 import classNames from "classnames";
+import { HTMLAttributes, ReactNode } from "react";
+
 import { Typography } from "../typography/typography";
+import styles from "./menu-button.module.scss";
 
 type MenuButtonProps = {
   onClick: () => void;
@@ -33,7 +34,7 @@ export function MenuButton({
         <Typography
           view={"button"}
           color={"secondary"}
-          className={textClassName}
+          className={classNames(styles.buttonText, textClassName)}
         >
           {text}
         </Typography>

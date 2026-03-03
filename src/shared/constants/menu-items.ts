@@ -11,9 +11,9 @@ export const MENU_ITEMS = [
   },
   {
     id: 2,
-    name: "Учимся считать",
+    name: "Решаем примеры",
     alias: "/count",
-  },  
+  },
   {
     id: 3,
     name: "Крестики-нолики",
@@ -28,5 +28,5 @@ export const MENU_ITEMS = [
     id: 5,
     name: "Светофор",
     alias: "/balls",
-  },    
-]
+  },
+];

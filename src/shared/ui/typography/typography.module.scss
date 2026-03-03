@@ -10,7 +10,6 @@
 .view_p-18,
 .view_p-16,
 .view_p-14 {
-  
   @include setFont($weight: $fw-400, $ff: $font-raleway);
   overflow: hidden;
   text-overflow: ellipsis;

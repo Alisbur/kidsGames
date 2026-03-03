@@ -2,10 +2,7 @@ import { getRandomFromArray } from "../../../shared/helpers/get-random-from-arra
 import { TFieldState } from "../types/field-state.type";
 import { TPieceType } from "../types/piece.type";
 
-export const definePiecePos = (
-  field: TFieldState,
-  pieceName: number
-): TPieceType | null => {
+export const definePiecePos = (field: TFieldState, pieceName: number): TPieceType | null => {
   for (let i = 0; i < field.length; i++) {
     for (let j = 0; j < field[i].length; j++) {
       if (field[i][j] === pieceName) {
@@ -45,13 +42,7 @@ export const move = (field: number[][], piece: number): TFieldState => {
   return newFieldState;
 };
 
-export const generateArr = ({
-  fieldH,
-  fieldW,
-}: {
-  fieldH: number;
-  fieldW: number;
-}) => {
+export const generateArr = ({ fieldH, fieldW }: { fieldH: number; fieldW: number }) => {
   const newFieldState: Array<number[]> = [];
   for (let i = 0; i < fieldH; i++) {
     const newRow = [];

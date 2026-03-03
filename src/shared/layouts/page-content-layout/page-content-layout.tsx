@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
-import styles from "./page-content-layout.module.scss";
+
 import { Divider } from "../../ui/divider/divider";
+import styles from "./page-content-layout.module.scss";
 
 type TPageContentLayoutProps = {
   headerContent?: ReactNode;

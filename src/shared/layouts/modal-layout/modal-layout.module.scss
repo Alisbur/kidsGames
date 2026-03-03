@@ -1,0 +1,68 @@
+@use "@styles/" as *;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: $z-index-backdrop;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.backdrop_open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  padding: 20px;
+  min-width: 300px;
+  max-width: 80dvw;
+  width: fit-content;
+  background-color: white;
+  z-index: $z-index-modal;
+  opacity: 0;
+  border-radius: $border-radius-m;
+
+  transform: translate(-50%, -60%);
+  transition:
+    transform 3s ease,
+    opacity 3s ease;
+}
+
+.modal_open {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.close {
+  background-color: white;
+  border: 1px solid $borderColorRGBA;
+  outline: none;
+  padding: 8px;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  transform: translate(40%, -40%);
+  cursor: pointer;
+
+  & > svg {
+    transition: opacity 0.3s ease-in;
+  }
+
+  &:hover {
+    & > svg {
+      opacity: 0.7;
+    }
+  }
+}

@@ -1,8 +1,8 @@
-
-import styles from "./XOField.module.scss";
-import xFigure from "../../assets/icons/x-figure.svg";
-import oFigure from "../../assets/icons/o-figure.svg";
 import classNames from "classnames";
+
+import oFigure from "../../assets/icons/o-figure.svg";
+import xFigure from "../../assets/icons/x-figure.svg";
+import styles from "./XOField.module.scss";
 
 const cn = classNames.bind(styles);
 
@@ -18,10 +18,7 @@ export function XOField({ fieldArr, onMove, win }: XOFieldProps) {
       {fieldArr.map((el, i) => (
         <div
           key={i}
-          className={cn(
-            styles.field_item,
-            win && win.includes(i) && styles.field_item__win
-          )}
+          className={cn(styles.field_item, win && win.includes(i) && styles.field_item__win)}
           onClick={() => onMove(i)}
         >
           {el < 0 && <img src={oFigure} className={styles.field_figure} />}

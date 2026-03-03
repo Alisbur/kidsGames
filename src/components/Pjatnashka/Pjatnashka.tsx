@@ -1,19 +1,20 @@
 import { useReducer, useState } from "react";
-import styles from "./Pjatnashka.module.scss";
-import { TSettings } from "./types/settings.type";
-import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
-import { INIT_SETTINGS } from "./constants/init-settings";
-import { settingsReducer } from "./helpers/settings-reducer";
+
 import { PageContentLayout } from "../../shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "../../shared/ui/menu-button/menu-button";
 import { Typography } from "../../shared/ui/typography/typography";
-import { TFieldState } from "./types/field-state.type";
+import { INIT_SETTINGS } from "./constants/init-settings";
 import { GAME_ACTIONS_ENUM } from "./enums/game-actions.enum";
+import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { fieldStateReducer } from "./helpers/field-state-reducer";
+import { settingsReducer } from "./helpers/settings-reducer";
+import styles from "./Pjatnashka.module.scss";
+import { TFieldState } from "./types/field-state.type";
 import { TGameActions } from "./types/game-actions.type";
+import { TGameSettingsActions } from "./types/game-settings-actions.type";
+import { TSettings } from "./types/settings.type";
 import { GameField } from "./ui/game-field/game-field";
 import { PjatnashkaSettings } from "./ui/pjatnashka-settings/pjatnashka-settings";
-import { TGameSettingsActions } from "./types/game-settings-actions.type";
 
 export function Pjatnashka() {
   const [settings, settingsDispatch] = useReducer<
@@ -31,12 +32,7 @@ export function Pjatnashka() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Игра-головоломка
             </Typography>
           }
@@ -71,21 +67,11 @@ export function Pjatnashka() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Настройки
             </Typography>
           }
-          mainContent={
-            <PjatnashkaSettings
-              settings={settings}
-              setSettings={settingsDispatch}
-            />
-          }
+          mainContent={<PjatnashkaSettings settings={settings} setSettings={settingsDispatch} />}
           mainDivider
           footerContent={
             <MenuButton
@@ -102,12 +88,7 @@ export function Pjatnashka() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"subtitle"}
-              tag={"h3"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
               Расставь фишки по-порядку
             </Typography>
           }
@@ -138,12 +119,7 @@ export function Pjatnashka() {
       return (
         <PageContentLayout
           headerContent={
-            <Typography
-              view={"title"}
-              tag={"h2"}
-              weight={"semibold"}
-              color={"primary"}
-            >
+            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Результаты
             </Typography>
           }

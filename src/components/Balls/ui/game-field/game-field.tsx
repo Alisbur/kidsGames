@@ -1,7 +1,8 @@
 import { allArrayItemsEqual } from "@shared/helpers/all-array-items-equal";
 import classNames from "classnames";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 
+// import { useElementDimensions } from "@/shared/hooks/useElementDimensions";
 import { FIELD_OPTIONS_SIZES } from "../../config/field-options";
 import { SHUFFLE_OPTIONS } from "../../config/shuffle-options";
 import { getLayersFromFieldState, getRotateRandomLayersCommand } from "../../helpers/helpers";
@@ -33,9 +34,10 @@ export const GameField: FC<TGameFieldProps> = ({
   handleRotateLayer,
   onBallClick,
 }) => {
-  // const layers: TBallsLayer[] = useMemo(()=>getLayersFromFieldState(field), [settings]);
   const layers: TBallsLayer[] = getLayersFromFieldState(field);
-
+  const fieldRef = useRef<HTMLDivElement>(null);
+  // TODO: контроль размеров игрового поля
+  // const { elementWidth, elementHeight } = useElementDimensions(fieldRef);
   const [isShuffleDone, setIsShuffleDone] = useState(false);
   const [shuffleCount, setShuffleCount] = useState(0);
   const [isGameActive, setIsGameActive] = useState(true);
@@ -84,10 +86,13 @@ export const GameField: FC<TGameFieldProps> = ({
 
   return (
     <div
+      ref={fieldRef}
       className={classNames(styles.wrapper, {
         [styles.wrapper_win]: !isGameActive,
       })}
-      style={{ pointerEvents: isShuffleDone && isGameActive ? "auto" : "none" }}
+      style={{
+        pointerEvents: isShuffleDone && isGameActive ? "auto" : "none",
+      }}
     >
       {emptySlot}
       {layers.map((layer, idx) => (

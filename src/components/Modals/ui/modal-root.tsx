@@ -2,13 +2,13 @@ import { useEffect } from "react";
 
 import { ModalLayout } from "@/shared/layouts/modal-layout/modal-layout";
 
-import { useModal } from "../model/use-modal";
+import { useModals } from "../model/use-modals";
 import { TModalProps, TModalType } from "../types/modals.type";
 import { ConfirmModal } from "./confirm-modal/confirm-modal";
 import styles from "./modal-root.module.scss";
 
 export const ModalRoot = () => {
-  const { isOpen, type, props, close } = useModal();
+  const { isOpen, modalType: type, modalProps: props, closeModal: close } = useModals();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -19,11 +19,11 @@ export const ModalRoot = () => {
   }, [isOpen]);
 
   const handleModalClose = () => {
-    props.onClose?.();
+    props?.onClose?.();
     close();
   };
 
-  const renderContent = (modalType: TModalType, modalProps?: TModalProps) => {
+  const renderContent = (modalType: TModalType, modalProps: TModalProps | null) => {
     switch (modalType) {
       case "confirm_modal":
         return <ConfirmModal {...modalProps} />;

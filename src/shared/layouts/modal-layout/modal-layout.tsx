@@ -18,22 +18,24 @@ export const ModalLayout = ({ isOpen, children, className, onClose }: TModalLayo
     onClose?.();
   };
 
-  return createPortal(
-    <div
-      className={classNames(styles.backdrop, { [styles.backdrop_open]: isOpen }, className)}
-      onClick={handleClick}
-    >
-      <aside
-        className={classNames(styles.modal, {
-          [styles.modal_open]: isOpen,
-        })}
-      >
-        {children}
-        <button className={styles.close} onClick={handleClick}>
-          <X />
-        </button>
-      </aside>
-    </div>,
-    document.getElementById("modal-root")!,
-  );
+  return isOpen
+    ? createPortal(
+        <div
+          className={classNames(styles.backdrop, { [styles.backdrop_open]: isOpen }, className)}
+          onClick={handleClick}
+        >
+          <aside
+            className={classNames(styles.modal, {
+              [styles.modal_open]: isOpen,
+            })}
+          >
+            {children}
+            <button className={styles.close} onClick={handleClick}>
+              <X />
+            </button>
+          </aside>
+        </div>,
+        document.getElementById("modal-root")!,
+      )
+    : null;
 };

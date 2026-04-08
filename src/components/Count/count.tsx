@@ -83,6 +83,7 @@ export function Count() {
             </Typography>
           }
           mainContent={<CountSettings settings={settings} setSettings={settingsDispatch} />}
+          mainContentScroll={true}
           mainDivider
           footerContent={
             <MenuButton
@@ -116,6 +117,7 @@ export function Count() {
               canModify={settings.canModifyAnswer}
             />
           ))}
+          mainContentScroll
           mainDivider
           footerContent={
             <MenuButton

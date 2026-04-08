@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 
-import { useModal } from "./use-modal";
+import { useModals } from "./use-modals";
 
 export const useConfirm = () => {
-  const { open, close } = useModal();
+  const { openModal: open, closeModal: close } = useModals();
 
   const openConfirmModal = async ({
     title,
@@ -24,8 +24,8 @@ export const useConfirm = () => {
       };
 
       open({
-        type: "confirm_modal",
-        payload: {
+        modalType: "confirm_modal",
+        modalProps: {
           title,
           content,
           actions: [

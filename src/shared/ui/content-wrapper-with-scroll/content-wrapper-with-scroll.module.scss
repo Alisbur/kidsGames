@@ -1,0 +1,63 @@
+@use "@styles/" as *;
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  max-height: 85dvh;
+}
+
+.mainWrapper {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow-y: hidden;
+
+  &__topGradient {
+    position: absolute;
+    top: -2px;
+    width: 100%;
+    pointer-events: none;
+    min-height: 30px;
+    z-index: 10;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  }
+
+  &__bottomGradient {
+    position: absolute;
+    bottom: -2px;
+    width: 100%;
+    min-height: 30px;
+    z-index: 10;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  }
+}
+
+.main {
+  overflow-y: auto;
+  width: 100%;
+  scrollbar-gutter: stable;
+
+  &_overflowed {
+    padding-inline: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    margin-left: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $inputOutline;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $borderColorRGBA;
+  }
+}

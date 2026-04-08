@@ -19,7 +19,7 @@ type TGameFieldsProps = {
 
 export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFieldState }) => {
   const fieldRef = useRef(null);
-  const { elementWidth } = useElementDimensions(fieldRef);
+  const { elementWidth, elementHeight } = useElementDimensions(fieldRef);
   const [pieceSize, setPieceSize] = useState(80);
   const [isGameActive, setIsGameActive] = useState(false);
   const [isShuffleDone, setIsShuffleDone] = useState(false);
@@ -34,8 +34,10 @@ export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFi
   const positions = new Map<number, { x: number; y: number }>();
 
   useEffect(() => {
-    setPieceSize(Math.round(elementWidth / fieldState[0].length - SPAN));
-  }, [elementWidth, setPieceSize]);
+    if (elementHeight && elementWidth) {
+      setPieceSize(Math.round(Math.min(elementWidth, elementHeight) / fieldState[0].length - SPAN));
+    }
+  }, [elementWidth, elementHeight, setPieceSize]);
 
   useEffect(() => {
     let cancelled = isGameActive;
@@ -71,15 +73,6 @@ export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFi
     row.forEach((el, x) => {
       if (el) {
         positions.set(el, { x, y });
-        console.log(
-          "EL=",
-          el,
-          "y=",
-          y,
-          "x=",
-          x,
-          y * FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW + x + 1,
-        );
         if (el !== y * FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW + x + 1) flag = true;
       }
     }),
@@ -90,7 +83,13 @@ export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFi
   }
 
   return (
-    <div className={styles.field} ref={fieldRef}>
+    <div
+      className={styles.field}
+      ref={fieldRef}
+      style={{
+        transform: `translateX(-${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px)`,
+      }}
+    >
       {[...positions.keys()]
         .sort((a, b) => a - b)
         .map((id) => {
@@ -105,6 +104,9 @@ export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFi
               span={SPAN}
               disabled={isShuffleDone && !isGameActive}
               onClick={() => {
+                if (isGameActive) setNewFieldState(id);
+              }}
+              onTouchEnd={() => {
                 if (isGameActive) setNewFieldState(id);
               }}
               winColor={isShuffleDone && !isGameActive}

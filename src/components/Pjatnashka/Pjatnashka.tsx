@@ -36,6 +36,7 @@ export function Pjatnashka() {
               Игра-головоломка
             </Typography>
           }
+          mainContentScroll={false}
           mainContent={
             <>
               <MenuButton

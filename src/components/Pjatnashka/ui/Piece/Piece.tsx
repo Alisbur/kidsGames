@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { HTMLAttributes, useEffect } from "react";
+import { HTMLAttributes } from "react";
 
 import styles from "./Piece.module.scss";
 
@@ -27,11 +27,6 @@ export function Piece({
   onClick,
   ...rest
 }: PieceProps) {
-  useEffect(() => {
-    console.log("mount", idx);
-    return () => console.log("unmount", idx);
-  }, []);
-
   return (
     <div
       className={classNames(
@@ -51,7 +46,7 @@ export function Piece({
       onClick={() => onClick(idx)}
       {...rest}
     >
-      {idx}
+      <span style={{ fontSize: `${size / 2}px` }}>{idx}</span>
     </div>
   );
 }

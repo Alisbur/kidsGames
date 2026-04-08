@@ -82,19 +82,19 @@ export const WORDS: TWordItem[] = [
   {
     id: 14,
     word: "ЛЯГУШКА",
-    parts: ["ЛЯ", "ГУ", "ШКА"],
+    parts: ["ЛЯ", "ГУШ", "КА"],
     image: "frog",
   },
   {
     id: 15,
     word: "ЧАШКА",
-    parts: ["ЧА", "ШКА"],
+    parts: ["ЧАШ", "КА"],
     image: "cup",
   },
   {
     id: 16,
     word: "КАСТРЮЛЯ",
-    parts: ["КАСТ", "РЮ", "ЛЯ"],
+    parts: ["КАС", "ТРЮ", "ЛЯ"],
     image: "pot",
   },
 ];

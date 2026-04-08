@@ -10,11 +10,12 @@ export function useElementDimensions(ref: RefObject<HTMLDivElement>) {
     const divElement: HTMLDivElement | null = ref.current;
 
     const handleResize = () => {
-      if (divElement)
+      if (divElement) {
         setElementDimensions({
           elementWidth: divElement.clientWidth,
           elementHeight: divElement.clientHeight,
         });
+      }
     };
 
     if (divElement) {

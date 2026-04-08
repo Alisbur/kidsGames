@@ -24,7 +24,7 @@ export const CountSettings: FC<TCountSettingsProps> = ({ settings, setSettings }
     <div className={styles.wrapper}>
       <div className={styles.optionsBlock}>
         <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
-          Типы операций
+          Типы действий
         </Typography>
         <div className={styles.options}>
           {Object.keys(EXAMPLE_TYPES_ENUM).map((t) =>

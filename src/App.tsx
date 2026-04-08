@@ -23,7 +23,6 @@ function App() {
         <Route path="/balls" element={<BallsPage />} />
       </Routes>
       <ModalRoot />
-      <div id={"modal-root"} />
     </div>
   );
 }

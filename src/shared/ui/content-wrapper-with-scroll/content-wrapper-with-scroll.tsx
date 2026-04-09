@@ -8,7 +8,7 @@ type ContentWrapperWithScrollProps = {
   maxHeight?: number;
 };
 
-const MIN_SCROLL_TRESHHOLD = 15;
+const MIN_SCROLL_THRESHOLD = 15;
 
 export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
   children,
@@ -20,17 +20,20 @@ export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
   const [isMainDivScrolledToBottom, setIsMainDivScrolledToBottom] = useState(false);
 
   useEffect(() => {
+    if (mainDivRef.current) {
+      mainDivRef.current.scrollTop = 0;
+    }
+  }, [children]);
+
+  useEffect(() => {
     const el = mainDivRef.current;
     if (!el) return;
 
     const handleScroll = () => {
-      const isScrolled = el.scrollTop > MIN_SCROLL_TRESHHOLD;
+      const isScrolled = el.scrollTop > MIN_SCROLL_THRESHOLD;
       const isScrolledToBottom =
-        el.scrollHeight - el.scrollTop - el.clientHeight <= MIN_SCROLL_TRESHHOLD;
-      setIsMainDivScrolled((prev) => {
-        if (isScrolled !== prev) return isScrolled;
-        return prev;
-      });
+        el.scrollHeight - el.scrollTop - el.clientHeight <= MIN_SCROLL_THRESHOLD;
+      setIsMainDivScrolled(isScrolled);
       setIsMainDivScrolledToBottom((prev) => {
         if (isScrolledToBottom !== prev) return isScrolledToBottom;
         return prev;
@@ -50,7 +53,7 @@ export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
       observer.disconnect();
       el.removeEventListener("scroll", handleScroll);
     };
-  }, [children, window.innerHeight, mainDivRef.current?.scrollTop]);
+  }, []);
 
   if (!children || !window) return null;
 

@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 
+import { useModals } from "@/components/Modals/model/use-modals";
+
 import { useElementDimensions } from "../../../../shared/hooks/useElementDimensions";
 import { FIELD_OPTIONS_SIZES } from "../../constants/field-options";
 import { SHUFFLE_OPTIONS } from "../../constants/shuffle-options";
@@ -11,13 +13,20 @@ import styles from "./game-field.module.scss";
 
 const SPAN = 5;
 
-type TGameFieldsProps = {
+type TGameFieldProps = {
   settings: TSettings;
   fieldState: TFieldState;
   setNewFieldState: (key: number) => void;
+  onGameOver?: () => void;
 };
 
-export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFieldState }) => {
+export const GameField: FC<TGameFieldProps> = ({
+  settings,
+  fieldState,
+  setNewFieldState,
+  onGameOver,
+}) => {
+  const { openModal } = useModals();
   const fieldRef = useRef(null);
   const { elementWidth, elementHeight } = useElementDimensions(fieldRef);
   const [pieceSize, setPieceSize] = useState(80);
@@ -26,8 +35,20 @@ export const GameField: FC<TGameFieldsProps> = ({ settings, fieldState, setNewFi
   const [shuffleCount, setShuffleCount] = useState(0);
 
   useEffect(() => {
-    if (isShuffleDone && isGameActive) {
+    if (!isShuffleDone) return;
+
+    if (isGameActive) {
       if (checkIsGameOver(fieldState)) setIsGameActive(false);
+    } else {
+      openModal({
+        modalType: "info_modal",
+        modalProps: {
+          title: "Поздравляю!",
+          content: "Ты успешно решил головоломку!",
+          actions: [{ id: "seccess", name: "Посмотреть результаты", action: () => onGameOver?.() }],
+          onClose: () => onGameOver?.(),
+        },
+      });
     }
   }, [fieldState, isGameActive]);
 

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type TModalType = "confirm_modal" | "info";
+export type TModalType = "confirm_modal" | "info_modal";
 
 export type TModalProps = {
   title?: ReactNode | string | null;

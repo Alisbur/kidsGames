@@ -39,6 +39,7 @@
 }
 
 .main {
+  overscroll-behavior-y: contain;
   overflow-y: auto;
   width: 100%;
   scrollbar-gutter: stable;

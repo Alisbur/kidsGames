@@ -1,0 +1,10 @@
+@use "@styles/" as *;
+
+.story {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  white-space: pre-line;
+  @include setFont(30px, $blackText, 500, 120%, $font-raleway);
+}

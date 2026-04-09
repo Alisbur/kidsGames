@@ -7,6 +7,7 @@ import { BallsPage } from "./pages/Balls-page/Balls-page";
 import { CountPage } from "./pages/Count-page/Count-page";
 import { MenuPage } from "./pages/Menu-page/Menu-page";
 import { PjatnashkaPage } from "./pages/Pjatnashka-page/Pjatnashke-page";
+import { ShortStoriesPage } from "./pages/ShortStories-page/ShortStories-page";
 import { WordsPage } from "./pages/Words-page/Words-page";
 import { XOPage } from "./pages/XO-page/XO-page";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/pjatnashka" element={<PjatnashkaPage />} />
         <Route path="/count" element={<CountPage />} />
         <Route path="/balls" element={<BallsPage />} />
+        <Route path="/stories" element={<ShortStoriesPage />} />
       </Routes>
       <ModalRoot />
     </div>

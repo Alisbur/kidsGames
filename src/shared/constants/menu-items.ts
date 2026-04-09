@@ -29,4 +29,9 @@ export const MENU_ITEMS = [
     name: "Светофор",
     alias: "/balls",
   },
+  {
+    id: 6,
+    name: "Читать истории",
+    alias: "/stories",
+  },
 ];

@@ -87,7 +87,6 @@ export function Count() {
           mainDivider
           footerContent={
             <MenuButton
-              className={styles.button}
               text={"Назад"}
               onClick={() => {
                 setStep(STEP.INIT);

@@ -3,6 +3,8 @@ import { useReducer, useState } from "react";
 import { PageContentLayout } from "../../shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "../../shared/ui/menu-button/menu-button";
 import { Typography } from "../../shared/ui/typography/typography";
+import { useConfirm } from "../Modals/model/use-confirm";
+import { useModals } from "../Modals/model/use-modals";
 import { INIT_SETTINGS } from "./constants/init-settings";
 import { GAME_ACTIONS_ENUM } from "./enums/game-actions.enum";
 import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
@@ -20,6 +22,8 @@ export function Pjatnashka() {
   const [settings, settingsDispatch] = useReducer<
     (state: TSettings, action: TGameSettingsActions) => TSettings
   >(settingsReducer, INIT_SETTINGS);
+
+  const { confirm } = useConfirm();
 
   const [fieldState, fieldStateDispatch] = useReducer<
     (state: TFieldState, action: TGameActions) => TFieldState
@@ -103,6 +107,7 @@ export function Pjatnashka() {
                   payload: id,
                 });
               }}
+              onGameOver={() => setStep(STEP.END)}
             />
           }
           mainDivider
@@ -110,7 +115,15 @@ export function Pjatnashka() {
             <MenuButton
               className={styles.button}
               text={"Завершить"}
-              onClick={() => setStep(STEP.END)}
+              onClick={async () => {
+                const ans = await confirm({
+                  title: "Завершить?",
+                  content: "Головоломка ещё не решена, точно выйти?",
+                });
+                if (ans) {
+                  setStep(STEP.END);
+                }
+              }}
             />
           }
         />

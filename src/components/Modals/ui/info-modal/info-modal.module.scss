@@ -1,0 +1,42 @@
+@use "@styles/" as *;
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 70dvh;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  height: fit-content;
+  min-height: 100px;
+  overflow-y: auto;
+  flex-shrink: 1;
+
+  & > h3 {
+    @include setFont($size: $fs-18, $color: $blackText, $weight: $fw-600);
+    text-align: center;
+  }
+
+  & > p {
+    @include setFont($size: $fs-14, $color: $blackText, $weight: $fw-400, $lh: $lh-22);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  column-gap: 12px;
+  border-top: 1px solid $borderColorRGBA;
+  padding-top: 20px;
+  flex-shrink: 0;
+
+  &__buttonLabel {
+    @include setFont($size: $fs-14, $color: $whiteText, $weight: $fw-500);
+  }
+}

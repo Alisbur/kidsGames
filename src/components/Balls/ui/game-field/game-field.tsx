@@ -2,6 +2,8 @@ import { allArrayItemsEqual } from "@shared/helpers/all-array-items-equal";
 import classNames from "classnames";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 
+import { useModals } from "@/components/Modals/model/use-modals";
+
 // import { useElementDimensions } from "@/shared/hooks/useElementDimensions";
 import { FIELD_OPTIONS_SIZES } from "../../config/field-options";
 import { SHUFFLE_OPTIONS } from "../../config/shuffle-options";
@@ -24,6 +26,7 @@ type TGameFieldProps = {
     direction: TBallsRotateDirection;
   }) => void;
   onBallClick: ({ layerIdx, ballIdx }: { layerIdx: number; ballIdx: number }) => void;
+  onGameOver: () => void;
 };
 
 export const GameField: FC<TGameFieldProps> = ({
@@ -33,9 +36,11 @@ export const GameField: FC<TGameFieldProps> = ({
   handleShuffleStep,
   handleRotateLayer,
   onBallClick,
+  onGameOver,
 }) => {
   const layers: TBallsLayer[] = getLayersFromFieldState(field);
   const fieldRef = useRef<HTMLDivElement>(null);
+  const { openModal } = useModals();
   // TODO: контроль размеров игрового поля
   // const { elementWidth, elementHeight } = useElementDimensions(fieldRef);
   const [isShuffleDone, setIsShuffleDone] = useState(false);
@@ -81,6 +86,21 @@ export const GameField: FC<TGameFieldProps> = ({
       setIsGameActive(false);
     }
   }, [field]);
+
+  useEffect(() => {
+    if (!isShuffleDone) return;
+    if (!isGameActive) {
+      openModal({
+        modalType: "info_modal",
+        modalProps: {
+          title: "Поздравляю!",
+          content: "Ты успешно решил головоломку!",
+          actions: [{ id: "seccess", name: "Посмотреть результаты", action: () => onGameOver?.() }],
+          onClose: () => onGameOver?.(),
+        },
+      });
+    }
+  }, [isGameActive]);
 
   if (!field) return null;
 

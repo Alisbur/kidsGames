@@ -5,6 +5,7 @@ import { ModalLayout } from "@/shared/layouts/modal-layout/modal-layout";
 import { useModals } from "../model/use-modals";
 import { TModalProps, TModalType } from "../types/modals.type";
 import { ConfirmModal } from "./confirm-modal/confirm-modal";
+import { InfoModal } from "./info-modal/info-modal";
 import styles from "./modal-root.module.scss";
 
 export const ModalRoot = () => {
@@ -27,6 +28,8 @@ export const ModalRoot = () => {
     switch (modalType) {
       case "confirm_modal":
         return <ConfirmModal {...modalProps} />;
+      case "info_modal":
+        return <InfoModal {...modalProps} />;
       default:
         return null;
     }

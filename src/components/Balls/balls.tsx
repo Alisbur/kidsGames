@@ -3,6 +3,7 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useEffect, useReducer, useState } from "react";
 
+import { useConfirm } from "../Modals/model/use-confirm";
 import styles from "./balls.module.scss";
 import { FIELD_OPTIONS_SIZES } from "./config/field-options";
 import { INIT_SETTINGS } from "./config/init-settings";
@@ -20,6 +21,7 @@ import { GameField } from "./ui/game-field/game-field";
 
 export function Balls() {
   const [step, setStep] = useState<STEP>(STEP.INIT);
+  const { confirm } = useConfirm();
 
   const [settings, settingsDispatch] = useReducer<
     (state: TBallsSettings, action: TGameSettingsActions) => TBallsSettings
@@ -104,6 +106,7 @@ export function Balls() {
               <GameField
                 field={fieldState}
                 settings={settings}
+                onGameOver={() => setStep(STEP.END)}
                 handleShuffleStep={(step: number) =>
                   fieldStateDispatch({
                     type: GAME_ACTIONS_ENUM.SHUFFLE_STEP,
@@ -160,7 +163,15 @@ export function Balls() {
             <MenuButton
               className={styles.button}
               text={"Завершить"}
-              onClick={() => setStep(STEP.END)}
+              onClick={async () => {
+                const ans = await confirm({
+                  title: "Завершить?",
+                  content: "Головоломка ещё не решена, точно выйти?",
+                });
+                if (ans) {
+                  setStep(STEP.END);
+                }
+              }}
             />
           }
         />

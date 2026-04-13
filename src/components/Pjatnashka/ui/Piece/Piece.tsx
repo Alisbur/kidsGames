@@ -38,6 +38,7 @@ export function Piece({
         className,
       )}
       style={{
+        willChange: "transform",
         transform: `translate(${(size + span) * x}px, ${(size + span) * y}px)`,
         width: size,
         height: size,

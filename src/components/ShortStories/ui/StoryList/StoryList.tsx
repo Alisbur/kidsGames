@@ -13,7 +13,7 @@ type TStoryListProps = {
 export const StoryList: FC<TStoryListProps> = ({ stories, selectStory }) => {
   return (
     <div className={styles.storyList}>
-      {stories.map((s, i) => (
+      {stories.map((s) => (
         <MenuButton
           text={s.title}
           onClick={() => {

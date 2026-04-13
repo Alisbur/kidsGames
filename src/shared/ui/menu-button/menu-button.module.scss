@@ -29,4 +29,8 @@
 
 .buttonText {
   @include setFont(18px, $whiteText, 400, 120%, $font-raleway);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

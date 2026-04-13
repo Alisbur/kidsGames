@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
+import { Typography } from "@/shared/ui/typography/typography";
+
 import oFigure from "../../assets/icons/o-figure.svg";
 import xFigure from "../../assets/icons/x-figure.svg";
 import { XOField } from "../../components/XOField/XOField";
@@ -74,32 +77,50 @@ export function XOPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <XOField fieldArr={fieldArr} onMove={handleMove} win={winLine} />
-      {isGameStarted && (
-        <div className={styles.turnData}>
-          {"Ход:  "}
-          <img src={turn === "X" ? xFigure : oFigure} />
-        </div>
-      )}
-      {winner && (
-        <div className={styles.turnData}>
-          {winner === "=" ? (
-            <span>Ничья!</span>
-          ) : (
-            <>
-              <span>Победил:</span>
-              <img src={winner === "X" ? xFigure : oFigure} />
-            </>
+    <PageContentLayout
+      headerContent={
+        <Typography
+          view={"title"}
+          tag={"h2"}
+          weight={"bold"}
+          color={"primary"}
+          className={styles.title}
+        >
+          Игра вдвоём
+        </Typography>
+      }
+      mainContent={
+        <div className={styles.container}>
+          <XOField fieldArr={fieldArr} onMove={handleMove} win={winLine} />
+          {isGameStarted && (
+            <div className={styles.turnData}>
+              {"Ход:  "}
+              <img src={turn === "X" ? xFigure : oFigure} />
+            </div>
+          )}
+          {winner && (
+            <div className={styles.turnData}>
+              {winner === "=" ? (
+                <span>Ничья!</span>
+              ) : (
+                <>
+                  <span>Победил:</span>
+                  <img src={winner === "X" ? xFigure : oFigure} />
+                </>
+              )}
+            </div>
           )}
         </div>
-      )}
-      <MenuButton
-        onClick={() => {
-          initNewGame();
-        }}
-        text={`${isGameStarted ? "Начать сначала" : "Новая игра"}`}
-      />
-    </div>
+      }
+      mainDivider
+      footerContent={
+        <MenuButton
+          onClick={() => {
+            initNewGame();
+          }}
+          text={`${isGameStarted ? "Начать сначала" : "Новая игра"}`}
+        />
+      }
+    />
   );
 }

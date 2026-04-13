@@ -146,7 +146,7 @@ export function Count() {
             <div style={{ width: "100%", display: "flex", gap: "8px" }}>
               <MenuButton
                 className={styles.button}
-                text={"Главное меню"}
+                text={"Меню игры"}
                 onClick={() => {
                   setStep(STEP.INIT);
                 }}

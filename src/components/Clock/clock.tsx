@@ -38,7 +38,7 @@ export const AnalogClock = ({ initialTime = new Date() }) => {
     if (isManualMode) return;
 
     const id = setInterval(() => {
-      setTime((prev) => {
+      setTime(() => {
         const now = new Date();
 
         return {

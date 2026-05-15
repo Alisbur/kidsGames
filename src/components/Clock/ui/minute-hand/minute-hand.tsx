@@ -4,8 +4,6 @@ import { getAngleFromMinutes, getMinutesFromAngle } from "../../helpers/helpers"
 import { TTime } from "../types/time.type";
 import styles from "./minute-hand.module.scss";
 
-const MINUTE_HAND_LENGTH = 100;
-
 type TMinuteHandProps = {
   time: TTime;
   setTime: (value: TTime | ((prev: TTime) => TTime)) => void;

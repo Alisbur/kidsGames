@@ -34,4 +34,9 @@ export const MENU_ITEMS = [
     name: "Читать истории",
     alias: "/stories",
   },
+  {
+    id: 7,
+    name: "Часы",
+    alias: "/clock",
+  },
 ];

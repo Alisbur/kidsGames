@@ -1,0 +1,38 @@
+  .hourHandWrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: 50% 100%;
+  }
+  
+  .hourHand {
+    width: 8px;
+    height: 60px;
+    background: linear-gradient(to top, #3f3ce7, #5409a4);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+  }
+
+  .dragHandle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    background: #0323d8;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border: 3px solid white;
+    cursor: grab;
+    z-index: 8;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+    
+    &:active {
+      cursor: grabbing;
+      transform: scale(0.95);
+    }
+  }

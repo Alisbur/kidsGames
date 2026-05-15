@@ -4,6 +4,7 @@ import styles from "./App.module.scss";
 import { Header } from "./components/Header/Header";
 import { ModalRoot } from "./components/Modals/ui/modal-root";
 import { BallsPage } from "./pages/Balls-page/Balls-page";
+import { ClockPage } from "./pages/Clock-page/Clock-page";
 import { CountPage } from "./pages/Count-page/Count-page";
 import { MenuPage } from "./pages/Menu-page/Menu-page";
 import { PjatnashkaPage } from "./pages/Pjatnashka-page/Pjatnashke-page";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/count" element={<CountPage />} />
         <Route path="/balls" element={<BallsPage />} />
         <Route path="/stories" element={<ShortStoriesPage />} />
+        <Route path="/clock" element={<ClockPage />} />
       </Routes>
       <ModalRoot />
     </div>

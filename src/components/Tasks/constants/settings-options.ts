@@ -1,0 +1,16 @@
+import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../enums/can-modify-answer.enum";
+import { TASK_LEVELS_ENUM } from "../enums/tasks-levels.enum";
+import { TASKS_TYPES_ENUM } from "../enums/tasks-types.enum";
+
+export const OPERATION_VARIANTS: TASKS_TYPES_ENUM[] = [
+  TASKS_TYPES_ENUM.SUM,
+  TASKS_TYPES_ENUM.SUB,
+  TASKS_TYPES_ENUM.MUL,
+  TASKS_TYPES_ENUM.DIV,
+];
+
+export const QUANTITY_VARIANTS = [3, 5, 10, 15];
+
+export const LEVEL_VARIANTS = [TASK_LEVELS_ENUM.EASY, TASK_LEVELS_ENUM.MID, TASK_LEVELS_ENUM.HARD];
+
+export const CAN_MODIFY_ANSWER: CAN_MODIFY_ANSWER_OPTIONS_ENUM = CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES;

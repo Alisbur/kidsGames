@@ -17,6 +17,7 @@ export const settingsReducer = (
 
   if (action.type === ACTIONS.SET_TYPES && exampleTypeGuard(action.payload)) {
     if (state.type.includes(action.payload as EXAMPLE_TYPES_ENUM)) {
+      if (state.type.length < 2) return state;
       const newTypes = state.type.filter((t) => t !== action.payload);
       return { ...state, type: newTypes };
     }

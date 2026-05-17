@@ -81,6 +81,7 @@ export const ShortStories = () => {
       }
       mainContent={<Story story={SHORT_STORIES[selectedStory]} />}
       mainContentScroll={true}
+      preserveMainContentScrollPosition={false}
       mainDivider
       footerContent={
         <div style={{ width: "100%", display: "flex", gap: "16px" }}>

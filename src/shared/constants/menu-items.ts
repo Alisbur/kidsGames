@@ -6,13 +6,23 @@ export const MENU_ITEMS = [
   },
   {
     id: 1,
-    name: "Читаем по слогам",
+    name: "Читать по слогам",
     alias: "/words",
+  },
+  {
+    id: 6,
+    name: "Читать истории",
+    alias: "/stories",
   },
   {
     id: 2,
     name: "Решаем примеры",
     alias: "/count",
+  },
+  {
+    id: 8,
+    name: "Решаем задачи",
+    alias: "/tasks",
   },
   {
     id: 3,
@@ -21,18 +31,13 @@ export const MENU_ITEMS = [
   },
   {
     id: 4,
-    name: "Пятнашка",
+    name: 'Головоломка "Пятнашка"',
     alias: "/pjatnashka",
   },
   {
     id: 5,
-    name: "Светофор",
+    name: 'Головоломка "Светофор"',
     alias: "/balls",
-  },
-  {
-    id: 6,
-    name: "Читать истории",
-    alias: "/stories",
   },
   {
     id: 7,

@@ -6,6 +6,7 @@ import styles from "./content-wrapper-with-scroll.module.scss";
 type ContentWrapperWithScrollProps = {
   children?: ReactNode;
   maxHeight?: number;
+  preserveScrollPosition?: boolean;
 };
 
 const MIN_SCROLL_THRESHOLD = 15;
@@ -13,6 +14,7 @@ const MIN_SCROLL_THRESHOLD = 15;
 export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
   children,
   maxHeight,
+  preserveScrollPosition = true,
 }) => {
   const mainDivRef = useRef<HTMLDivElement>(null);
   const [isMainDivOverflowed, setIsMainDivOverflowed] = useState(false);
@@ -20,10 +22,10 @@ export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
   const [isMainDivScrolledToBottom, setIsMainDivScrolledToBottom] = useState(false);
 
   useEffect(() => {
-    if (mainDivRef.current) {
+    if (mainDivRef.current && !preserveScrollPosition) {
       mainDivRef.current.scrollTop = 0;
     }
-  }, [children]);
+  }, [children, preserveScrollPosition]);
 
   useEffect(() => {
     const el = mainDivRef.current;

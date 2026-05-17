@@ -15,6 +15,7 @@ type TPageContentLayoutProps = {
   mainContentScroll?: boolean;
   footerContent?: ReactNode;
   footerDivider?: boolean;
+  preserveMainContentScrollPosition?: boolean;
 };
 
 export const PageContentLayout: FC<TPageContentLayoutProps> = ({
@@ -25,6 +26,7 @@ export const PageContentLayout: FC<TPageContentLayoutProps> = ({
   mainContentScroll = false,
   footerContent,
   footerDivider = false,
+  preserveMainContentScrollPosition = true,
 }) => {
   const [mainDivHeight, setMainDivHeight] = useState(0);
   const mainDivRef = useRef<HTMLDivElement>(null);
@@ -65,7 +67,10 @@ export const PageContentLayout: FC<TPageContentLayoutProps> = ({
         <>
           <section className={styles.mainContent} ref={mainDivRef}>
             {mainContentScroll ? (
-              <ContentWrapperWithScroll maxHeight={mainDivHeight}>
+              <ContentWrapperWithScroll
+                maxHeight={mainDivHeight}
+                preserveScrollPosition={preserveMainContentScrollPosition}
+              >
                 <div className={styles.main}>{mainContent}</div>
               </ContentWrapperWithScroll>
             ) : (

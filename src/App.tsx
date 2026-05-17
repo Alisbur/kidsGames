@@ -9,6 +9,7 @@ import { CountPage } from "./pages/Count-page/Count-page";
 import { MenuPage } from "./pages/Menu-page/Menu-page";
 import { PjatnashkaPage } from "./pages/Pjatnashka-page/Pjatnashke-page";
 import { ShortStoriesPage } from "./pages/ShortStories-page/ShortStories-page";
+import { TasksPage } from "./pages/Tasks-page/Tasks-page";
 import { WordsPage } from "./pages/Words-page/Words-page";
 import { XOPage } from "./pages/XO-page/XO-page";
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/balls" element={<BallsPage />} />
         <Route path="/stories" element={<ShortStoriesPage />} />
         <Route path="/clock" element={<ClockPage />} />
+        <Route path="/tasks" element={<TasksPage />} />
       </Routes>
       <ModalRoot />
     </div>

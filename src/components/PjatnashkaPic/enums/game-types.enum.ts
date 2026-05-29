@@ -1,0 +1,4 @@
+export enum GAME_TYPES_ENUM {
+  NUMBERS = "NUMBERS",
+  PICTURE = "PICTURE",
+}

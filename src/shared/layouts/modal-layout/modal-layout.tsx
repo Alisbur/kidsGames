@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { X } from "lucide-react";
 import { ReactNode } from "react";
+import React from "react";
 import { createPortal } from "react-dom";
 
 import styles from "./modal-layout.module.scss";

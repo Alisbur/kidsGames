@@ -32,7 +32,7 @@ export const MENU_ITEMS = [
   {
     id: 4,
     name: 'Головоломка "Пятнашка"',
-    alias: "/pjatnashka",
+    alias: "/pjatnashka-pic",
   },
   {
     id: 5,

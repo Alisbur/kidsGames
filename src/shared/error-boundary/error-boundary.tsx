@@ -28,7 +28,6 @@ export class BaseErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("ErrorBoundary caught:", error, errorInfo);
     this.props.onError?.(error, errorInfo);
   }
 

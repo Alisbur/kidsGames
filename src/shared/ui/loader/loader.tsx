@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-import styles from "./Loader.module.scss";
+import styles from "./loader.module.scss";
 
 type LoaderProps = {
   size?: number;

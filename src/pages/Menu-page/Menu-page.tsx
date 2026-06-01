@@ -8,6 +8,7 @@ export function MenuPage() {
       headerContent={<h2>Меню</h2>}
       headerDivider={false}
       mainContent={<Menu menuItems={MENU_ITEMS} />}
+      mainContentScroll
     />
   );
 }

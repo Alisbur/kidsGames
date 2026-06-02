@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 
 import pics from "@/assets/images";
 import { getRandomFromArray } from "@/shared/helpers/get-random-from-array";
+import { useCroppedImage } from "@/shared/hooks/use-cropped-image";
 
 import { PageContentLayout } from "../../shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "../../shared/ui/menu-button/menu-button";
@@ -32,15 +33,15 @@ const BG_IMAGES = [
   pics.story_utenok,
   pics.story_zaichenok,
   pics.story_ziplenok,
+  pics.drum,
 ];
+
+const IMG_MAX_CROP_SIZE = 600;
 
 export function PjatnashkaPic() {
   const [settings, settingsDispatch] = useReducer<
     (state: TSettings, action: TGameSettingsActions) => TSettings
   >(settingsReducer, INIT_SETTINGS);
-
-  const { confirm } = useConfirm();
-  const { openModal } = useModals();
 
   const [fieldState, fieldStateDispatch] = useReducer<
     (state: TFieldState, action: TGameActions) => TFieldState
@@ -50,14 +51,22 @@ export function PjatnashkaPic() {
   const [isShuffleDone, setIsShuffleDone] = useState(false);
   const [isShuffleRunning, setShuffleIsRunning] = useState(false);
   const [imgUrl, setImageUrl] = useState<string | null>(null);
+  const { croppedUrl, cropImage } = useCroppedImage();
+  const { confirm } = useConfirm();
+  const { openModal } = useModals();
 
   useEffect(() => {
     if (isShuffleDone) setShuffleIsRunning(false);
   }, [isShuffleDone]);
 
+  useEffect(() => {
+    if (imgUrl) cropImage({ img: imgUrl, maxW: IMG_MAX_CROP_SIZE, maxH: IMG_MAX_CROP_SIZE });
+  }, [imgUrl, cropImage]);
+
   const initNewGame = useCallback(() => {
     setIsShuffleDone(false);
     if (settings.gameType === GAME_TYPES_ENUM.PICTURE) setImageUrl(getRandomFromArray(BG_IMAGES));
+    else setImageUrl(null);
     fieldStateDispatch({
       type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
       payload: settings,
@@ -65,10 +74,6 @@ export function PjatnashkaPic() {
 
     setStep(STEP.GAME);
   }, [settings]);
-
-  const imageComponent = useMemo(() => {
-    return <img src={imgUrl!} style={{ width: "100%" }} />;
-  }, [imgUrl]);
 
   switch (step) {
     case STEP.INIT:
@@ -138,7 +143,7 @@ export function PjatnashkaPic() {
               isShuffleDone={isShuffleDone}
               setIsShuffleDone={setIsShuffleDone}
               isShuffleRunning={isShuffleRunning}
-              imgUrl={imgUrl}
+              imgUrl={croppedUrl}
             />
           }
           mainDivider
@@ -161,7 +166,12 @@ export function PjatnashkaPic() {
                         modalType: "info_modal",
                         modalProps: {
                           title: "Подсказка",
-                          content: imageComponent,
+                          content: (
+                            <img
+                              src={croppedUrl}
+                              style={{ maxWidth: "100%", maxHeight: "300px", aspectRatio: "1/1" }}
+                            />
+                          ),
                         },
                       });
                     }}
@@ -214,7 +224,9 @@ export function PjatnashkaPic() {
         />
       );
     }
-    default:
-      return null;
+    default: {
+      const _exhaustiveCheck: never = step;
+      throw new Error(`Unhandled step: ${_exhaustiveCheck}`);
+    }
   }
 }

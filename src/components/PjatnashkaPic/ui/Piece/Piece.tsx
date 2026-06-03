@@ -46,7 +46,6 @@ export const Piece = ({
   isLoading = true,
   ...rest
 }: PieceProps) => {
-  // Стили для позиционирования кусочка в сетке
   const positionStyle = {
     willChange: "transform",
     transform: `translate(${(size + span) * x}px, ${(size + span) * y}px)`,

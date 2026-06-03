@@ -33,7 +33,6 @@ const BG_IMAGES = [
   pics.story_utenok,
   pics.story_zaichenok,
   pics.story_ziplenok,
-  pics.drum,
 ];
 
 const IMG_MAX_CROP_SIZE = 600;
@@ -51,7 +50,7 @@ export function PjatnashkaPic() {
   const [isShuffleDone, setIsShuffleDone] = useState(false);
   const [isShuffleRunning, setShuffleIsRunning] = useState(false);
   const [imgUrl, setImageUrl] = useState<string | null>(null);
-  const { croppedUrl, cropImage } = useCroppedImage();
+  const { croppedUrl, cropImage, isLoading, resetCrop } = useCroppedImage();
   const { confirm } = useConfirm();
   const { openModal } = useModals();
 
@@ -65,6 +64,7 @@ export function PjatnashkaPic() {
 
   const initNewGame = useCallback(() => {
     setIsShuffleDone(false);
+    resetCrop();
     if (settings.gameType === GAME_TYPES_ENUM.PICTURE) setImageUrl(getRandomFromArray(BG_IMAGES));
     else setImageUrl(null);
     fieldStateDispatch({
@@ -144,6 +144,7 @@ export function PjatnashkaPic() {
               setIsShuffleDone={setIsShuffleDone}
               isShuffleRunning={isShuffleRunning}
               imgUrl={croppedUrl}
+              isLoading={isLoading}
             />
           }
           mainDivider

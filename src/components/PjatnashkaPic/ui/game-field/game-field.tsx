@@ -23,6 +23,7 @@ type TGameFieldProps = {
   isShuffleRunning: boolean;
   imgUrl: string | null;
   onGameOver?: () => void;
+  isLoading: boolean;
 };
 
 export const GameField: FC<TGameFieldProps> = ({
@@ -34,6 +35,7 @@ export const GameField: FC<TGameFieldProps> = ({
   isShuffleRunning,
   onGameOver,
   imgUrl = null,
+  isLoading,
 }) => {
   const { openModal } = useModals();
   const fieldRef = useRef(null);
@@ -74,7 +76,7 @@ export const GameField: FC<TGameFieldProps> = ({
     return () => clearTimeout(timer);
   }, [fieldState, isGameActive]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (elementHeight && elementWidth) {
       setPieceSize(Math.round(Math.min(elementWidth, elementHeight) / fieldState[0].length - SPAN));
     }
@@ -134,14 +136,14 @@ export const GameField: FC<TGameFieldProps> = ({
               x={pos.x}
               y={pos.y}
               span={SPAN}
-              imageUrl={imgUrl ?? ""}
+              imageUrl={imgUrl || ""}
               imageWidth={imageWidth}
               imageHeight={imageHeight}
               fieldCols={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW}
               fieldRows={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldH}
               disabled={isShuffleDone && !isGameActive}
               gameType={settings.gameType}
-              isLoading={loading}
+              isLoading={loading || isLoading}
               onClick={() => {
                 if (isGameActive) setNewFieldState(id);
               }}

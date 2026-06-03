@@ -96,5 +96,13 @@ export function useCroppedImage() {
     [imgUrl, targetDimensions],
   );
 
-  return { croppedUrl, cropImage, size: targetDimensions, isLoading, error };
+  const resetCrop = () => {
+    setImgUrl("");
+    setTargetDimensions(null);
+    setCroppedUrl("");
+    setIsLoading(false);
+    setError(null);
+  };
+
+  return { croppedUrl, cropImage, size: targetDimensions, resetCrop, isLoading, error };
 }

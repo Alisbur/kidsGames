@@ -3,23 +3,23 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useReducer, useState } from "react";
 
-import { Example } from "../../components/Count/ui/example/example";
 import { useConfirm } from "../Modals/model/use-confirm";
 import { INIT_SETTINGS } from "./constants/init-settings";
-import styles from "./count.module.scss";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "./enums/can-modify-answer.enum";
 import { EXAMPLE_ACTIONS_ENUM } from "./enums/example-actions.enum";
 import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { examplesReducer } from "./helpers/examples-reducer";
 import { settingsReducer } from "./helpers/settings-reducer";
+import styles from "./mul-table.module.scss";
 import { TExample } from "./types/example.type";
 import { TExampleAction } from "./types/example-actions.type";
 import { TSettings } from "./types/settings.type";
 import { TSettingAction } from "./types/settings-actions.type";
-import { CountSettings } from "./ui/count-settings/count-settings";
+import { Example } from "./ui/example/example";
+import { MulTableSettings } from "./ui/mul-table-settings/mul-table-settings";
 import { Results } from "./ui/results/results";
 
-export function Count() {
+export function MulTable() {
   const [settings, settingsDispatch] = useReducer<
     (state: TSettings, action: TSettingAction) => TSettings
   >(settingsReducer, INIT_SETTINGS);
@@ -38,7 +38,7 @@ export function Count() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Решаем примеры
+              Таблица умножения
             </Typography>
           }
           mainContent={
@@ -73,7 +73,7 @@ export function Count() {
               Настройки
             </Typography>
           }
-          mainContent={<CountSettings settings={settings} setSettings={settingsDispatch} />}
+          mainContent={<MulTableSettings settings={settings} setSettings={settingsDispatch} />}
           mainContentScroll={true}
           mainDivider
           footerContent={
@@ -167,7 +167,9 @@ export function Count() {
         />
       );
     }
-    default:
-      return null;
+    default: {
+      const exhaustiveCheck: never = step;
+      throw new Error(`Exhaustive check failed ${exhaustiveCheck}`);
+    }
   }
 }

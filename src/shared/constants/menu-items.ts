@@ -20,6 +20,11 @@ export const MENU_ITEMS = [
     alias: "/count",
   },
   {
+    id: 21,
+    name: "Таблица умножения",
+    alias: "/mul-table",
+  },
+  {
     id: 8,
     name: "Решаем задачи",
     alias: "/tasks",

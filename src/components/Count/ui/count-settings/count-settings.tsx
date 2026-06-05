@@ -8,15 +8,13 @@ import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../../enums/can-modify-answer.en
 import { EXAMPLE_TYPES_ENUM } from "../../enums/example-types.enum";
 import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../enums/set-settings-actions.enum";
 import { TSettings } from "../../types/settings.type";
+import { TSettingAction } from "../../types/settings-actions.type";
 import { canModifyAnswerTypeGuard, exampleTypeGuard } from "../../types/typeguards";
 import styles from "./count-settings.module.scss";
 
 type TCountSettingsProps = {
   settings: TSettings;
-  setSettings: (value: {
-    type: ACTIONS;
-    payload: number | EXAMPLE_TYPES_ENUM | CAN_MODIFY_ANSWER_OPTIONS_ENUM;
-  }) => void;
+  setSettings: (value: TSettingAction) => void;
 };
 
 export const CountSettings: FC<TCountSettingsProps> = ({ settings, setSettings }) => {

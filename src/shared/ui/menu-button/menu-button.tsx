@@ -11,6 +11,7 @@ type MenuButtonProps = {
   className?: string;
   textClassName?: string;
   children?: ReactNode;
+  fullWidth?: boolean;
 } & HTMLAttributes<HTMLButtonElement>;
 
 export function MenuButton({
@@ -19,13 +20,14 @@ export function MenuButton({
   disabled = false,
   className,
   textClassName,
+  fullWidth = true,
   children,
   ...props
 }: MenuButtonProps) {
   return (
     <button
       type="button"
-      className={classNames(styles.button, className)}
+      className={classNames(styles.button, { [styles.button_fullWidth]: fullWidth }, className)}
       onClick={() => onClick()}
       disabled={disabled}
       {...props}

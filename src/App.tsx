@@ -8,6 +8,7 @@ import { BallsPage } from "./pages/Balls-page/Balls-page";
 import { ClockPage } from "./pages/Clock-page/Clock-page";
 import { CountPage } from "./pages/Count-page/Count-page";
 import { MenuPage } from "./pages/Menu-page/Menu-page";
+import { MulTablePage } from "./pages/Mul-table-page/Mul-table-page";
 // import { PjatnashkaPage } from "./pages/Pjatnashka-page/Pjatnashke-page";
 import { PjatnashkaPicPage } from "./pages/Pjatnashka-pic-page/Pjatnashka-pic-page";
 import { ShortStoriesPage } from "./pages/ShortStories-page/ShortStories-page";
@@ -58,6 +59,14 @@ function App() {
           element={
             <PageErrorBoundary>
               <CountPage />
+            </PageErrorBoundary>
+          }
+        />
+        <Route
+          path="/mul-table"
+          element={
+            <PageErrorBoundary>
+              <MulTablePage />
             </PageErrorBoundary>
           }
         />

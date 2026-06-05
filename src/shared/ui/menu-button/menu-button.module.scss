@@ -3,9 +3,8 @@
 @use "@styles/variables.scss" as *;
 
 .button {
-  width: 100%;
-  height: 50px;
   background-color: $normalBtn;
+  padding: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,9 +20,17 @@
     }
   }
 
+  &_fullWidth {
+    width: 100%;
+  }
+
   &:disabled {
     background-color: $disabledBtn;
     pointer-events: none;
+  }
+
+  &:active {
+    background-color: $inputCorrect;
   }
 }
 
@@ -34,28 +41,3 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-// .button {
-//   width: 100%;
-//   // height: 50px;
-//   padding: 10px 20px;
-//   font-size: 14px;
-//   font-weight: 600;
-//   cursor: pointer;
-//   background: linear-gradient(to bottom, $normalBtn, #9ba8f9);
-//   border: 1px solid #ccc;
-//   border-radius: 8px;
-//   color: #333;
-//   transition: all 0.2s;
-//   font-family: inherit;
-
-//   &:hover {
-//     background: linear-gradient(to bottom, #e8e8e8, #d8d8d8);
-//     transform: translateY(-1px);
-//     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-//   }
-
-//   &:active {
-//     transform: translateY(0);
-//   }
-// }

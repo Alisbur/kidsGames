@@ -144,7 +144,7 @@ export function Tasks() {
     }
     case STEP.END: {
       const total = tasks.length;
-      const solved = tasks.filter((e) => e.solved).length;
+      const solved = tasks.filter((e) => e.solved === "correct").length;
       const wrong = total - solved;
 
       return (

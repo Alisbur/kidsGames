@@ -146,7 +146,7 @@ export function MulTable() {
     }
     case STEP.END: {
       const total = examples.length;
-      const solved = examples.filter((e) => e.solved).length;
+      const solved = examples.filter((e) => e.solved === "correct").length;
       const wrong = total - solved;
 
       return (

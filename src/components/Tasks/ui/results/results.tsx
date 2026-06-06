@@ -41,13 +41,21 @@ export const Results: FC<TResultsProps> = ({ total, solved, wrong }) => {
       </div>
 
       {solved >= total * 0.9 ? (
-        <p className={classNames(styles.resultsItem__result, styles.resultsItem__result_good)}>
-          <Typography view={"p-20"} tag={"p"} weight={"semibold"} color={"success"}>
-            {solved === total ? "Отлично!!!" : "Почти получилось!"}
-          </Typography>
-        </p>
+        <Typography
+          view={"p-20"}
+          tag={"p"}
+          weight={"semibold"}
+          className={classNames(styles.resultsItem__result, styles.resultsItem__result_good)}
+        >
+          {solved === total ? "Отлично!!!" : "Почти получилось!"}
+        </Typography>
       ) : (
-        <Typography view={"p-20"} tag={"p"} weight={"semibold"} color={"error"}>
+        <Typography
+          view={"p-20"}
+          tag={"p"}
+          weight={"semibold"}
+          className={classNames(styles.resultsItem__result, styles.resultsItem__result_bad)}
+        >
           {"Надо ещё потренироваться."}
         </Typography>
       )}

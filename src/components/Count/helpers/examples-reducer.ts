@@ -25,7 +25,7 @@ export const examplesReducer = (state: TExample[], action: TExampleAction) => {
             const newExample: TExample = generateExample({
               limit,
               type: exampleType,
-              solved: false,
+              solved: null,
             });
             attempt++;
             if (isExampleUnique(examples, newExample) || attempt === MAX_ATTEMPTS) {
@@ -39,7 +39,7 @@ export const examplesReducer = (state: TExample[], action: TExampleAction) => {
     }
     case EXAMPLE_ACTIONS_ENUM.SET_SOLVED: {
       const newState = [...state];
-      newState[action.payload].solved = true;
+      newState[action.payload.idx].solved = action.payload.solution;
       return newState;
     }
     default: {

@@ -6,26 +6,32 @@ import { FC, useEffect, useRef, useState } from "react";
 
 import { OPERATION_SIGNS } from "../../constants/operation-signs";
 import { TExample } from "../../types/example.type";
+import { TSolution } from "../../types/solution.type";
 import styles from "./example.module.scss";
 
 type TExampleProps = {
   // type: EXAMPLE_TYPES_ENUM;
+  id: number;
   example: TExample;
-  setSolved: () => void;
+  setSolved: ({ id, solution }: { id: number; solution: TSolution }) => void;
   canModify?: boolean;
 };
 
-export const Example: FC<TExampleProps> = ({ example, canModify = true, setSolved }) => {
+export const Example: FC<TExampleProps> = ({ example, canModify = true, setSolved, id }) => {
   const [answer, setAnswer] = useState<number | null>(null);
   const [value, setValue] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [isConfirmButtonVisible, setIsConfirmButtonVisible] = useState(false);
 
   useEffect(() => {
-    if (answer !== null && answer === example.result && !example.solved) {
-      setSolved();
+    if (answer !== null) {
+      if (answer === example.result) {
+        setSolved({ id, solution: "correct" });
+      } else {
+        setSolved({ id, solution: "incorrect" });
+      }
     }
-  }, [answer, example.result, example.solved, setSolved]);
+  }, [answer, example.result, setSolved, id]);
 
   const handleAnswer = (value: string) => {
     const val = parseInt(value);
@@ -37,17 +43,20 @@ export const Example: FC<TExampleProps> = ({ example, canModify = true, setSolve
   return (
     <div
       onClick={() => {
-        if (!example.solved && (answer === null || (answer !== null && canModify))) {
+        if (!example.solved || (example.solved === "incorrect" && canModify)) {
           inputRef.current?.focus();
         }
       }}
       className={classNames(
         styles.wrapper,
-        { [styles.wrapper_incorrect]: answer !== null && !example.solved },
-        { [styles.wrapper_correct]: example.solved },
+        { [styles.wrapper_incorrect]: answer !== null && example.solved === "incorrect" },
+        { [styles.wrapper_correct]: example.solved && example.solved === "correct" },
       )}
       style={{
-        cursor: example.solved ? "auto" : canModify || answer === null ? "pointer" : "auto",
+        cursor:
+          example.solved === "correct" || (example.solved === "incorrect" && !canModify)
+            ? "auto"
+            : "pointer",
       }}
     >
       <div className={styles.example}>
@@ -61,7 +70,7 @@ export const Example: FC<TExampleProps> = ({ example, canModify = true, setSolve
           maxLength={example.result.toString().length}
           value={value}
           setValue={setValue}
-          disabled={example.solved}
+          disabled={(example.solved && !canModify) || example.solved === "correct"}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               handleAnswer(value);
@@ -78,8 +87,8 @@ export const Example: FC<TExampleProps> = ({ example, canModify = true, setSolve
             setIsConfirmButtonVisible(false);
           }}
           isCorrect={(() => {
-            if (example.solved) return true;
-            if (answer !== null && !example.solved) return false;
+            if (example.solved === "correct") return true;
+            if (example.solved === "incorrect") return false;
             return null;
           })()}
         />
@@ -98,13 +107,9 @@ export const Example: FC<TExampleProps> = ({ example, canModify = true, setSolve
           tag={"span"}
           weight={"semibold"}
           className={styles.hint}
-          color={example.solved ? "success" : "error"}
+          color={example.solved === "correct" ? "success" : "error"}
         >
-          {answer !== null && !example.solved
-            ? canModify
-              ? "Попробуй ещё"
-              : "Неверно"
-            : "Молодец!"}
+          {example.solved === "incorrect" ? (canModify ? "Попробуй ещё" : "Неверно") : "Молодец!"}
         </Typography>
       )}
     </div>

@@ -5,7 +5,9 @@ import { TASKS_ACTIONS_ENUM } from "../enums/tasks-actions.enum";
 import { TExtendedTask, TTask, TTaskActions as ACTIONS } from "../types/task.type";
 
 export const tasksReducer = (state: TExtendedTask[], action: ACTIONS) => {
-  switch (action.type) {
+  const actionType = action.type;
+
+  switch (actionType) {
     case TASKS_ACTIONS_ENUM.GENERATE_TASKS: {
       const { type, level, quantity } = action.payload;
       const filteredTasks = TASK_LIST.filter(
@@ -14,17 +16,24 @@ export const tasksReducer = (state: TExtendedTask[], action: ACTIONS) => {
       const taskList: TTask[] | null = getRandomItemsFromArray(filteredTasks, quantity);
       if (!taskList) return [];
 
-      const extendedTaskList = taskList.map((t) => ({ ...t, solved: false, result: null }));
+      const extendedTaskList: TExtendedTask[] = taskList.map((t) => ({
+        ...t,
+        solved: null,
+        result: null,
+      }));
       return extendedTaskList;
     }
     case TASKS_ACTIONS_ENUM.SET_SOLVED: {
-      if (action.payload < 0 || action.payload >= state.length) return state;
+      if (action.payload.idx < 0 || action.payload.idx >= state.length) return state;
       const newState = [...state];
-      newState[action.payload] = { ...newState[action.payload], solved: true };
+      newState[action.payload.idx] = {
+        ...newState[action.payload.idx],
+        solved: action.payload.solution,
+      };
       return newState;
     }
     default: {
-      const _exhaustiveCheck: never = action;
+      const _exhaustiveCheck: never = actionType;
       throw new Error(`Wrong action type ${_exhaustiveCheck}`);
     }
   }

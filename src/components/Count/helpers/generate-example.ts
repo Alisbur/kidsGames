@@ -1,14 +1,15 @@
 import { EXAMPLE_TYPES_ENUM } from "../enums/example-types.enum";
 import { TExample } from "../types/example.type";
+import { TSolution } from "../types/solution.type";
 
 export const generateExample = ({
   limit = 10,
   type = EXAMPLE_TYPES_ENUM.SUM,
-  solved = false,
+  solved = null,
 }: {
   limit?: number;
   type: EXAMPLE_TYPES_ENUM;
-  solved?: boolean;
+  solved?: TSolution;
 }): TExample => {
   switch (type) {
     case EXAMPLE_TYPES_ENUM.SUM: {

@@ -1,15 +1,18 @@
 import { PageContentLayout } from "@shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
-import { useReducer, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 
+import { useConfirm } from "../Modals/model/use-confirm";
 import { INIT_SETTINGS } from "./constants/init-settings";
+import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "./enums/can-modify-answer.enum";
 import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { TASKS_ACTIONS_ENUM } from "./enums/tasks-actions.enum";
 import { settingsReducer } from "./helpers/settings-reducer";
 import { tasksReducer } from "./helpers/tasks-reducer";
 import styles from "./tasks.module.scss";
 import { TSettings, TSettingsActions } from "./types/settings.type";
+import { TSolution } from "./types/solution.type";
 import { TExtendedTask, TTaskActions } from "./types/task.type";
 import { Results } from "./ui/results/results";
 import { Task } from "./ui/task/task";
@@ -24,7 +27,18 @@ export function Tasks() {
     (state: TExtendedTask[], action: TTaskActions) => TExtendedTask[]
   >(tasksReducer, []);
 
+  const { confirm } = useConfirm();
+
   const [step, setStep] = useState<STEP>(STEP.INIT);
+
+  const handleSetSolved = useCallback(
+    ({ id, solution }: { id: number; solution: TSolution }) =>
+      tasksDispatch({
+        type: TASKS_ACTIONS_ENUM.SET_SOLVED,
+        payload: { idx: id, solution: solution },
+      }),
+    [],
+  );
 
   switch (step) {
     case STEP.INIT:
@@ -91,14 +105,10 @@ export function Tasks() {
           mainContent={tasks.map((t, i) => (
             <Task
               key={i}
+              id={i}
               task={t}
-              setSolved={() =>
-                tasksDispatch({
-                  type: TASKS_ACTIONS_ENUM.SET_SOLVED,
-                  payload: i,
-                })
-              }
-              canModify={settings.canModifyAnswer}
+              setSolved={handleSetSolved}
+              canModify={settings.canModifyAnswer === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES}
             />
           ))}
           mainContentScroll
@@ -107,7 +117,26 @@ export function Tasks() {
             <MenuButton
               className={styles.button}
               text={"Завершить"}
-              onClick={() => setStep(STEP.END)}
+              onClick={async () => {
+                if (
+                  tasks.some(
+                    (e) =>
+                      e.solved === null ||
+                      (e.solved === "incorrect" &&
+                        settings.canModifyAnswer === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES),
+                  )
+                ) {
+                  const ans = await confirm({
+                    title: "Завершить?",
+                    content: "Некоторые примеры ещё не решены, точно выйти?",
+                  });
+                  if (ans) {
+                    setStep(STEP.END);
+                  }
+                } else {
+                  setStep(STEP.END);
+                }
+              }}
             />
           }
         />

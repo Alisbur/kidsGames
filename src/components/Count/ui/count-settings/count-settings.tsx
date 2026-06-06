@@ -21,9 +21,11 @@ export const CountSettings: FC<TCountSettingsProps> = ({ settings, setSettings }
   return (
     <div className={styles.wrapper}>
       <div className={styles.optionsBlock}>
-        <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
-          Типы действий
-        </Typography>
+        <div className={styles.optionsHeader}>
+          <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
+            Типы действий
+          </Typography>
+        </div>
         <div className={styles.options}>
           {Object.keys(EXAMPLE_TYPES_ENUM).map((t) =>
             exampleTypeGuard(t) ? (
@@ -46,9 +48,11 @@ export const CountSettings: FC<TCountSettingsProps> = ({ settings, setSettings }
       </div>
 
       <div className={styles.optionsBlock}>
-        <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
-          Максимальные значения
-        </Typography>
+        <div className={styles.optionsHeader}>
+          <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
+            Максимальные значения
+          </Typography>
+        </div>
 
         <div className={styles.options}>
           {LIMIT_VARIANTS.map((l) => (
@@ -70,9 +74,11 @@ export const CountSettings: FC<TCountSettingsProps> = ({ settings, setSettings }
       </div>
 
       <div className={styles.optionsBlock}>
-        <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
-          Количество примеров
-        </Typography>
+        <div className={styles.optionsHeader}>
+          <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
+            Количество примеров
+          </Typography>
+        </div>
 
         <div className={styles.options}>
           {QUANTITY_VARIANTS.map((q) => (
@@ -94,9 +100,11 @@ export const CountSettings: FC<TCountSettingsProps> = ({ settings, setSettings }
       </div>
 
       <div className={styles.optionsBlock}>
-        <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
-          Можно исправлять ответы
-        </Typography>
+        <div className={styles.optionsHeader}>
+          <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
+            Можно исправлять ответы
+          </Typography>
+        </div>
         <div className={styles.options}>
           {Object.keys(CAN_MODIFY_ANSWER_OPTIONS_ENUM).map((o) =>
             canModifyAnswerTypeGuard(o) ? (

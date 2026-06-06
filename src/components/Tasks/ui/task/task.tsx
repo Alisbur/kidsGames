@@ -1,54 +1,41 @@
+import { AnswerInput } from "@shared/ui/answer-input/answer-input";
+import { MenuButton } from "@shared/ui/menu-button/menu-button";
+import { Typography } from "@shared/ui/typography/typography";
 import classNames from "classnames";
 import { FC, useEffect, useRef, useState } from "react";
 
-import { AnswerInput } from "../../../../shared/ui/answer-input/answer-input";
-import { MenuButton } from "../../../../shared/ui/menu-button/menu-button";
-import { Typography } from "../../../../shared/ui/typography/typography";
-import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../../enums/can-modify-answer.enum";
+import { TSolution } from "../../types/solution.type";
 import { TExtendedTask } from "../../types/task.type";
 import styles from "./task.module.scss";
 
 type TTaskProps = {
+  id: number;
   task: TExtendedTask;
-  setSolved: () => void;
-  canModify?: CAN_MODIFY_ANSWER_OPTIONS_ENUM;
+  setSolved: ({ id, solution }: { id: number; solution: TSolution }) => void;
+  canModify?: boolean;
 };
 
-export const Task: FC<TTaskProps> = ({
-  task,
-  canModify = CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES,
-  setSolved,
-}) => {
+export const Task: FC<TTaskProps> = ({ id, task, canModify = true, setSolved }) => {
   const [answer, setAnswer] = useState<number | null>(null);
   const [value, setValue] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [isConfirmButtonVisible, setIsConfirmButtonVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  // useEffect(() => {
-  //   if (answer !== null && task.answer === answer && !task.solved) {
-  //     setSolved();
-  //   }
-  // }, [answer, task.solved, setSolved]);
-
   useEffect(() => {
     if (!inputRef.current) return;
 
-    if (
-      isFocused &&
-      !task.solved &&
-      (answer === null || (answer !== null && canModify === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES))
-    ) {
+    if (isFocused && !task.solved && (answer === null || (answer !== null && canModify))) {
       inputRef.current?.focus();
     }
   }, [isFocused]);
 
-  const handleAnswer = (value: string) => {
+  const handleAnswer = () => {
     const val = parseInt(value);
-    if (!isNaN(val)) {
-      setAnswer(val);
-      if (val === task.answer) setSolved();
-    }
+    if (isNaN(val)) return;
+    setAnswer(val);
+    if (val === task.answer) setSolved({ id, solution: "correct" });
+    else setSolved({ id, solution: "incorrect" });
   };
 
   return (
@@ -58,12 +45,12 @@ export const Task: FC<TTaskProps> = ({
       }}
       className={classNames(
         styles.wrapper,
-        { [styles.wrapper_incorrect]: answer !== null && !task.solved },
-        { [styles.wrapper_correct]: task.solved },
+        { [styles.wrapper_incorrect]: answer !== null && task.solved === "incorrect" },
+        { [styles.wrapper_correct]: task.solved && task.solved === "correct" },
       )}
       style={{
         cursor:
-          task.solved || (answer !== null && canModify === CAN_MODIFY_ANSWER_OPTIONS_ENUM.NO)
+          task.solved === "correct" || (task.solved === "incorrect" && !canModify)
             ? "auto"
             : "pointer",
       }}
@@ -79,9 +66,7 @@ export const Task: FC<TTaskProps> = ({
             maxLength={task.answer.toString().length}
             value={value}
             setValue={setValue}
-            disabled={
-              task.solved || (answer !== null && canModify === CAN_MODIFY_ANSWER_OPTIONS_ENUM.NO)
-            }
+            disabled={(task.solved && !canModify) || task.solved === "correct"}
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 inputRef.current?.blur();
@@ -92,14 +77,14 @@ export const Task: FC<TTaskProps> = ({
               setIsConfirmButtonVisible(true);
             }}
             onBlur={() => {
-              if (value) handleAnswer(value);
+              if (value) handleAnswer();
               else setValue(answer?.toString() ?? "");
               setIsConfirmButtonVisible(false);
               setIsFocused(false);
             }}
             isCorrect={(() => {
-              if (task.solved) return true;
-              if (answer !== null && !task.solved) return false;
+              if (task.solved === "correct") return true;
+              if (task.solved === "incorrect") return false;
               return null;
             })()}
           />
@@ -107,7 +92,7 @@ export const Task: FC<TTaskProps> = ({
           {isConfirmButtonVisible && (
             <MenuButton
               text={"Ответить"}
-              onClick={() => handleAnswer(value)}
+              onClick={handleAnswer}
               style={{ width: "fit-content", height: "40px", paddingInline: "16px" }}
             />
           )}
@@ -117,9 +102,9 @@ export const Task: FC<TTaskProps> = ({
               tag={"span"}
               weight={"semibold"}
               className={styles.hint}
-              color={task.solved ? "success" : "error"}
+              color={task.solved === "correct" ? "success" : "error"}
             >
-              {answer !== null && !task.solved ? "Попробуй ещё" : "Молодец!"}
+              {task.solved === "incorrect" ? (canModify ? "Попробуй ещё" : "Неверно") : "Молодец!"}
             </Typography>
           )}
         </div>

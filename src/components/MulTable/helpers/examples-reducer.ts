@@ -21,7 +21,7 @@ export const examplesReducer = (state: TExample[], action: TExampleAction) => {
             firstItem: bv,
             secondItem: i,
             type: exampleType,
-            solved: false,
+            solved: null,
             result: i * bv,
           };
           examples.push(newExample);
@@ -40,7 +40,7 @@ export const examplesReducer = (state: TExample[], action: TExampleAction) => {
     }
     case EXAMPLE_ACTIONS_ENUM.SET_SOLVED: {
       const newState = [...state];
-      newState[action.payload].solved = true;
+      newState[action.payload.idx].solved = action.payload.solution;
       return newState;
     }
     default: {

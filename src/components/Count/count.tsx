@@ -1,7 +1,7 @@
 import { PageContentLayout } from "@shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
-import { useReducer, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 
 import { Example } from "../../components/Count/ui/example/example";
 import { useConfirm } from "../Modals/model/use-confirm";
@@ -16,6 +16,7 @@ import { TExample } from "./types/example.type";
 import { TExampleAction } from "./types/example-actions.type";
 import { TSettings } from "./types/settings.type";
 import { TSettingAction } from "./types/settings-actions.type";
+import { TSolution } from "./types/solution.type";
 import { CountSettings } from "./ui/count-settings/count-settings";
 import { Results } from "./ui/results/results";
 
@@ -31,6 +32,15 @@ export function Count() {
   const { confirm } = useConfirm();
 
   const [step, setStep] = useState<STEP>(STEP.INIT);
+
+  const handleSetSolved = useCallback(
+    ({ id, solution }: { id: number; solution: TSolution }) =>
+      examplesDispatch({
+        type: EXAMPLE_ACTIONS_ENUM.SET_SOLVED,
+        payload: { idx: id, solution: solution },
+      }),
+    [],
+  );
 
   switch (step) {
     case STEP.INIT:
@@ -97,13 +107,9 @@ export function Count() {
           mainContent={examples.map((ex, i) => (
             <Example
               key={i}
+              id={i}
               example={ex}
-              setSolved={() =>
-                examplesDispatch({
-                  type: EXAMPLE_ACTIONS_ENUM.SET_SOLVED,
-                  payload: i,
-                })
-              }
+              setSolved={handleSetSolved}
               canModify={settings.canModifyAnswer === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES}
             />
           ))}
@@ -114,11 +120,22 @@ export function Count() {
               className={styles.button}
               text={"Завершить"}
               onClick={async () => {
-                const ans = await confirm({
-                  title: "Завершить?",
-                  content: "Некоторые примеры ещё не решены, точно выйти?",
-                });
-                if (ans) {
+                if (
+                  examples.some(
+                    (e) =>
+                      e.solved === null ||
+                      (e.solved === "incorrect" &&
+                        settings.canModifyAnswer === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES),
+                  )
+                ) {
+                  const ans = await confirm({
+                    title: "Завершить?",
+                    content: "Некоторые примеры ещё не решены, точно выйти?",
+                  });
+                  if (ans) {
+                    setStep(STEP.END);
+                  }
+                } else {
                   setStep(STEP.END);
                 }
               }}

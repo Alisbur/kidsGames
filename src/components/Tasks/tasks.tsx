@@ -3,6 +3,9 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useReducer, useState } from "react";
 
+import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
+import { TTaskSolution } from "@/shared/types/types";
+
 import { useConfirm } from "../Modals/model/use-confirm";
 import { INIT_SETTINGS } from "./constants/init-settings";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "./enums/can-modify-answer.enum";
@@ -12,7 +15,6 @@ import { settingsReducer } from "./helpers/settings-reducer";
 import { tasksReducer } from "./helpers/tasks-reducer";
 import styles from "./tasks.module.scss";
 import { TSettings, TSettingsActions } from "./types/settings.type";
-import { TSolution } from "./types/solution.type";
 import { TExtendedTask, TTaskActions } from "./types/task.type";
 import { Results } from "./ui/results/results";
 import { Task } from "./ui/task/task";
@@ -32,10 +34,10 @@ export function Tasks() {
   const [step, setStep] = useState<STEP>(STEP.INIT);
 
   const handleSetSolved = useCallback(
-    ({ id, solution }: { id: number; solution: TSolution }) =>
+    ({ id, solution }: { id: number; solution: TTaskSolution }) =>
       tasksDispatch({
         type: TASKS_ACTIONS_ENUM.SET_SOLVED,
-        payload: { idx: id, solution: solution },
+        payload: { id, solution },
       }),
     [],
   );
@@ -102,10 +104,10 @@ export function Tasks() {
               Реши задачи
             </Typography>
           }
-          mainContent={tasks.map((t, i) => (
+          mainContent={tasks.map((t) => (
             <Task
-              key={i}
-              id={i}
+              key={t.id}
+              id={t.id}
               task={t}
               setSolved={handleSetSolved}
               canModify={settings.canModifyAnswer === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES}
@@ -122,7 +124,7 @@ export function Tasks() {
                   tasks.some(
                     (e) =>
                       e.solved === null ||
-                      (e.solved === "incorrect" &&
+                      (e.solved === TASK_ITEM_SOLUTION_ENUM.INCORRECT &&
                         settings.canModifyAnswer === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES),
                   )
                 ) {
@@ -144,7 +146,7 @@ export function Tasks() {
     }
     case STEP.END: {
       const total = tasks.length;
-      const solved = tasks.filter((e) => e.solved === "correct").length;
+      const solved = tasks.filter((e) => e.solved === TASK_ITEM_SOLUTION_ENUM.CORRECT).length;
       const wrong = total - solved;
 
       return (

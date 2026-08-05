@@ -3,6 +3,9 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useReducer, useState } from "react";
 
+import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
+import { TTaskSolution } from "@/shared/types/types";
+
 import { useConfirm } from "../Modals/model/use-confirm";
 import { INIT_SETTINGS } from "./constants/init-settings";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "./enums/can-modify-answer.enum";
@@ -15,7 +18,6 @@ import { TExample } from "./types/example.type";
 import { TExampleAction } from "./types/example-actions.type";
 import { TSettings } from "./types/settings.type";
 import { TSettingAction } from "./types/settings-actions.type";
-import { TSolution } from "./types/solution.type";
 import { Example } from "./ui/example/example";
 import { MulTableSettings } from "./ui/mul-table-settings/mul-table-settings";
 import { Results } from "./ui/results/results";
@@ -34,7 +36,7 @@ export function MulTable() {
   const [step, setStep] = useState<STEP>(STEP.INIT);
 
   const handleSetSolved = useCallback(
-    ({ id, solution }: { id: number; solution: TSolution }) =>
+    ({ id, solution }: { id: number; solution: TTaskSolution }) =>
       examplesDispatch({
         type: EXAMPLE_ACTIONS_ENUM.SET_SOLVED,
         payload: { idx: id, solution: solution },
@@ -124,7 +126,7 @@ export function MulTable() {
                   examples.some(
                     (e) =>
                       e.solved === null ||
-                      (e.solved === "incorrect" &&
+                      (e.solved === TASK_ITEM_SOLUTION_ENUM.INCORRECT &&
                         settings.canModifyAnswer === CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES),
                   )
                 ) {
@@ -146,7 +148,7 @@ export function MulTable() {
     }
     case STEP.END: {
       const total = examples.length;
-      const solved = examples.filter((e) => e.solved === "correct").length;
+      const solved = examples.filter((e) => e.solved === TASK_ITEM_SOLUTION_ENUM.CORRECT).length;
       const wrong = total - solved;
 
       return (

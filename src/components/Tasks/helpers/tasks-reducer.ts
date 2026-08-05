@@ -24,12 +24,9 @@ export const tasksReducer = (state: TExtendedTask[], action: ACTIONS) => {
       return extendedTaskList;
     }
     case TASKS_ACTIONS_ENUM.SET_SOLVED: {
-      if (action.payload.idx < 0 || action.payload.idx >= state.length) return state;
-      const newState = [...state];
-      newState[action.payload.idx] = {
-        ...newState[action.payload.idx],
-        solved: action.payload.solution,
-      };
+      const newState = state.map((t) =>
+        t.id === action.payload.id ? { ...t, solved: action.payload.solution } : t,
+      );
       return newState;
     }
     default: {

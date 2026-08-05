@@ -8,26 +8,41 @@ type TAnswerInputProps = {
   maxLength?: number;
   value: string;
   setValue: (val: string) => void;
-  isCorrect: boolean | null;
+  isCorrect?: boolean | null;
   className?: string;
   borderColor?: string;
   disabled?: boolean;
+  inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export const AnswerInput = forwardRef<HTMLInputElement, TAnswerInputProps>(
   (
-    { value = "", setValue, maxLength, isCorrect = null, className, disabled = false, ...rest },
+    {
+      value = "",
+      setValue,
+      maxLength,
+      isCorrect = null,
+      className,
+      disabled = false,
+      inputMode = "numeric",
+      ...rest
+    },
     ref,
   ) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value === "" || !isNaN(parseInt(e.target.value))) {
+      if (inputMode === "numeric") {
+        if (e.target.value === "" || !isNaN(parseInt(e.target.value))) {
+          setValue(e.target.value);
+        }
+      }
+      if (inputMode === "text") {
         setValue(e.target.value);
       }
     };
 
     return (
       <input
-        inputMode="numeric"
+        inputMode={inputMode}
         maxLength={Math.max(maxLength || 0, 2) || undefined}
         type="text"
         value={value}

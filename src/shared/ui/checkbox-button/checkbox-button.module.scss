@@ -14,6 +14,7 @@
   place-content: center;
   position: relative;
   @include setFont(16px, $whiteText, 400, 120%, $font-raleway);
+  -webkit-tap-highlight-color: transparent;
 
   &_fullWidth {
     width: 100%;

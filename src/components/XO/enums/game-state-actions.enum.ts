@@ -1,0 +1,6 @@
+export enum GAME_STATE_ACTIONS_ENUM {
+  SET_STEP = "SET_STEP",
+  START = "START",
+  STOP = "STOP",
+  NEXT_TURN = "NEXT_TURN",
+}

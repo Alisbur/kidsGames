@@ -15,6 +15,7 @@ export const StoryList: FC<TStoryListProps> = ({ stories, selectStory }) => {
     <div className={styles.storyList}>
       {stories.map((s) => (
         <MenuButton
+          key={s.id}
           text={s.title}
           onClick={() => {
             selectStory(s.id);

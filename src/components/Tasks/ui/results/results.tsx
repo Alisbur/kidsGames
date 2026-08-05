@@ -15,7 +15,7 @@ export const Results: FC<TResultsProps> = ({ total, solved, wrong }) => {
     <div className={styles.wrapper}>
       <div className={styles.resultsItem}>
         <Typography view={"p-18"} tag={"p"} weight={"semibold"}>
-          Всего примеров:
+          Всего задач:
         </Typography>
         <Typography view={"p-44"} tag={"p"} weight={"semibold"}>
           {total}

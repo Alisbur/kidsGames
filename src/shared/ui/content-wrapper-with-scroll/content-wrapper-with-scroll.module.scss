@@ -43,9 +43,10 @@
   overflow-y: auto;
   width: 100%;
   scrollbar-gutter: stable;
+  padding-inline: 10px;
 
   &_overflowed {
-    padding-inline: 10px;
+    padding-right: 15px;
   }
 
   &::-webkit-scrollbar {

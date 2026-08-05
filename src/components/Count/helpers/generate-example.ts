@@ -1,6 +1,7 @@
+import { TTaskSolution } from "@/shared/types/types";
+
 import { EXAMPLE_TYPES_ENUM } from "../enums/example-types.enum";
 import { TExample } from "../types/example.type";
-import { TSolution } from "../types/solution.type";
 
 export const generateExample = ({
   limit = 10,
@@ -9,7 +10,7 @@ export const generateExample = ({
 }: {
   limit?: number;
   type: EXAMPLE_TYPES_ENUM;
-  solved?: TSolution;
+  solved?: TTaskSolution;
 }): TExample => {
   switch (type) {
     case EXAMPLE_TYPES_ENUM.SUM: {

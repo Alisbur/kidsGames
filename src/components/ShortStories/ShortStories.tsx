@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
@@ -12,31 +12,29 @@ import { StoryList } from "./ui/StoryList/StoryList";
 export const ShortStories = () => {
   const [selectedStory, setSelectedStory] = useState<number | null>(null);
 
-  const handleNextStory = () => {
+  const handleNextStory = useCallback(() => {
     if (selectedStory !== null) {
       setSelectedStory((prev) => prev! + 1);
     }
-  };
+  }, []);
 
-  const handlePrevStory = () => {
+  const handlePrevStory = useCallback(() => {
     if (selectedStory !== null) {
       setSelectedStory((prev) => prev! - 1);
     }
-  };
+  }, []);
 
-  const handleSelectStory = (id: number) => {
+  const handleSelectStory = useCallback((id: number) => {
     const storyIndex = SHORT_STORIES.findIndex((s) => s.id === id);
     if (storyIndex >= 0) {
       setSelectedStory(storyIndex);
     }
-  };
+  }, []);
 
-  const handleSelectRandomStory = () => {
+  const handleSelectRandomStory = useCallback(() => {
     const storyIndex = Math.floor(Math.random() * SHORT_STORIES.length);
-    if (storyIndex >= 0) {
-      setSelectedStory(storyIndex);
-    }
-  };
+    setSelectedStory(storyIndex);
+  }, []);
 
   if (selectedStory === null) {
     return (

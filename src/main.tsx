@@ -10,7 +10,7 @@ import { GlobalErrorBoundary } from "./components/ErrorBoundary/GlobalErrorBound
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <GlobalErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter basename="/kidsGames">
         <App />
       </BrowserRouter>
     </GlobalErrorBoundary>

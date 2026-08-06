@@ -163,6 +163,7 @@ export function XO() {
           }
           // mainContent={<BallsSettings settings={settings} setSettings={settingsDispatch} />}
           mainContent={<XOGameSettings setSettings={settingsDispatch} settings={settings} />}
+          mainContentScroll
           mainDivider
           footerContent={
             <MenuButton

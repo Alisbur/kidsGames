@@ -138,6 +138,7 @@ export const TaskItem: FC<TTaskItemProps> = ({
             ref={inputRef}
             maxLength={correctAnswer.toString().length + 2}
             value={value}
+            tabIndex={-1}
             setValue={setValue}
             disabled={(solved && !canModify) || solved === TASK_ITEM_SOLUTION_ENUM.CORRECT}
             inputMode={typeof correctAnswer === "number" ? "numeric" : "text"}

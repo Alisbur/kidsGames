@@ -1,8 +1,10 @@
+import { INIT_GAME_STATS } from "../constants/init-game-stats";
 import { GAME_STATE_ACTIONS_ENUM } from "../enums/game-state-actions.enum";
 import { GAME_STEPS } from "../enums/game-steps.enum";
 import { PLAYERS_ENUM } from "../enums/players.enum";
 import { TGameState } from "../types/game-state.type";
 import { TGameStateActions } from "../types/game-state-actions.type";
+import { TStats } from "../types/stats.type";
 
 export const gameStateReducer = (state: TGameState, action: TGameStateActions): TGameState => {
   const actionType = action.type;
@@ -32,6 +34,26 @@ export const gameStateReducer = (state: TGameState, action: TGameStateActions): 
       }
 
       return state;
+    }
+    case GAME_STATE_ACTIONS_ENUM.RESET_STATS: {
+      const newGameState: TGameState = {
+        ...state,
+        stats: INIT_GAME_STATS,
+      };
+      return newGameState;
+    }
+    case GAME_STATE_ACTIONS_ENUM.SET_WINNER: {
+      const newStats: TStats = { ...state.stats };
+      newStats.games += 1;
+      if (action.payload) {
+        if (action.payload === PLAYERS_ENUM.PLAYER_1) newStats.playerOneWins += 1;
+        else newStats.playerTwoWins += 1;
+      }
+      const newGameState: TGameState = {
+        ...state,
+        stats: newStats,
+      };
+      return newGameState;
     }
 
     default: {

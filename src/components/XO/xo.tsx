@@ -23,6 +23,7 @@ import { TGameState } from "./types/game-state.type";
 import { TGameStateActions } from "./types/game-state-actions.type";
 import { TXOSettings } from "./types/settings.type";
 import { XOField } from "./ui/game-field/game-field";
+import { Results } from "./ui/results/results";
 import { XOGameSettings } from "./ui/xo-game-settings/xo-game-settings";
 import styles from "./xo.module.scss";
 
@@ -52,6 +53,10 @@ export function XO() {
   useEffect(() => {
     if (fieldState.winner) {
       gameStateDispatch({ type: GAME_STATE_ACTIONS_ENUM.STOP });
+      gameStateDispatch({
+        type: GAME_STATE_ACTIONS_ENUM.SET_WINNER,
+        payload: fieldState.winner === "no" ? null : gameState.turn,
+      });
     }
   }, [fieldState.winner]);
 
@@ -116,6 +121,7 @@ export function XO() {
                     type: GAME_SETTINGS_ACTIONS_ENUM.SET_PLAYERS_TYPE,
                     payload: PLAYERS_TYPES_ENUM.SINGLE,
                   });
+                  gameStateDispatch({ type: GAME_STATE_ACTIONS_ENUM.RESET_STATS });
                   gameStateDispatch({
                     type: GAME_STATE_ACTIONS_ENUM.SET_STEP,
                     payload: GAME_STEPS.GAME,
@@ -131,6 +137,7 @@ export function XO() {
                     type: GAME_SETTINGS_ACTIONS_ENUM.SET_PLAYERS_TYPE,
                     payload: PLAYERS_TYPES_ENUM.MULTI,
                   });
+                  gameStateDispatch({ type: GAME_STATE_ACTIONS_ENUM.RESET_STATS });
                   gameStateDispatch({
                     type: GAME_STATE_ACTIONS_ENUM.SET_STEP,
                     payload: GAME_STEPS.GAME,
@@ -245,7 +252,13 @@ export function XO() {
               Результаты
             </Typography>
           }
-          mainContent={<>Тут будут результаты</>}
+          mainContent={
+            <Results
+              stats={gameState.stats}
+              player1={settings.PLAYER_1}
+              player2={settings.PLAYER_2}
+            />
+          }
           mainDivider
           footerContent={
             <div className={styles.actionBar}>
@@ -264,6 +277,7 @@ export function XO() {
                 className={styles.button}
                 text={"Ещё раз"}
                 onClick={() => {
+                  gameStateDispatch({ type: GAME_STATE_ACTIONS_ENUM.RESET_STATS });
                   gameStateDispatch({
                     type: GAME_STATE_ACTIONS_ENUM.SET_STEP,
                     payload: GAME_STEPS.GAME,

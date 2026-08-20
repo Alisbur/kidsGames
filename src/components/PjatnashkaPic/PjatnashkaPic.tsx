@@ -1,16 +1,16 @@
+import pics from "@assets/images";
+import { getRandomFromArray } from "@shared/helpers/get-random-from-array";
+import { useCroppedImage } from "@shared/hooks/use-cropped-image";
+import { PageContentLayout } from "@shared/layouts/page-content-layout/page-content-layout";
+import { MenuButton } from "@shared/ui/menu-button/menu-button";
+import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
-import pics from "@/assets/images";
-import { getRandomFromArray } from "@/shared/helpers/get-random-from-array";
-import { useCroppedImage } from "@/shared/hooks/use-cropped-image";
-
-import { PageContentLayout } from "../../shared/layouts/page-content-layout/page-content-layout";
-import { MenuButton } from "../../shared/ui/menu-button/menu-button";
-import { Typography } from "../../shared/ui/typography/typography";
 import { useConfirm } from "../Modals/model/use-confirm";
 import { useModals } from "../Modals/model/use-modals";
 import { INIT_SETTINGS } from "./constants/init-settings";
 import { GAME_ACTIONS_ENUM } from "./enums/game-actions.enum";
+import { GAME_SETTINGS_ACTIONS_ENUM } from "./enums/game-settings-actions.enum";
 import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { GAME_TYPES_ENUM } from "./enums/game-types.enum";
 import { fieldStateReducer } from "./helpers/field-state-reducer";
@@ -63,15 +63,31 @@ export function PjatnashkaPic() {
   }, [imgUrl, cropImage]);
 
   const initNewGame = useCallback(() => {
+    settingsDispatch({
+      type: GAME_SETTINGS_ACTIONS_ENUM.SET_GAME_TYPE,
+      payload: GAME_TYPES_ENUM.NUMBERS,
+    });
     setIsShuffleDone(false);
-    resetCrop();
-    if (settings.gameType === GAME_TYPES_ENUM.PICTURE) setImageUrl(getRandomFromArray(BG_IMAGES));
-    else setImageUrl(null);
+    setImageUrl(null);
     fieldStateDispatch({
       type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
       payload: settings,
     });
+    setStep(STEP.GAME);
+  }, [resetCrop, settings]);
 
+  const initNewGameWithPic = useCallback(() => {
+    settingsDispatch({
+      type: GAME_SETTINGS_ACTIONS_ENUM.SET_GAME_TYPE,
+      payload: GAME_TYPES_ENUM.PICTURE,
+    });
+    resetCrop();
+    setImageUrl(getRandomFromArray(BG_IMAGES));
+    setIsShuffleDone(false);
+    fieldStateDispatch({
+      type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
+      payload: settings,
+    });
     setStep(STEP.GAME);
   }, [settings]);
 
@@ -87,7 +103,12 @@ export function PjatnashkaPic() {
           mainContentScroll={false}
           mainContent={
             <>
-              <MenuButton className={styles.button} text={"Играть"} onClick={initNewGame} />
+              <MenuButton className={styles.button} text={"Игра с цифрами"} onClick={initNewGame} />
+              <MenuButton
+                className={styles.button}
+                text={"Игра с картинкой"}
+                onClick={initNewGameWithPic}
+              />
 
               <MenuButton
                 className={styles.button}

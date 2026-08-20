@@ -15,10 +15,15 @@ import { ShortStoriesPage } from "./pages/ShortStories-page/ShortStories-page";
 import { TasksPage } from "./pages/Tasks-page/Tasks-page";
 import { WordsPage } from "./pages/Words-page/Words-page";
 import { XOPage } from "./pages/XO-page/XO-page";
+import { useScreenOrientation } from "./shared/hooks/use-screen-orientation";
+import { OrientationBlocker } from "./shared/ui/orientation-blocker/orientation-blocker";
 
 function App() {
+  const orientation = useScreenOrientation();
+
   return (
     <div className={styles.App}>
+      <OrientationBlocker orientation={orientation} />
       <Header />
       <Routes>
         <Route path="/" element={<MenuPage />} />

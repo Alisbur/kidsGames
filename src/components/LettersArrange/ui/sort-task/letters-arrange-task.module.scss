@@ -1,0 +1,36 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.game {
+  max-width: 720px;
+  width: 100%;
+  // margin: 40px auto;
+  // padding: 24px;
+
+  // font-family: system-ui, sans-serif;
+  color: $color-text;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 28px;
+}
+
+.hint {
+  text-align: center;
+  margin-bottom: 24px;
+  color: $color-text-muted;
+  font-size: 15px;
+}
+
+.message {
+  text-align: center;
+  margin-top: 16px;
+  font-weight: 600;
+}
+
+.ok   { color: $color-ok; }
+.err  { color: $color-err; }
+.info { color: $color-info; }

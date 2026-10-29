@@ -78,6 +78,10 @@
     color: $inputIncorrect;
   }
 
+  &_muted {
+    color: $color-text-muted;
+  }  
+
   &_normal {
     @include setFont($weight: $fw-400);
   }

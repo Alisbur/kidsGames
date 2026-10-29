@@ -6,6 +6,8 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
+
 import { useConfirm } from "../Modals/model/use-confirm";
 import { useModals } from "../Modals/model/use-modals";
 import { INIT_SETTINGS } from "./constants/init-settings";
@@ -144,12 +146,17 @@ export function PjatnashkaPic() {
     case STEP.GAME: {
       return (
         <PageContentLayout
+          withMainHeader={false}
           headerContent={
-            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
-              {settings.gameType === GAME_TYPES_ENUM.NUMBERS && "Расставь числа по порядку"}
-              {settings.gameType === GAME_TYPES_ENUM.PICTURE && "Собери картинку"}
-            </Typography>
+            <PageContentLayoutGameHeader
+              title={
+                (settings.gameType === GAME_TYPES_ENUM.NUMBERS && "Расставь числа по порядку") ||
+                (settings.gameType === GAME_TYPES_ENUM.PICTURE && "Собери картинку") ||
+                "Пятнашка"
+              }
+            />
           }
+          headerDivider
           mainContent={
             <GameField
               settings={settings}
@@ -174,7 +181,8 @@ export function PjatnashkaPic() {
               {!isShuffleDone ? (
                 <MenuButton
                   className={styles.button}
-                  text={"Перемешать"}
+                  text={isShuffleRunning ? "Перемешиваю..." : "Начать"}
+                  color={"accent"}
                   onClick={() => setShuffleIsRunning(true)}
                   disabled={isShuffleRunning}
                 />

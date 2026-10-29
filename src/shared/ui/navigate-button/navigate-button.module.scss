@@ -25,6 +25,10 @@
     background-color: $disabledBtn;
     pointer-events: none;
   }
+
+    &:active {
+    background-color: $activeBtn;
+  }
 }
 
 .buttonText {

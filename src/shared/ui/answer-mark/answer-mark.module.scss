@@ -1,0 +1,19 @@
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #ffffff;
+
+  transition: background-color .15s ease;
+}
+
+.yes {
+  background-color: #16a34a; // зелёный
+}
+
+.no {
+  background-color: #dc2626; // красный
+}

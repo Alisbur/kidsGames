@@ -10,7 +10,7 @@ export const OPERATION_VARIANTS: EXAMPLE_TYPES_ENUM[] = [
 
 export const QUANTITY_VARIANTS = [5, 10, 15, 25]; // Не используется
 
-export const LIMIT_VARIANTS = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+export const LIMIT_VARIANTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export const BASE_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

@@ -15,9 +15,10 @@ export type TextProps = {
   /** Контент */
   children: React.ReactNode;
   /** Цвет */
-  color?: "primary" | "secondary" | "accent" | "success" | "error";
+  color?: "primary" | "secondary" | "accent" | "success" | "error" | "muted";
   /** Максимальное кол-во строк */
   maxLines?: number;
+  size?: number;
 };
 
 export const Typography: React.FC<TextProps> = ({
@@ -28,10 +29,12 @@ export const Typography: React.FC<TextProps> = ({
   children,
   color,
   maxLines,
+  size,
 }) => {
   const Element = tag;
   let isClamped = false;
-  let extraStyles: { [key: string]: string } = {};
+  // let extraStyles: { [key: string]: string } = size
+  let extraStyles: React.CSSProperties = size ? { fontSize: size ? `${size}px` : undefined } : {};
 
   if (maxLines !== undefined && typeof maxLines === "number") {
     extraStyles = { ...extraStyles, WebkitLineClamp: maxLines.toString() };

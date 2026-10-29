@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 import { Typography } from "@/shared/ui/typography/typography";
 
 import { MenuButton } from "../../shared/ui/menu-button/menu-button";
@@ -168,7 +169,6 @@ export function XO() {
               Настройки
             </Typography>
           }
-          // mainContent={<BallsSettings settings={settings} setSettings={settingsDispatch} />}
           mainContent={<XOGameSettings setSettings={settingsDispatch} settings={settings} />}
           mainContentScroll
           mainDivider
@@ -189,11 +189,19 @@ export function XO() {
     case GAME_STEPS.GAME: {
       return (
         <PageContentLayout
+          withMainHeader={false}
           headerContent={
-            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
-              Попробуй выиграть
-            </Typography>
+            <PageContentLayoutGameHeader
+              title={
+                (settings.playersType === PLAYERS_TYPES_ENUM.MULTI &&
+                  "Кто сильнее в Крестики-нолики?") ||
+                (settings.playersType === PLAYERS_TYPES_ENUM.SINGLE &&
+                  "Попробуй выиграть у компьютера") ||
+                "Крестики нолики"
+              }
+            />
           }
+          headerDivider
           mainContent={
             <XOField
               fieldState={fieldState}

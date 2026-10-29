@@ -1,7 +1,7 @@
+import { CheckBoxButton } from "@shared/ui/checkbox-button/checkbox-button";
+import { Typography } from "@shared/ui/typography/typography";
 import { FC } from "react";
 
-import { CheckBoxButton } from "../../../../shared/ui/checkbox-button/checkbox-button";
-import { Typography } from "../../../../shared/ui/typography/typography";
 import { CAN_MODIFY_ANSWER_NAMES, OPERATION_NAMES } from "../../constants/option-names";
 import { LIMIT_VARIANTS, QUANTITY_VARIANTS } from "../../constants/settings-options";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../../enums/can-modify-answer.enum";

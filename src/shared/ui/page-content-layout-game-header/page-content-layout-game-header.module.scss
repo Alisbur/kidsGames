@@ -1,0 +1,19 @@
+@use "@styles/" as *;
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: $gap-s;
+  padding: 32px 16px 24px 16px;
+}
+
+.title {
+  text-align: center;
+  line-height: 1.1;
+}
+
+.subtitle {
+  text-align: center;
+}

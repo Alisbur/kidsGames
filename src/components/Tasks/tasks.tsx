@@ -5,6 +5,7 @@ import { useCallback, useReducer, useState } from "react";
 
 import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
 import { TTaskSolution } from "@/shared/types/types";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
 import { useConfirm } from "../Modals/model/use-confirm";
 import { INIT_SETTINGS } from "./constants/init-settings";
@@ -99,11 +100,9 @@ export function Tasks() {
     case STEP.GAME: {
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
-              Реши задачи
-            </Typography>
-          }
+          withMainHeader={false}
+          headerContent={<PageContentLayoutGameHeader title={"Реши задачи"} />}
+          headerDivider
           mainContent={tasks.map((t) => (
             <Task
               key={t.id}

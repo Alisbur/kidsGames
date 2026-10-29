@@ -1,0 +1,26 @@
+@use "@styles/" as *;
+
+.wrapper {
+  width: 100%;
+  border: 2px dashed transparent;
+  border-radius: $radius-pool;
+}
+
+.pool {
+  width: 100%;
+  display: flex;
+  min-width: fit-content;
+  flex: 0 0 auto;
+  gap: $gap;
+  justify-content: flex-start;
+  padding: 16px;
+  background: $color-surface-alt;
+  transition:
+    background $t-fast,
+    border-color $t-fast;
+}
+
+.over {
+  background: $color-primary-soft;
+  border-color: $color-primary;
+}

@@ -3,6 +3,8 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useEffect, useReducer, useState } from "react";
 
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
+
 import { useConfirm } from "../Modals/model/use-confirm";
 import styles from "./balls.module.scss";
 import { FIELD_OPTIONS_SIZES } from "./config/field-options";
@@ -47,11 +49,6 @@ export function Balls() {
     case STEP.INIT:
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Шарики
-            </Typography>
-          }
           mainContent={
             <>
               <MenuButton
@@ -96,11 +93,14 @@ export function Balls() {
     case STEP.GAME: {
       return (
         <PageContentLayout
+          withMainHeader={false}
           headerContent={
-            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
-              Расставь шарики в столбики по цветам
-            </Typography>
+            <PageContentLayoutGameHeader
+              title={`Головоломка "Светофор"`}
+              subtitle={"Собери шарики одного цвета в столбцы"}
+            />
           }
+          headerDivider
           mainContent={
             fieldState.fieldState.length && (
               <GameField

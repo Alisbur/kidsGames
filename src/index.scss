@@ -12,5 +12,8 @@ body {
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
-  overscroll-behavior-y: contain;
+  max-height: 100svh;
+  // max-height: 100svh;
+  // overscroll-behavior-y: contain;
+  overflow: hidden;
 }

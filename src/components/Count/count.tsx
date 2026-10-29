@@ -5,6 +5,7 @@ import { useCallback, useReducer, useState } from "react";
 
 import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
 import { TTaskSolution } from "@/shared/types/types";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
 import { Example } from "../../components/Count/ui/example/example";
 import { useConfirm } from "../Modals/model/use-confirm";
@@ -101,11 +102,9 @@ export function Count() {
     case STEP.GAME: {
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"subtitle"} tag={"h3"} weight={"semibold"} color={"primary"}>
-              Реши примеры
-            </Typography>
-          }
+          withMainHeader={false}
+          headerContent={<PageContentLayoutGameHeader title={"Реши примеры"} />}
+          headerDivider
           mainContent={examples.map((ex, i) => (
             <Example
               key={i}

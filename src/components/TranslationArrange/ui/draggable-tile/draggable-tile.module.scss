@@ -1,0 +1,44 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.tile {
+  height: fit-content;
+  min-width: fit-content;
+  // min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  background:$color-surface;
+  border: 2px solid $color-border;
+  border-radius: 8px;
+  cursor: grab;
+
+  box-shadow:$shadow-tile;
+  transition:
+    box-shadow$t-fast,
+    border-color$t-fast,
+    opacity$t-fast,
+    scale;
+  // touch-action: manipulation;
+  // touch-action: none;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.dragging {
+  opacity: 0.35;
+  touch-action: "none";
+}
+
+.overlay {
+  cursor: grabbing;
+  border-color:$color-primary;
+  box-shadow:$shadow-tile-drag;
+  transform: scale(1.2);
+}

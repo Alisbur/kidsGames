@@ -1,0 +1,27 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+
+.slot {
+  width: $slot-size;
+  height: $slot-size;
+  display: grid;
+  place-items: center;
+
+  background: $color-bg;
+  border: 2px dashed $color-border;
+  border-radius: $radius-slot;
+
+  transition: background $t-fast, border-color $t-fast;
+}
+
+.filled {
+  border-style: solid;
+  border-color: $color-primary;
+}
+
+.over {
+  background: $color-primary-soft;
+  border-color: $color-primary;
+}

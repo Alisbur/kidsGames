@@ -1,5 +1,6 @@
-import classNames from "classnames";
 import { FC } from "react";
+
+import { RatingStarsComponent } from "@/shared/ui/rating-stars-component/rating-stars-component";
 
 import { Typography } from "../../../../shared/ui/typography/typography";
 import styles from "./results.module.scss";
@@ -40,25 +41,7 @@ export const Results: FC<TResultsProps> = ({ total, solved, wrong }) => {
         </Typography>
       </div>
 
-      {solved >= total * 0.9 ? (
-        <Typography
-          view={"p-20"}
-          tag={"p"}
-          weight={"semibold"}
-          className={classNames(styles.resultsItem__result, styles.resultsItem__result_good)}
-        >
-          {solved === total ? "Отлично!!!" : "Почти получилось!"}
-        </Typography>
-      ) : (
-        <Typography
-          view={"p-20"}
-          tag={"p"}
-          weight={"semibold"}
-          className={classNames(styles.resultsItem__result, styles.resultsItem__result_bad)}
-        >
-          {"Надо ещё потренироваться."}
-        </Typography>
-      )}
+      <RatingStarsComponent rating={(3 * solved) / total} size={"l"} />
     </div>
   );
 };

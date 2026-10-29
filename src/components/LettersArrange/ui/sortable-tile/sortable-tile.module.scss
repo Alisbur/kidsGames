@@ -1,0 +1,50 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.tile {
+  flex: 0 0 auto;
+
+  min-width: $min-tile-size;
+  min-height: $min-tile-size;
+  display: grid;
+  place-items: center;
+
+  background: $color-surface;
+  border: 2px solid $color-border;
+  border-radius: $radius-tile;
+
+  // font-size: ;
+  font-weight: 700;
+  color: $color-text;
+  cursor: grab;
+
+  // Объёмный «кубик»: нижняя грань + мягкая тень снизу.
+  box-shadow:
+    0 2px 0 $color-border,
+    0 4px 10px rgba(0, 0, 0, 0.08);
+
+  // Ключевое для тача: браузер не начнёт скроллить, пока тащим кубик.
+  touch-action: none;
+  user-select: none;
+  will-change: transform;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// Источник драга невидим — рисуем копию в DragOverlay.
+.dragging {
+  opacity: 0;
+}
+
+// Летящая копия.
+.overlay {
+  cursor: grabbing;
+  border-color: $color-primary;
+  box-shadow:
+    0 2px 0 $color-primary,
+    0 14px 28px rgba(99, 102, 241, 0.4);
+  transform: scale(1.2) rotate(-3deg);
+}

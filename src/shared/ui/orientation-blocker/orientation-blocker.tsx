@@ -8,7 +8,7 @@ interface OrientationBlockerProps {
 }
 
 export const OrientationBlocker: React.FC<OrientationBlockerProps> = ({ orientation }) => {
-  if (orientation === "portrait") return null;
+  if (orientation !== "landscape") return null;
 
   return (
     <div className={styles.overlay}>

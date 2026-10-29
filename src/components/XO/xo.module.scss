@@ -1,6 +1,4 @@
-@use "@styles/colors.scss" as c;
-@use "@styles/mixins.scss" as m;
-@use "@styles/variables.scss" as v;
+@use "@styles/" as *;
 
 .container {
   width: 100%;
@@ -13,7 +11,7 @@
 }
 
 .turnData {
-  @include m.setFont(24px, c.$textGreen, 600, 120%, v.$font-raleway);
+  @include setFont(24px, $textGreen, 600, 120%, $font-raleway);
   display: flex;
   width: 100%;
   align-items: center;
@@ -26,4 +24,10 @@
   width: 100%;
   column-gap: 16px;
   align-items: center;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.1;
 }

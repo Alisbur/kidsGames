@@ -10,43 +10,63 @@ export const MENU_ITEMS = [
     alias: "/words",
   },
   {
-    id: 6,
+    id: 2,
     name: "Читать истории",
     alias: "/stories",
   },
   {
-    id: 2,
+    id: 3,
     name: "Решаем примеры",
     alias: "/count",
   },
   {
-    id: 21,
+    id: 4,
     name: "Таблица умножения",
     alias: "/mul-table",
   },
   {
-    id: 8,
+    id: 5,
     name: "Решаем задачи",
     alias: "/tasks",
   },
   {
-    id: 3,
+    id: 6,
     name: "Крестики-нолики",
     alias: "/xo",
   },
   {
-    id: 4,
+    id: 7,
     name: 'Головоломка "Пятнашка"',
     alias: "/pjatnashka-pic",
   },
   {
-    id: 5,
+    id: 8,
     name: 'Головоломка "Светофор"',
     alias: "/balls",
   },
   {
-    id: 7,
+    id: 9,
     name: "Часы",
     alias: "/clock",
+  },
+  {
+    id: 10,
+    name: "Буквы",
+    alias: "/letters",
+  },
+  {
+    id: 11,
+    name: "Расставь слова",
+    alias: "/words-arrange",
+  },
+  {
+    id: 12,
+    name: "Собери слова",
+    alias: "/letters-arrange",
+  },
+  {
+    id: 13,
+    name: "Собери примеры",
+    alias: "/nums-arrange",
   },
 ];

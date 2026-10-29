@@ -1,0 +1,45 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.tile {
+  width:$tile-size;
+  height:$tile-size;
+  display: grid;
+  place-items: center;
+
+  background:$color-surface;
+  border: 2px solid$color-border;
+  border-radius:$radius-tile;
+
+  font-size: 28px;
+  font-weight: 600;
+  color:$color-text;
+  cursor: grab;
+
+  box-shadow:$shadow-tile;
+  transition:
+    box-shadow$t-fast,
+    border-color$t-fast,
+    opacity$t-fast;
+
+  // КЛЮЧЕВОЕ для тач-устройств: не даём браузеру начать скролл,
+  // когда палец ведёт плитку.
+  touch-action: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// Источник, пока его тащат, — полупрозрачный.
+.dragging {
+  opacity: 0.35;
+}
+
+// Копия, которая рисуется в DragOverlay.
+.overlay {
+  cursor: grabbing;
+  border-color:$color-primary;
+  box-shadow:$shadow-tile-drag;
+}

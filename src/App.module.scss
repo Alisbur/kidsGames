@@ -1,11 +1,11 @@
-@use '@styles/colors.scss' as *;
+@use '@styles/' as *;
 
 .App {
   width: 100%;
   position: relative;
-  max-width: 600px;
-  height: 100dvh;
-  max-height: 100dvh;
+  max-width: $app-max-width;
+  height: 100svh;
+  max-height: $app-max-height;
   margin: 0 auto;
   padding: 10px 20px;
   overflow-x: hidden;

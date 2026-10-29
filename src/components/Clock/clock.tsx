@@ -1,6 +1,9 @@
 import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
+import { Instruction } from "@/shared/ui/instruction/instruction";
+
 import styles from "./clock.module.scss";
 import { isNight } from "./helpers/helpers";
 import { ClockFace } from "./ui/clock-face/clock-face";
@@ -68,89 +71,96 @@ export const AnalogClock = ({ initialTime = new Date() }) => {
   );
 
   return (
-    <div className={styles.clock}>
-      <SkyBackground time={time} />
-      <div
-        className={classNames(styles.clock__digital, {
-          [styles.clock__digital_night]: isNight(time),
-        })}
-      >
-        {String(time.hours).padStart(2, "0")}:{String(time.minutes).padStart(2, "0")}
-      </div>
-      <ClockFace ref={clockRef} time={time} showMinutes={showMinutes}>
-        <HourHand
-          time={time}
-          setTime={setTime}
-          setManualMode={setIsManualMode}
-          getAngleFromClockFaceCenter={(clientX: number, clientY: number) =>
-            getAngleFromCenter(clientX, clientY)
-          }
-        />
-        <div className={styles.clock__centerDot} />
+    <PageContentLayout
+      mainContent={
+        <div className={styles.clock}>
+          <SkyBackground time={time} />
+          <div
+            className={classNames(styles.clock__digital, {
+              [styles.clock__digital_night]: isNight(time),
+            })}
+          >
+            {String(time.hours).padStart(2, "0")}:{String(time.minutes).padStart(2, "0")}
+          </div>
+          <ClockFace ref={clockRef} time={time} showMinutes={showMinutes}>
+            <HourHand
+              time={time}
+              setTime={setTime}
+              setManualMode={setIsManualMode}
+              getAngleFromClockFaceCenter={(clientX: number, clientY: number) =>
+                getAngleFromCenter(clientX, clientY)
+              }
+            />
+            <div className={styles.clock__centerDot} />
 
-        <MinuteHand
-          time={time}
-          setTime={setTime}
-          setManualMode={setIsManualMode}
-          setShowMinutes={setShowMinutes}
-          getAngleFromClockFaceCenter={(clientX: number, clientY: number) =>
-            getAngleFromCenter(clientX, clientY)
-          }
-        />
-      </ClockFace>
+            <MinuteHand
+              time={time}
+              setTime={setTime}
+              setManualMode={setIsManualMode}
+              setShowMinutes={setShowMinutes}
+              getAngleFromClockFaceCenter={(clientX: number, clientY: number) =>
+                getAngleFromCenter(clientX, clientY)
+              }
+            />
+          </ClockFace>
 
-      <div className={styles.clock__controls}>
-        <button
-          onClick={() => {
-            setTime({ ...time, hours: time.hours === 0 ? 23 : time.hours - 1 });
-          }}
-          className={styles.clock__button}
-        >
-          -1 час
-        </button>
+          <Instruction
+            hint={
+              "Перетащите красный кружок на конце минутной стрелки или синий на конце часовой, чтобы изменить время"
+            }
+            centered
+          />
+        </div>
+      }
+      footerContent={
+        <div className={styles.clock__controls}>
+          <button
+            onClick={() => {
+              setTime({ ...time, hours: time.hours === 0 ? 23 : time.hours - 1 });
+            }}
+            className={styles.clock__button}
+          >
+            -1 час
+          </button>
 
-        <button
-          onClick={() => {
-            const totalMinutes = time.hours * 60 + time.minutes - 1;
-            let newHours = Math.floor(totalMinutes / 60);
-            let newMinutes = totalMinutes % 60;
-            if (newHours < 0) newHours = 23;
-            if (newMinutes < 0) newMinutes = 59;
-            setTime({ hours: newHours, minutes: newMinutes });
-          }}
-          className={styles.clock__button}
-        >
-          -1 мин
-        </button>
-        <button onClick={handleResetTime} className={styles.clock__button}>
-          Сброс
-        </button>
-        <button
-          onClick={() => {
-            const totalMinutes = time.hours * 60 + time.minutes + 1;
-            let newHours = Math.floor(totalMinutes / 60);
-            const newMinutes = totalMinutes % 60;
-            if (newHours >= 24) newHours = 0;
-            setTime({ hours: newHours, minutes: newMinutes });
-          }}
-          className={styles.clock__button}
-        >
-          +1 мин
-        </button>
-        <button
-          onClick={() => {
-            setTime({ ...time, hours: time.hours === 23 ? 0 : time.hours + 1 });
-          }}
-          className={styles.clock__button}
-        >
-          +1 час
-        </button>
-      </div>
-
-      <div className={styles.clock__instruction}>
-        💡 Перетащите красный кружок на конце минутной стрелки или синий на конце часовой, чтобы
-        изменить время
-      </div>
-    </div>
+          <button
+            onClick={() => {
+              const totalMinutes = time.hours * 60 + time.minutes - 1;
+              let newHours = Math.floor(totalMinutes / 60);
+              let newMinutes = totalMinutes % 60;
+              if (newHours < 0) newHours = 23;
+              if (newMinutes < 0) newMinutes = 59;
+              setTime({ hours: newHours, minutes: newMinutes });
+            }}
+            className={styles.clock__button}
+          >
+            -1 мин
+          </button>
+          <button onClick={handleResetTime} className={styles.clock__button}>
+            Сброс
+          </button>
+          <button
+            onClick={() => {
+              const totalMinutes = time.hours * 60 + time.minutes + 1;
+              let newHours = Math.floor(totalMinutes / 60);
+              const newMinutes = totalMinutes % 60;
+              if (newHours >= 24) newHours = 0;
+              setTime({ hours: newHours, minutes: newMinutes });
+            }}
+            className={styles.clock__button}
+          >
+            +1 мин
+          </button>
+          <button
+            onClick={() => {
+              setTime({ ...time, hours: time.hours === 23 ? 0 : time.hours + 1 });
+            }}
+            className={styles.clock__button}
+          >
+            +1 час
+          </button>
+        </div>
+      }
+    />
   );
 };

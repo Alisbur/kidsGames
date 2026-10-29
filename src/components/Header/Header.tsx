@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { Typography } from "@/shared/ui/typography/typography";
+
 import { MENU_ITEMS } from "../../shared/constants/menu-items";
 import { Divider } from "../../shared/ui/divider/divider";
 import { NavigateButton } from "../../shared/ui/navigate-button/navigate-button";
@@ -28,9 +30,9 @@ export function Header() {
     <header className={styles.container}>
       <div className={styles.content}>
         <NavigateButton type="back" onClick={async () => await handleRedirect()} />
-        <h1 className={styles.title}>
+        <Typography view={"title"} tag={"h1"} className={styles.title}>
           {MENU_ITEMS.find((item) => item.alias === location.pathname)?.name}
-        </h1>
+        </Typography>
       </div>
       <Divider />
     </header>

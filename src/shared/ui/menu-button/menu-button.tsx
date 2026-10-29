@@ -12,6 +12,7 @@ type MenuButtonProps = {
   textClassName?: string;
   children?: ReactNode;
   fullWidth?: boolean;
+  color?: "normal" | "accent" | "error";
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
@@ -23,6 +24,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
       className,
       textClassName,
       fullWidth = true,
+      color = "normal",
       children,
       ...props
     },
@@ -32,7 +34,12 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
       <button
         type="button"
         ref={ref}
-        className={classNames(styles.button, { [styles.button_fullWidth]: fullWidth }, className)}
+        className={classNames(
+          styles.button,
+          styles[`button_${color}`],
+          { [styles.button_fullWidth]: fullWidth },
+          className,
+        )}
         onClick={() => onClick()}
         disabled={disabled}
         {...props}

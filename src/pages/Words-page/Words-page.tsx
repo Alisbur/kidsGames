@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
+
 import { NavBlock } from "../../components/NavBlock/NavBlock";
 import { WordPartsBlock } from "../../components/WordPartsBlock/WordPartsBlock";
 import { WORDS } from "../../shared/constants/words";
@@ -51,21 +53,27 @@ export function WordsPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <ImageCard name={currentPic} onClick={imageClickHandler} />
-      <WordPartsBlock parts={WORDS[currentWord].parts} onDone={handleDone} />
-      <NavBlock
-        onPrev={backHandler}
-        onNext={forwardHandler}
-        prevDisabled={currentWord <= 0}
-        nextDisabled={currentWord >= WORDS.length - 1}
-      >
-        <MenuButton
-          text="Случайное слово"
-          onClick={randomHandler}
-          style={{ width: "fit-content", paddingInline: "15px" }}
-        />
-      </NavBlock>
-    </div>
+    <PageContentLayout
+      mainContent={
+        <main className={styles.container}>
+          <ImageCard name={currentPic} onClick={imageClickHandler} />
+          <WordPartsBlock parts={WORDS[currentWord].parts} onDone={handleDone} />
+        </main>
+      }
+      footerContent={
+        <NavBlock
+          onPrev={backHandler}
+          onNext={forwardHandler}
+          prevDisabled={currentWord <= 0}
+          nextDisabled={currentWord >= WORDS.length - 1}
+        >
+          <MenuButton
+            text="Случайное слово"
+            onClick={randomHandler}
+            style={{ width: "fit-content", paddingInline: "15px" }}
+          />
+        </NavBlock>
+      }
+    />
   );
 }

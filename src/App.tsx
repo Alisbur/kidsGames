@@ -2,17 +2,18 @@ import { Route, Routes } from "react-router-dom";
 
 import styles from "./App.module.scss";
 import { PageErrorBoundary } from "./components/ErrorBoundary/PageErrorBoundary";
-import { Header } from "./components/Header/Header";
 import { ModalRoot } from "./components/Modals/ui/modal-root";
 import { BallsPage } from "./pages/Balls-page/Balls-page";
 import { ClockPage } from "./pages/Clock-page/Clock-page";
 import { CountPage } from "./pages/Count-page/Count-page";
+import { LettersArrangePage } from "./pages/LettersArrange-page/LettersArrange-page";
 import { MenuPage } from "./pages/Menu-page/Menu-page";
 import { MulTablePage } from "./pages/Mul-table-page/Mul-table-page";
-// import { PjatnashkaPage } from "./pages/Pjatnashka-page/Pjatnashke-page";
+import { NumsArrangePage } from "./pages/NumsArrangePage/NumsArrangePage";
 import { PjatnashkaPicPage } from "./pages/Pjatnashka-pic-page/Pjatnashka-pic-page";
 import { ShortStoriesPage } from "./pages/ShortStories-page/ShortStories-page";
 import { TasksPage } from "./pages/Tasks-page/Tasks-page";
+import { TranslationArrangePage } from "./pages/TranslationArrangePage/TranslationArrangePage";
 import { WordsPage } from "./pages/Words-page/Words-page";
 import { XOPage } from "./pages/XO-page/XO-page";
 import { useScreenOrientation } from "./shared/hooks/use-screen-orientation";
@@ -24,7 +25,7 @@ function App() {
   return (
     <div className={styles.App}>
       <OrientationBlocker orientation={orientation} />
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<MenuPage />} />
         <Route
@@ -43,14 +44,6 @@ function App() {
             </PageErrorBoundary>
           }
         />
-        {/* <Route
-          path="/pjatnashka"
-          element={
-            <PageErrorBoundary>
-              <PjatnashkaPage />
-            </PageErrorBoundary>
-          }
-        /> */}
         <Route
           path="/pjatnashka-pic"
           element={
@@ -104,6 +97,38 @@ function App() {
           element={
             <PageErrorBoundary>
               <TasksPage />
+            </PageErrorBoundary>
+          }
+        />
+        {/* <Route
+          path="/letters"
+          element={
+            <PageErrorBoundary>
+              <LettersPage />
+            </PageErrorBoundary>
+          }
+        /> */}
+        <Route
+          path="/words-arrange"
+          element={
+            <PageErrorBoundary>
+              <TranslationArrangePage />
+            </PageErrorBoundary>
+          }
+        />
+        <Route
+          path="/letters-arrange"
+          element={
+            <PageErrorBoundary>
+              <LettersArrangePage />
+            </PageErrorBoundary>
+          }
+        />
+        <Route
+          path="/nums-arrange"
+          element={
+            <PageErrorBoundary>
+              <NumsArrangePage />
             </PageErrorBoundary>
           }
         />

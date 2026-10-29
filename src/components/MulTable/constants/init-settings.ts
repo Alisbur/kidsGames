@@ -6,7 +6,7 @@ import { TSettings } from "../types/settings.type";
 export const INIT_SETTINGS: TSettings = {
   type: [EXAMPLE_TYPES_ENUM.SUM],
   quantity: 10, // Не используется
-  limit: 2,
+  limit: 10,
   canModifyAnswer: CAN_MODIFY_ANSWER_OPTIONS_ENUM.YES,
   baseValues: [1, 2],
   shouldShuffleExamples: SHOULD_SHUFFLE_EXAMPLES_ENUM.NO,

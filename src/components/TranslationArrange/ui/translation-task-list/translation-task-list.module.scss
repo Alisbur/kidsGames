@@ -1,0 +1,27 @@
+@use "@styles/" as *;
+
+.wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+  row-gap: 16px;
+}
+
+.task {
+  background-color: $color-primary-soft;
+  border-radius: 8px;
+  transition: background-color $t-fast, border-color $t-fast;
+
+  &_over {
+    background-color: $exampleColor;
+    border-color: $color-primary;
+  }
+
+  &_filled {
+    border-style: solid;
+    border-color: $color-primary;
+    width: fit-content;
+    height: fit-content;
+  }
+}

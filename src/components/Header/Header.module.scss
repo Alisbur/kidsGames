@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   padding-top: 20px;
   flex-shrink: 0;
@@ -22,4 +23,5 @@
 .title {
   @include setFont(24px, $textGreen, 600, 120%, $font-raleway);
   opacity: 0.8;
+  text-align: end;
 }

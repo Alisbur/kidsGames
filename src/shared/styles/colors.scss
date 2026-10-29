@@ -3,13 +3,38 @@ $whiteText: white;
 $whiteBg: white;
 $blackText: rgb(32, 32, 32);
 $textGreen: #1ada47;
-$disabledBtn: gray;
-$normalBtn: #3577f3;
+$scrollBar: #3577f3;
 $activeItem: #35f374;
-$inputOutline: #3577f3;
+$inputOutline: #2f5497;
 $inputIncorrect: rgb(255, 88, 88);
 $inputCorrect: #1ada47;
 $borderColorRGBA: rgba(120, 120, 120, 0.4);
 $exampleColor: #3577f3;
 $exampleBorderColorRGBA: rgba(53, 119, 243, 0.2);
 $appBgColor: rgb(240, 239, 249);
+
+$color-bg:            #f8fafc;
+$color-surface:       #ffffff;
+$color-surface-alt:   #eef2ff;
+$color-border:        #cbd5e1;
+$color-primary:       #6366f1;
+$color-primary-soft:  #e0e7ff;
+$color-text:          #334155;
+$color-text-muted:    #64748b;
+$color-ok:            #16a34a;
+$color-err:           #dc2626;
+$color-info:          #475569;
+
+$color-star-empty:  rgba(53, 119, 243, 0.2);;
+$color-star-filled: #eeb114;
+
+//Buttons colors
+$disabledBtn: gray;
+$normalBtn: #3577f3;
+$activeBtn: #2056b9;
+$accentBtn: #1ada47;
+$activeAccentBtn: #20a940;
+$errorBtn: rgb(255, 88, 88);
+$activeErrorBtn: rgb(189, 45, 45);
+
+$instruction-color: #888;

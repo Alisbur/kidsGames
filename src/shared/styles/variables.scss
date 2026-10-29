@@ -12,6 +12,9 @@ $screen-l: 1024px;
 $z-index-backdrop: 100;
 $z-index-modal: 110;
 
+$app-max-width: 600px;
+$app-max-height: 100svh;
+
 //Spaces
 $space-xxxl: 48px;
 $space-xxl: 32px;
@@ -51,3 +54,24 @@ $lh-18: 18px;
 $lh-14: 14px;
 
 $ls-0: 0px;
+
+// Размеры
+$tile-size:    60px;
+$min-tile-size:    30px;
+$slot-size:    64px;
+$gap:          10px;
+$radius-tile:  10px;
+$radius-slot:  12px;
+$radius-pool:  8px;
+
+// Тени
+$shadow-tile:      0 2px 6px rgba(0, 0, 0, .08);
+$shadow-tile-drag: 0 10px 24px rgba(99, 102, 241, .35);
+
+// Тайминги
+$t-fast: .15s;
+
+$gap-s: 8px;
+$gap-m: 16px;
+$gap-l: 24px;
+$gap-xl: 32px;

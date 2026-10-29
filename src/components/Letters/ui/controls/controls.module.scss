@@ -1,0 +1,35 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+
+  transition: background $t-fast, opacity $t-fast;
+
+  &:hover { opacity: .9; }
+  &:active { opacity: .8; }
+}
+
+.primary {
+  background: $color-primary;
+  color: #fff;
+}
+
+.ghost {
+  background: #e2e8f0;
+  color: $color-text;
+}

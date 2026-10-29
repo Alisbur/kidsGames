@@ -1,0 +1,35 @@
+@use "@styles/colors.scss" as *;
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.starWrapper {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.outline {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: $color-star-empty;
+  pointer-events: none;
+}
+
+.fillClip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.filled {
+  display: block;
+  color: $color-star-filled;
+}

@@ -1,0 +1,13 @@
+  @use "@styles/" as *;
+  
+  .instruction {
+    font-style: italic;
+    // padding-bottom: $gap-s;
+    text-align: left;
+    color: $instruction-color;
+
+    &_centered {
+      width: 100%;
+      text-align: center;
+    }
+  }

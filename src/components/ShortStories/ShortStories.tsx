@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 import { Typography } from "@/shared/ui/typography/typography";
 
 import { SHORT_STORIES } from "./constants/stories";
@@ -12,17 +13,17 @@ import { StoryList } from "./ui/StoryList/StoryList";
 export const ShortStories = () => {
   const [selectedStory, setSelectedStory] = useState<number | null>(null);
 
-  const handleNextStory = useCallback(() => {
+  const handleNextStory = () => {
     if (selectedStory !== null) {
       setSelectedStory((prev) => prev! + 1);
     }
-  }, []);
+  };
 
-  const handlePrevStory = useCallback(() => {
+  const handlePrevStory = () => {
     if (selectedStory !== null) {
       setSelectedStory((prev) => prev! - 1);
     }
-  }, []);
+  };
 
   const handleSelectStory = useCallback((id: number) => {
     const storyIndex = SHORT_STORIES.findIndex((s) => s.id === id);
@@ -47,7 +48,7 @@ export const ShortStories = () => {
             color={"primary"}
             className={styles.title}
           >
-            Истории
+            Оглавление
           </Typography>
         }
         mainContent={<StoryList stories={SHORT_STORIES} selectStory={handleSelectStory} />}
@@ -66,31 +67,19 @@ export const ShortStories = () => {
 
   return (
     <PageContentLayout
-      headerContent={
-        <Typography
-          view={"title"}
-          tag={"h2"}
-          weight={"bold"}
-          color={"primary"}
-          className={styles.title}
-        >
-          {SHORT_STORIES[selectedStory].title}
-        </Typography>
-      }
+      withMainHeader={false}
+      headerContent={<PageContentLayoutGameHeader title={SHORT_STORIES[selectedStory].title} />}
+      headerDivider
       mainContent={<Story story={SHORT_STORIES[selectedStory]} />}
       mainContentScroll={true}
       preserveMainContentScrollPosition={false}
       mainDivider
       footerContent={
         <div style={{ width: "100%", display: "flex", gap: "16px" }}>
+          <MenuButton text={"<<"} onClick={handlePrevStory} disabled={selectedStory === 0} />
+          <MenuButton text={"Меню"} onClick={() => setSelectedStory(null)} />
           <MenuButton
-            text={"Предыдущая"}
-            onClick={handlePrevStory}
-            disabled={selectedStory === 0}
-          />
-          <MenuButton text={"Список"} onClick={() => setSelectedStory(null)} />
-          <MenuButton
-            text={"Следующая"}
+            text={">>"}
             onClick={handleNextStory}
             disabled={selectedStory === SHORT_STORIES.length - 1}
           />

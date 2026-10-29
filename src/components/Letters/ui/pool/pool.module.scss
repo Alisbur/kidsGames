@@ -1,0 +1,26 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+
+.pool {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: $gap;
+  justify-content: center;
+
+  min-height: 80px;
+  padding: 16px;
+
+  background: $color-surface-alt;
+  border: 2px dashed transparent;
+  border-radius: $radius-pool;
+
+  transition: background $t-fast, border-color $t-fast;
+}
+
+.over {
+  background: $color-primary-soft;
+  border-color: $color-primary;
+}

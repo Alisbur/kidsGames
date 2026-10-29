@@ -62,7 +62,7 @@ export const GameField: FC<TGameFieldProps> = ({
             modalType: "info_modal",
             modalProps: {
               title: "Молодец!",
-              content: "Ты успешно решил головоломку!",
+              content: "Ты решил головоломку!",
               actions: [
                 { id: "seccess", name: "Посмотреть результаты", action: () => onGameOver?.() },
               ],
@@ -121,7 +121,7 @@ export const GameField: FC<TGameFieldProps> = ({
       className={styles.field}
       ref={fieldRef}
       style={{
-        transform: `translateX(-${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px)`,
+        transform: `translate(-${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px, -${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px)`,
       }}
     >
       {[...positions.keys()]

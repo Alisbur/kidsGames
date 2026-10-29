@@ -1,5 +1,6 @@
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 
+import { Header } from "@/components/Header/Header";
 import { ContentWrapperWithScroll } from "@/shared/ui/content-wrapper-with-scroll/content-wrapper-with-scroll";
 
 import { Divider } from "../../ui/divider/divider";
@@ -16,6 +17,7 @@ type TPageContentLayoutProps = {
   footerContent?: ReactNode;
   footerDivider?: boolean;
   preserveMainContentScrollPosition?: boolean;
+  withMainHeader?: boolean;
 };
 
 export const PageContentLayout: FC<TPageContentLayoutProps> = ({
@@ -27,6 +29,7 @@ export const PageContentLayout: FC<TPageContentLayoutProps> = ({
   footerContent,
   footerDivider = false,
   preserveMainContentScrollPosition = true,
+  withMainHeader = true,
 }) => {
   const [mainDivHeight, setMainDivHeight] = useState(0);
   const mainDivRef = useRef<HTMLDivElement>(null);
@@ -55,46 +58,49 @@ export const PageContentLayout: FC<TPageContentLayoutProps> = ({
   }, [mainDivRef.current?.clientHeight]);
 
   return (
-    <main className={styles.wrapper}>
-      {headerContent ? (
-        <section className={styles.headerContent}>
-          <div className={styles.header}>{headerContent}</div>
-          {headerDivider && <Divider className={styles.divider} />}
-        </section>
-      ) : null}
-
-      {mainContent ? (
-        <>
-          <section className={styles.mainContent} ref={mainDivRef}>
-            {mainContentScroll ? (
-              <ContentWrapperWithScroll
-                maxHeight={mainDivHeight}
-                preserveScrollPosition={preserveMainContentScrollPosition}
-              >
-                <div className={styles.main}>{mainContent}</div>
-              </ContentWrapperWithScroll>
-            ) : (
-              <div
-                className={styles.main}
-                style={{
-                  maxHeight: `${mainDivRef?.current?.clientHeight ?? 0}px`,
-                }}
-              >
-                {mainContent}
-              </div>
-            )}
+    <>
+      {withMainHeader && <Header />}
+      <main className={styles.wrapper}>
+        {headerContent ? (
+          <section className={styles.headerContent}>
+            <div className={styles.header}>{headerContent}</div>
+            {headerDivider && <Divider className={styles.divider} />}
           </section>
+        ) : null}
 
-          {mainDivider && <Divider className={styles.divider} />}
-        </>
-      ) : null}
+        {mainContent ? (
+          <>
+            <section className={styles.mainContent} ref={mainDivRef}>
+              {mainContentScroll ? (
+                <ContentWrapperWithScroll
+                  maxHeight={mainDivHeight}
+                  preserveScrollPosition={preserveMainContentScrollPosition}
+                >
+                  <div className={styles.main}>{mainContent}</div>
+                </ContentWrapperWithScroll>
+              ) : (
+                <div
+                  className={styles.main}
+                  style={{
+                    maxHeight: `${mainDivRef?.current?.clientHeight ?? 0}px`,
+                  }}
+                >
+                  {mainContent}
+                </div>
+              )}
+            </section>
 
-      {footerContent ? (
-        <section className={styles.footerContent}>
-          <div className={styles.footer}>{footerContent}</div>
-          {footerDivider && <Divider className={styles.divider} />}
-        </section>
-      ) : null}
-    </main>
+            {mainDivider && <Divider className={styles.divider} />}
+          </>
+        ) : null}
+
+        {footerContent ? (
+          <section className={styles.footerContent}>
+            <div className={styles.footer}>{footerContent}</div>
+            {footerDivider && <Divider className={styles.divider} />}
+          </section>
+        ) : null}
+      </main>
+    </>
   );
 };

@@ -1,9 +1,6 @@
-@use "@styles/colors.scss" as *;
-@use "@styles/mixins.scss" as *;
-@use "@styles/variables.scss" as *;
+@use "@styles/" as *;
 
 .button {
-  background-color: $normalBtn;
   padding: 12px;
   display: flex;
   align-items: center;
@@ -13,6 +10,30 @@
   outline: none;
   border: none;
   cursor: pointer;
+
+  &_normal {
+    background-color: $normalBtn;
+
+    &:active {
+      background-color: $activeBtn;
+    }
+  }
+
+  &_accent {
+    background-color: $accentBtn;
+
+    &:active {
+      background-color: $activeAccentBtn;
+    }
+  }
+
+  &_error {
+    background-color: $errorBtn;
+
+    &:active {
+      background-color: $activeErrorBtn;
+    }
+  }
 
   @media (hover: hover) {
     &:hover {
@@ -27,10 +48,6 @@
   &:disabled {
     background-color: $disabledBtn;
     pointer-events: none;
-  }
-
-  &:active {
-    background-color: $inputCorrect;
   }
 }
 

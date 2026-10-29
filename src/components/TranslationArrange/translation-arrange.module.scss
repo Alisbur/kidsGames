@@ -1,0 +1,12 @@
+@use "@styles/colors.scss" as *;
+@use "@styles/mixins.scss" as *;
+@use "@styles/variables.scss" as *;
+
+.game {
+  width: 100%;
+  max-width: $app-max-width;
+  margin-top: 40px;
+  font-family: system-ui, sans-serif;
+  color: $color-text;
+  user-select: none;
+}

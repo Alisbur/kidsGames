@@ -30,6 +30,7 @@ export const TranslationTaskList: FC<TTranslationTaskListProps> = ({
           key={t.id}
           className={styles.task}
           isOverClassName={styles.task_over}
+          slot={t.slot}
         >
           <TranslationTaskCard task={t} gameType={gameType} resChecked={resChecked}>
             {t.slot && (

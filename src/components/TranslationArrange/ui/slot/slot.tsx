@@ -1,7 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 
 import { TSlotValue, TTileContentType } from "../../types/types";
-// import type { DropId, SlotValue } from "../../types/types";
 import { DraggableTile } from "../draggable-tile/draggable-tile";
 import styles from "../slot/slot.module.scss";
 

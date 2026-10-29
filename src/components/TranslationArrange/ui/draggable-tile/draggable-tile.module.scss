@@ -11,17 +11,13 @@
   justify-content: center;
   flex: 0 0 auto;
   padding: 4px 8px;
-  background:$color-surface;
+  background: $color-surface;
   border: 2px solid $color-border;
   border-radius: 8px;
   cursor: grab;
 
-  box-shadow:$shadow-tile;
-  transition:
-    box-shadow$t-fast,
-    border-color$t-fast,
-    opacity$t-fast,
-    scale;
+  box-shadow: $shadow-tile;
+  transition: box-shadow$t-fast, border-color$t-fast, opacity$t-fast, scale;
   // touch-action: manipulation;
   // touch-action: none;
   user-select: none;
@@ -38,7 +34,7 @@
 
 .overlay {
   cursor: grabbing;
-  border-color:$color-primary;
-  box-shadow:$shadow-tile-drag;
+  border-color: $color-primary;
+  box-shadow: $shadow-tile-drag;
   transform: scale(1.2);
 }

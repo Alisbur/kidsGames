@@ -182,6 +182,7 @@ export const GameStep: FC<TGameStepProps> = ({
           }
         }
       }
+
       return { pool, tasks };
     });
   };
@@ -216,6 +217,9 @@ export const GameStep: FC<TGameStepProps> = ({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onDragCancel={handleDragCancel}
+      autoScroll={{
+        layoutShiftCompensation: false,
+      }}
       // autoScroll={false}
     >
       <PageContentLayout

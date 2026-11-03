@@ -70,7 +70,7 @@ export default function NumsArrange() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Собери примеры
+              Составь примеры
             </Typography>
           }
           mainContent={
@@ -118,7 +118,7 @@ export default function NumsArrange() {
           withMainHeader={false}
           headerContent={
             <PageContentLayoutGameHeader
-              title={"Собери правильные примеры"}
+              title={"Составь примеры"}
               subtitle={"Перемести числа на правильные места"}
             />
           }

@@ -1,4 +1,6 @@
-import styles from "./navigate-button.module.scss";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+import { MenuButton } from "../menu-button/menu-button";
 
 type NavigateButtonProps = {
   onClick: () => void;
@@ -8,8 +10,17 @@ type NavigateButtonProps = {
 
 export function NavigateButton({ onClick, type, disabled = false }: NavigateButtonProps) {
   return (
-    <button type="button" className={styles.button} onClick={() => onClick()} disabled={disabled}>
-      <span className={styles.buttonText}>{type === "forward" ? ">>" : "<<"}</span>
-    </button>
+    <MenuButton
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={type === "forward" ? "Вперёд" : "Назад"}
+      fullWidth={false}
+    >
+      {type === "forward" ? (
+        <ChevronRight size={20} color={"white"} />
+      ) : (
+        <ChevronLeft size={20} color={"white"} />
+      )}
+    </MenuButton>
   );
 }

@@ -1,12 +1,21 @@
 import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
-
-import type { TBoardProps } from "../../types/types";
-import { SortableTile } from "../sortable-tile/sortable-tile";
-import styles from "./board.module.scss";
 import classNames from "classnames";
+
 import { Typography } from "@/shared/ui/typography/typography";
 
-export function Board({ letters, tileSize, hint, isSolved }: TBoardProps) {
+import { TLetter } from "../../types/types";
+import { SortableTile } from "../sortable-tile/sortable-tile";
+import styles from "./board.module.scss";
+
+type TBoardProps = {
+  letters: TLetter[];
+  tileSize?: number;
+  hint?: string;
+  isSolved: boolean;
+  isActive: boolean;
+};
+
+export function Board({ letters, tileSize, hint, isSolved, isActive }: TBoardProps) {
   return (
     <SortableContext
       items={letters.map((letter) => letter.id)}
@@ -14,7 +23,10 @@ export function Board({ letters, tileSize, hint, isSolved }: TBoardProps) {
       disabled={isSolved}
     >
       <div
-        className={classNames(styles.board, { [styles.board_success]: isSolved })}
+        className={classNames(styles.board, {
+          [styles.board_success]: isSolved,
+          [styles.board_active]: isActive,
+        })}
         style={{ pointerEvents: isSolved ? "none" : "auto" }}
       >
         <Typography

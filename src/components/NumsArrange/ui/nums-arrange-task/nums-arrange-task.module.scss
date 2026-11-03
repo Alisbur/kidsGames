@@ -18,19 +18,21 @@
     background-color: $inputCorrect;
     pointer-events: none;
   }
+
+  &_active {
+    border: 2px solid $normalBtn;
+  }
 }
 
 .slots {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
 .title {
   text-align: center;
-  // margin-bottom: 8px;
-  // font-size: 28px;
 }
 
 .hint {
@@ -46,6 +48,12 @@
   font-weight: 600;
 }
 
-.ok   { color: $color-ok; }
-.err  { color: $color-err; }
-.info { color: $color-info; }
+.ok {
+  color: $color-ok;
+}
+.err {
+  color: $color-err;
+}
+.info {
+  color: $color-info;
+}

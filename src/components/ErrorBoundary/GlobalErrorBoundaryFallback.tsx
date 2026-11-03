@@ -13,18 +13,22 @@ export const GlobalErrorBoundaryFallback: FC<{ error: Error; reset: () => void }
     window.location.reload();
   };
 
+  const handleBack = () => {
+    window.history.back();
+  };
+
   if (!error) return null;
 
   return (
     <div className={styles.fallbackWrapper_global}>
       <Typography tag="h1">⚠️ Критическая ошибка</Typography>
       <Typography tag="p">Приложение не может продолжить работу.</Typography>
-      <details style={{ margin: "1rem 0", maxWidth: "80%" }}>
+      <details style={{ margin: "1rem 0" }}>
         <summary>
           <Typography tag="span">Подробности</Typography>
         </summary>
         <pre style={{ marginTop: "8px" }}>
-          <Typography tag="p" color="error">
+          <Typography tag="p" color="error" className={styles.errorMessage}>
             {error.message}
           </Typography>
         </pre>
@@ -32,6 +36,7 @@ export const GlobalErrorBoundaryFallback: FC<{ error: Error; reset: () => void }
       <div style={{ display: "flex", gap: "16px" }}>
         <MenuButton onClick={reset} text="Повторить действие" />
         <MenuButton onClick={handleHardReset} text="Перезагрузить страницу" />
+        <MenuButton onClick={handleBack} text="Назад" />
       </div>
     </div>
   );

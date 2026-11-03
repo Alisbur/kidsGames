@@ -1,0 +1,3 @@
+export enum SET_SETTINGS_ACTIONS_ENUM {
+  SET_VOICE = "SET_VOICE",
+}

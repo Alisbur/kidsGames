@@ -219,16 +219,20 @@ export const NumsArrangeTask: FC<TNumsArrangeTaskProps> = ({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onDragCancel={handleDragCancel}
+      autoScroll={false}
     >
-      <div className={classNames(styles.task, { [styles.task_solved]: task.solved })}>
+      <div
+        className={classNames(styles.task, {
+          [styles.task_solved]: task.solved,
+          [styles.task_active]: !!activeTile,
+        })}
+      >
         <div className={styles.slots}>
-          {/* {state.slots.map((el, idx) => ( */}
           <Slot index={0} slot={state.slots[0]} onReturn={returnToPool} tileSize={tileSize} />
           <FixedTile content={OPERATION_SIGNS[task.type]} tileSize={tileSize} />
           <Slot index={1} slot={state.slots[1]} onReturn={returnToPool} tileSize={tileSize} />
           <FixedTile content={"="} tileSize={tileSize} />
           <Slot index={2} slot={state.slots[2]} onReturn={returnToPool} tileSize={tileSize} />
-          {/* ))} */}
         </div>
         <DragOverlay dropAnimation={null}>
           {activeTile ? <DraggableTile content={activeTile} isOverlay tileSize={tileSize} /> : null}

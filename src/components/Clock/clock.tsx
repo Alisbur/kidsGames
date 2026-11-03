@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { Instruction } from "@/shared/ui/instruction/instruction";
+import { MenuButton } from "@/shared/ui/menu-button/menu-button";
 
 import styles from "./clock.module.scss";
 import { isNight } from "./helpers/helpers";
@@ -105,25 +106,24 @@ export const AnalogClock = ({ initialTime = new Date() }) => {
           </ClockFace>
 
           <Instruction
-            hint={
-              "Перетащите красный кружок на конце минутной стрелки или синий на конце часовой, чтобы изменить время"
-            }
+            hint={"Чтобы изменить время перетащите стрелки за синий или красный кружок"}
             centered
           />
         </div>
       }
       footerContent={
         <div className={styles.clock__controls}>
-          <button
+          <MenuButton
+            color={"muted"}
+            text={"-1 час"}
             onClick={() => {
               setTime({ ...time, hours: time.hours === 0 ? 23 : time.hours - 1 });
             }}
-            className={styles.clock__button}
-          >
-            -1 час
-          </button>
+          />
 
-          <button
+          <MenuButton
+            color={"muted"}
+            text={"-1 мин"}
             onClick={() => {
               const totalMinutes = time.hours * 60 + time.minutes - 1;
               let newHours = Math.floor(totalMinutes / 60);
@@ -132,14 +132,11 @@ export const AnalogClock = ({ initialTime = new Date() }) => {
               if (newMinutes < 0) newMinutes = 59;
               setTime({ hours: newHours, minutes: newMinutes });
             }}
-            className={styles.clock__button}
-          >
-            -1 мин
-          </button>
-          <button onClick={handleResetTime} className={styles.clock__button}>
-            Сброс
-          </button>
-          <button
+          />
+          <MenuButton color={"muted"} onClick={handleResetTime} text={"Сброс"} />
+          <MenuButton
+            color={"muted"}
+            text={"+1 мин"}
             onClick={() => {
               const totalMinutes = time.hours * 60 + time.minutes + 1;
               let newHours = Math.floor(totalMinutes / 60);
@@ -147,18 +144,14 @@ export const AnalogClock = ({ initialTime = new Date() }) => {
               if (newHours >= 24) newHours = 0;
               setTime({ hours: newHours, minutes: newMinutes });
             }}
-            className={styles.clock__button}
-          >
-            +1 мин
-          </button>
-          <button
+          />
+          <MenuButton
+            color={"muted"}
+            text={"+1 час"}
             onClick={() => {
               setTime({ ...time, hours: time.hours === 23 ? 0 : time.hours + 1 });
             }}
-            className={styles.clock__button}
-          >
-            +1 час
-          </button>
+          />
         </div>
       }
     />

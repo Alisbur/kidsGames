@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 
 import { getRandomItemsFromArray } from "@/shared/helpers/get-random-items-from-array";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
@@ -15,7 +15,7 @@ import styles from "./LettersArrange.module.scss";
 import { TSettings, TSettingsActions } from "./types/settings.type";
 import type { TLettersArrangeTask, TLettersArrangeTaskExt } from "./types/types";
 import { Results } from "./ui/results/results";
-import { LettersArrangeTask } from "./ui/sort-task/letters-arrange-task";
+import { LettersArrangeTaskList } from "./ui/sort-task-list/letters-arrange-task-list";
 import { TasksSettings } from "./ui/tasks-settings/tasks-settings";
 
 function createTasks(qty: number = 10, wordLens: number[]): TLettersArrangeTaskExt[] {
@@ -38,9 +38,9 @@ export default function LettersArrange() {
   const [step, setStep] = useState<STEP>(STEP.INIT);
   const [tasks, setTasks] = useState<TLettersArrangeTaskExt[]>([]);
 
-  const handleSetTaskSolved = (id: number) => {
+  const handleSetTaskSolved = useCallback((id: number) => {
     setTasks((prev) => prev.map((t) => (id === t.id ? { ...t, solved: true } : t)));
-  };
+  }, []);
 
   const handleStartNewGame = () => {
     setTasks(createTasks(settings.wordsQuantity, settings.lettersQuantity));
@@ -106,14 +106,9 @@ export default function LettersArrange() {
             />
           }
           headerDivider
-          mainContent={tasks.map((t) => (
-            <LettersArrangeTask
-              // tileSize={tileSize}
-              task={t}
-              setTaskSolved={() => handleSetTaskSolved(t.id)}
-              key={t.id}
-            />
-          ))}
+          mainContent={
+            <LettersArrangeTaskList tasks={tasks} setTaskSolved={(id) => handleSetTaskSolved(id)} />
+          }
           mainContentScroll
           mainDivider
           footerContent={

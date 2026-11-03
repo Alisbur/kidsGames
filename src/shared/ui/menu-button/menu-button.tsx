@@ -12,7 +12,7 @@ type MenuButtonProps = {
   textClassName?: string;
   children?: ReactNode;
   fullWidth?: boolean;
-  color?: "normal" | "accent" | "error";
+  color?: "normal" | "accent" | "error" | "muted";
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
@@ -40,15 +40,15 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
           { [styles.button_fullWidth]: fullWidth },
           className,
         )}
-        onClick={() => onClick()}
+        onClick={onClick}
         disabled={disabled}
         {...props}
       >
         {text && (
           <Typography
             view={"button"}
-            color={"secondary"}
-            className={classNames(styles.buttonText, textClassName)}
+            color={color === "muted" ? "muted" : "secondary"}
+            className={textClassName ?? ""}
           >
             {text}
           </Typography>

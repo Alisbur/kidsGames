@@ -2,8 +2,14 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { type CSSProperties } from "react";
 
-import type { TSortableTileProps } from "../../types/types";
+import type { TLetter } from "../../types/types";
 import styles from "./sortable-tile.module.scss";
+
+export type TSortableTileProps = {
+  letter: TLetter;
+  isOverlay?: boolean;
+  size?: number;
+};
 
 export function SortableTile({ letter, isOverlay, size }: TSortableTileProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({

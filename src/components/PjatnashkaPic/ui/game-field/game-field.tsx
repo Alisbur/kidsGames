@@ -124,36 +124,37 @@ export const GameField: FC<TGameFieldProps> = ({
         transform: `translate(-${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px, -${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px)`,
       }}
     >
-      {[...positions.keys()]
-        .sort((a, b) => a - b)
-        .map((id) => {
-          const pos = positions.get(id)!;
-          return (
-            <Piece
-              key={id}
-              idx={id}
-              size={pieceSize}
-              x={pos.x}
-              y={pos.y}
-              span={SPAN}
-              imageUrl={imgUrl || ""}
-              imageWidth={imageWidth}
-              imageHeight={imageHeight}
-              fieldCols={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW}
-              fieldRows={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldH}
-              disabled={isShuffleDone && !isGameActive}
-              gameType={settings.gameType}
-              isLoading={loading || isLoading}
-              onClick={() => {
-                if (isGameActive) setNewFieldState(id);
-              }}
-              onTouchEnd={() => {
-                if (isGameActive) setNewFieldState(id);
-              }}
-              winColor={isShuffleDone && !isGameActive}
-            />
-          );
-        })}
+      {!!pieceSize &&
+        [...positions.keys()]
+          .sort((a, b) => a - b)
+          .map((id) => {
+            const pos = positions.get(id)!;
+            return (
+              <Piece
+                key={id}
+                idx={id}
+                size={pieceSize}
+                x={pos.x}
+                y={pos.y}
+                span={SPAN}
+                imageUrl={imgUrl || ""}
+                imageWidth={imageWidth}
+                imageHeight={imageHeight}
+                fieldCols={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW}
+                fieldRows={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldH}
+                disabled={isShuffleDone && !isGameActive}
+                gameType={settings.gameType}
+                isLoading={loading || isLoading}
+                onClick={() => {
+                  if (isGameActive) setNewFieldState(id);
+                }}
+                onTouchEnd={() => {
+                  if (isGameActive) setNewFieldState(id);
+                }}
+                winColor={isShuffleDone && !isGameActive}
+              />
+            );
+          })}
     </div>
   );
 };

@@ -49,16 +49,11 @@ export const MENU_ITEMS = [
     name: "Часы",
     alias: "/clock",
   },
-  {
-    id: 10,
-    name: "Буквы",
-    alias: "/letters",
-  },
-  {
-    id: 11,
-    name: "Расставь слова",
-    alias: "/words-arrange",
-  },
+  // {
+  //   id: 10,
+  //   name: "Буквы",
+  //   alias: "/letters",
+  // },
   {
     id: 12,
     name: "Собери слова",
@@ -68,5 +63,15 @@ export const MENU_ITEMS = [
     id: 13,
     name: "Собери примеры",
     alias: "/nums-arrange",
+  },
+  {
+    id: 11,
+    name: "Английские слова",
+    alias: "/eng-words-arrange",
+  },
+  {
+    id: 14,
+    name: "Английский алфавит",
+    alias: "/eng-alphabet",
   },
 ];

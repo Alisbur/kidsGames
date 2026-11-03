@@ -103,7 +103,7 @@ export const HourHand: FC<THourHandProps> = ({
       <div className={styles.hourHand} />
       <div
         className={styles.dragHandle}
-        style={{ transform: `translate(-50%, -50%)` }}
+        style={{ transform: `translate(-50%, -50%) scale(${isDragging ? "1.3" : "1"})` }}
         onMouseDown={startDrag}
         onTouchStart={startDrag}
       />

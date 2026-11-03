@@ -132,7 +132,7 @@ export const MinuteHand: FC<TMinuteHandProps> = ({
       <div
         className={styles.dragHandle}
         style={{
-          transform: `translate(-50%, -50%)`,
+          transform: `translate(-50%, -50%) scale(${isDragging ? "1.3" : "1"})`,
         }}
         onMouseDown={startDrag}
         onTouchStart={startDrag}

@@ -1,0 +1,11 @@
+@use "@styles/" as *;
+
+.game {
+  max-width: $app-max-width;
+  width: 100%;
+  color: $color-text;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: $gap-m;
+}

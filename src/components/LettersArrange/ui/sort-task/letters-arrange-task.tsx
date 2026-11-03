@@ -11,16 +11,14 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 import { shuffleArray } from "@/shared/helpers/shuffle-array";
-import { useElementDimensions } from "@/shared/hooks/useElementDimensions";
 
 import type { TLetter } from "../../types/types";
 import { TLettersArrangeTaskExt } from "../../types/types";
 import { Board } from "../board/board";
 import { SortableTile } from "../sortable-tile/sortable-tile";
-import styles from "./letters-arrange-task.module.scss";
 
 function createLetters(chars: string): TLetter[] {
   return chars.split("").map((char, index) => ({ id: `letter-${index}`, char }));
@@ -29,25 +27,26 @@ function createLetters(chars: string): TLetter[] {
 type TLettersArrangeTaskProps = {
   task: TLettersArrangeTaskExt;
   setTaskSolved: () => void;
+  parentWidth?: number;
 };
 
-export const LettersArrangeTask: FC<TLettersArrangeTaskProps> = ({ task, setTaskSolved }) => {
+export const LettersArrangeTask: FC<TLettersArrangeTaskProps> = ({
+  task,
+  setTaskSolved,
+  parentWidth = 0,
+}) => {
   const [letters, setLetters] = useState<TLetter[]>(shuffleArray(createLetters(task.word)));
   const [activeId, setActiveId] = useState<string | null>(null);
   const [tileSize, setTileSize] = useState(40);
 
-  const divRef = useRef<HTMLDivElement>(null);
-
-  const boardSize = useElementDimensions(divRef);
-
   useEffect(() => {
-    const newTileSize = boardSize.elementWidth / (task.word.length + 2);
+    const newTileSize = parentWidth / (task.word.length + 2);
     setTileSize(newTileSize);
-  }, [boardSize.elementWidth]);
+  }, [parentWidth, task.word.length]);
 
   const handleCheck = useCallback((): void => {
     const current = letters.map((letter) => letter.char).join("");
-    if (current === task.word) {
+    if (current.toLowerCase().trim() === task.word.toLowerCase().trim()) {
       setTaskSolved();
     }
   }, [letters, setTaskSolved, task.word]);
@@ -87,26 +86,28 @@ export const LettersArrangeTask: FC<TLettersArrangeTaskProps> = ({ task, setTask
 
   const activeLetter: TLetter | null = letters.find((letter) => letter.id === activeId) ?? null;
 
-  return (
-    <div className={styles.game} ref={divRef}>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDragCancel={handleDragCancel}
-      >
-        <Board
-          letters={letters}
-          tileSize={tileSize}
-          hint={task.description}
-          isSolved={task.solved}
-        />
+  if (!parentWidth) return <></>;
 
-        <DragOverlay dropAnimation={null}>
-          {activeLetter ? <SortableTile letter={activeLetter} isOverlay size={tileSize} /> : null}
-        </DragOverlay>
-      </DndContext>
-    </div>
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onDragCancel={handleDragCancel}
+      autoScroll={false}
+    >
+      <Board
+        letters={letters}
+        tileSize={tileSize}
+        hint={task.description}
+        isSolved={task.solved}
+        isActive={!!activeId}
+      />
+
+      <DragOverlay dropAnimation={null}>
+        {activeLetter ? <SortableTile letter={activeLetter} isOverlay size={tileSize} /> : null}
+      </DragOverlay>
+    </DndContext>
   );
 };

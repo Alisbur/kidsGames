@@ -11,9 +11,8 @@ body {
   margin: 0;
   width: 100%;
   min-width: 320px;
-  min-height: 100vh;
-  max-height: 100svh;
-  // max-height: 100svh;
-  // overscroll-behavior-y: contain;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  overscroll-behavior-y: contain;
   overflow: hidden;
 }

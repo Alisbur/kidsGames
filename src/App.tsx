@@ -6,6 +6,7 @@ import { ModalRoot } from "./components/Modals/ui/modal-root";
 import { BallsPage } from "./pages/Balls-page/Balls-page";
 import { ClockPage } from "./pages/Clock-page/Clock-page";
 import { CountPage } from "./pages/Count-page/Count-page";
+import { LettersLearningPage } from "./pages/Letters-learning-page/Letters-learning-page";
 import { LettersArrangePage } from "./pages/LettersArrange-page/LettersArrange-page";
 import { MenuPage } from "./pages/Menu-page/Menu-page";
 import { MulTablePage } from "./pages/Mul-table-page/Mul-table-page";
@@ -109,7 +110,7 @@ function App() {
           }
         /> */}
         <Route
-          path="/words-arrange"
+          path="/eng-words-arrange"
           element={
             <PageErrorBoundary>
               <TranslationArrangePage />
@@ -129,6 +130,14 @@ function App() {
           element={
             <PageErrorBoundary>
               <NumsArrangePage />
+            </PageErrorBoundary>
+          }
+        />
+        <Route
+          path="/eng-alphabet"
+          element={
+            <PageErrorBoundary>
+              <LettersLearningPage />
             </PageErrorBoundary>
           }
         />

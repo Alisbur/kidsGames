@@ -1,0 +1,47 @@
+@use "@styles/" as *;
+
+.letter {
+  width: fit-content;
+}
+
+.wrapper {
+  width: 100%;
+  border: 2px dashed transparent;
+  border-radius: $radius-pool;
+  background: $color-surface-alt;
+}
+
+.carouselWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+  gap: $gap-l;
+}
+
+.pool {
+  display: flex;
+  flex: 0 0 auto;
+  gap: $gap;
+  justify-content: flex-start;
+  padding: 16px;
+
+  transition:
+    background $t-fast,
+    border-color $t-fast;
+}
+
+.poolButton {
+  width: 60px;
+  height: 60px;
+  min-width: fit-content;
+  border: 2px solid $color-border;
+}
+
+.footerContentWrapper {
+  width: 100%;
+  display: flex; 
+  flex-direction: column; 
+  row-gap: $gap-s;
+}

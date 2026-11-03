@@ -1,6 +1,4 @@
-@use "@styles/colors.scss" as *;
-@use "@styles/mixins.scss" as *;
-@use "@styles/variables.scss" as *;
+@use "@styles/" as *;
 
 .board {
   display: flex;
@@ -13,11 +11,15 @@
   padding: 16px 8px 24px 8px;
 
   background: $color-surface-alt;
-  border-radius: 16px;
+  border-radius: $border-radius-m;
+  border: 2px solid $color-border;
 
   &_success {
     background: $inputCorrect;
-    // opacity: 0.8;
+  }
+
+  &_active {
+    border: 2px solid $normalBtn;
   }
 
   &__pool {

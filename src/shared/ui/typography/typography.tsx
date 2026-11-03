@@ -44,10 +44,12 @@ export const Typography: React.FC<TextProps> = ({
   return (
     <Element
       className={classNames(
-        { [styles[`view_${view}`]]: view },
-        { [styles.clamped]: isClamped },
-        { [styles[`text_${color}`]]: color },
-        { [styles[`text_${weight}`]]: weight },
+        {
+          [styles[`view_${view}`]]: view,
+          [styles[`text_${color}`]]: color,
+          [styles.clamped]: isClamped,
+          [styles[`text_${weight}`]]: weight,
+        },
         className,
       )}
       style={extraStyles}

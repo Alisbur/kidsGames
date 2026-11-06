@@ -6,7 +6,6 @@ import {
   type DragStartEvent,
   KeyboardSensor,
   MouseSensor,
-  PointerSensor,
   TouchSensor,
   useSensor,
   useSensors,

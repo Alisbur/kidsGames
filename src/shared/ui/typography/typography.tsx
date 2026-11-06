@@ -15,7 +15,7 @@ export type TextProps = {
   /** Контент */
   children: React.ReactNode;
   /** Цвет */
-  color?: "primary" | "secondary" | "accent" | "success" | "error" | "muted";
+  color?: "primary" | "secondary" | "accent" | "success" | "error" | "muted" | "purple";
   /** Максимальное кол-во строк */
   maxLines?: number;
   size?: number;

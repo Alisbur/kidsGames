@@ -16,37 +16,41 @@ type TLetterCardProps = {
 export const LetterCard: FC<TLetterCardProps> = ({ letter, speak, cardMaxWidth }) => {
   return (
     <div className={styles.wrapper} style={{ maxWidth: `${cardMaxWidth}px` }}>
-      <div className={styles.cardWrapper} style={{ maxWidth: `${cardMaxWidth}px` }}>
-        <div className={styles.letters}>
-          <Typography
-            tag={"span"}
-            weight={"bold"}
-            color={letter.wowel ? "success" : "accent"}
-            className={styles.upperLetter}
+      {/* <div className={styles.cardWrapper} style={{ maxWidth: `${cardMaxWidth}px` }}>
+        <div className={styles.cardWrapper} style={{ maxWidth: `${cardMaxWidth}px` }}></div> */}
+      <div className={styles.cardWrapper}>
+        <div className={styles.card}>
+          <div className={styles.letters}>
+            <Typography
+              tag={"span"}
+              weight={"bold"}
+              color={letter.wowel ? "success" : "accent"}
+              className={styles.upperLetter}
+            >
+              {letter.letter.toUpperCase()}
+            </Typography>
+            {"  "}
+            <Typography
+              tag={"span"}
+              weight={"bold"}
+              color={letter.wowel ? "success" : "accent"}
+              className={styles.lowerLetter}
+            >
+              {letter.letter.toLowerCase()}
+            </Typography>
+          </div>
+          <MenuButton
+            onClick={() => speak?.([letter.letter, letter.examples[0].word], 500)}
+            disabled={!speak}
+            fullWidth={false}
+            color={letter.wowel ? "accent" : "normal"}
+            aria-label={`Произнести букву ${letter.letter}`}
+            className={styles.playButton}
           >
-            {letter.letter.toUpperCase()}
-          </Typography>
-          {"  "}
-          <Typography
-            tag={"span"}
-            weight={"bold"}
-            color={letter.wowel ? "success" : "accent"}
-            className={styles.lowerLetter}
-          >
-            {letter.letter.toLowerCase()}
-          </Typography>
+            <Play size={20} color="white" />
+            {!!speak && <span className={styles.pulseRing} aria-hidden="true" />}
+          </MenuButton>
         </div>
-        <MenuButton
-          onClick={() => speak?.([letter.letter, letter.examples[0].word], 500)}
-          disabled={!speak}
-          fullWidth={false}
-          color={letter.wowel ? "accent" : "normal"}
-          aria-label={`Произнести букву ${letter.letter}`}
-          className={styles.playButton}
-        >
-          <Play size={20} color="white" />
-          {!!speak && <span className={styles.pulseRing} aria-hidden="true" />}
-        </MenuButton>
       </div>
 
       <div className={styles.wordWithIconWrapper} style={{ cursor: speak ? "pointer" : "auto" }}>

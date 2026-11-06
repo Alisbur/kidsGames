@@ -12,14 +12,21 @@
 }
 
 .alphabetWrapper {
+  list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   place-items: center;
   min-height: 0;
   width: 100%;
   gap: $gap-s;
-  padding-top: 16px;
+  padding: 16px 0;
   overflow: visible;
+}
+
+.letterButtonWrapper {
+  padding: 0;
+  width: 100%;
+  container-type: inline-size;
 }
 
 .pool {
@@ -36,19 +43,10 @@
 
 .letterButton {
   position: relative;
-  width: 100%;
-  // height: 60px;
-  aspect-ratio: 1 / 1;
-  min-width: fit-content;
+  width: 100cqw;
+  height: 100cqw;
   border: 2px solid $color-border;
   overflow: visible;
-}
-
-.footerContentWrapper {
-  width: 100%;
-  display: flex; 
-  flex-direction: column; 
-  row-gap: $gap-s;
 }
 
 .flyingLetter {

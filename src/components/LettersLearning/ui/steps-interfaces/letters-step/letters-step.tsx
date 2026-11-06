@@ -3,10 +3,12 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 
 import { LETTERS_ENG } from "@/components/LettersLearning/constants/letters";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { HScroller } from "@/shared/ui/h-scroller/h-scroller";
 import { Instruction } from "@/shared/ui/instruction/instruction";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
+import { NavigateButton } from "@/shared/ui/navigate-button/navigate-button";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 import { Typography } from "@/shared/ui/typography/typography";
 
@@ -92,7 +94,7 @@ export const LettersStep: FC<TLettersStepProps> = ({ speak, setGameStep }) => {
         </div>
       }
       footerContent={
-        <div className={styles.footerContentWrapper}>
+        <FooterControlsLayout type={"vertical"}>
           {!speak && <Instruction hint={"Браузер не поддерживает воспроизведение речи"} />}
           <HScroller className={styles.wrapper}>
             <div className={styles.pool} ref={scrollerRef}>
@@ -118,20 +120,26 @@ export const LettersStep: FC<TLettersStepProps> = ({ speak, setGameStep }) => {
               ))}
             </div>
           </HScroller>
-          <div style={{ width: "100%", display: "flex", alignItems: "center", columnGap: "8px" }}>
-            <MenuButton
-              text={"Назад"}
+          <FooterControlsLayout>
+            <NavigateButton
+              type={"back"}
               onClick={() => emblaApi?.scrollPrev()}
               disabled={!canScrollPrev}
+              fullWidth
             />
-            <MenuButton text={"Меню"} onClick={() => setGameStep(GAME_STEPS_ENUM.MENU)} />
             <MenuButton
-              text={"Вперёд"}
+              text={"Меню игры"}
+              onClick={() => setGameStep(GAME_STEPS_ENUM.MENU)}
+              textNoWrap
+            />
+            <NavigateButton
+              type={"forward"}
               onClick={() => emblaApi?.scrollNext()}
               disabled={!canScrollNext}
+              fullWidth
             />
-          </div>
-        </div>
+          </FooterControlsLayout>
+        </FooterControlsLayout>
       }
     />
   );

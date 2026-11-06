@@ -32,12 +32,11 @@
 }
 
 .description {
-  @include setFont(18px, 600, 120%, $font-raleway);
+  @include setFont($size: 18px, $weight: 600, $lh: 1.2, $ff: $font-raleway);
 }
 
 .task {
   width: 100%;
-  display: flex;
   gap: 20px;
 
   display: flex;

@@ -1,6 +1,8 @@
+import classNames from "classnames";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 
 import { LETTERS_ENG } from "@/components/LettersLearning/constants/letters";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { Instruction } from "@/shared/ui/instruction/instruction";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
@@ -19,22 +21,21 @@ type TAlphabetStepProps = {
 };
 
 export const AlphabetStep: FC<TAlphabetStepProps> = ({ speak, setGameStep }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [canScrollPrev, setCanScrollPrev] = useState(selectedIndex > 0);
-  const [canScrollNext, setCanScrollNext] = useState(selectedIndex < LETTERS_ENG.letters.length);
-  const [playSound, setPlaySound] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
   const [animationKey, setAnimationKey] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleLetterClick = (index: number) => {
-    speak?.(LETTERS_ENG.letters[index].letter);
     setSelectedIndex(index);
     setIsAnimating(true);
     setAnimationKey((k) => k + 1);
   };
 
   const handlePrevLetter = () => {
+    if (selectedIndex === null) return;
     const newIndex = selectedIndex - 1;
     if (newIndex >= 0) {
       setSelectedIndex(newIndex);
@@ -44,7 +45,9 @@ export const AlphabetStep: FC<TAlphabetStepProps> = ({ speak, setGameStep }) => 
   };
 
   const handleNextLetter = () => {
-    const newIndex = selectedIndex + 1;
+    let newIndex;
+    if (selectedIndex === null) newIndex = 0;
+    else newIndex = selectedIndex + 1;
     if (newIndex >= 0) {
       setSelectedIndex(newIndex);
       setIsAnimating(true);
@@ -57,12 +60,12 @@ export const AlphabetStep: FC<TAlphabetStepProps> = ({ speak, setGameStep }) => 
   };
 
   useEffect(() => {
+    if (selectedIndex === null) return;
     const canGoPrev = selectedIndex > 0;
     const canGoNext = selectedIndex < LETTERS_ENG.letters.length - 1;
     setCanScrollNext(canGoNext);
     setCanScrollPrev(canGoPrev);
-    if (playSound) speak?.(LETTERS_ENG.letters[selectedIndex].letter);
-    setPlaySound(true);
+    speak?.(LETTERS_ENG.letters[selectedIndex].letter);
   }, [selectedIndex, speak]);
 
   return (
@@ -70,53 +73,67 @@ export const AlphabetStep: FC<TAlphabetStepProps> = ({ speak, setGameStep }) => 
       headerContent={<PageContentLayoutGameHeader title={"Английский алфавит"} />}
       withMainHeader={false}
       headerDivider
+      mainDivider
       mainContent={
-        <div className={styles.alphabetWrapper}>
+        <ul className={styles.alphabetWrapper}>
           {LETTERS_ENG.letters.map((l, idx) => (
-            <MenuButton
-              key={idx}
-              onClick={() => {
-                handleLetterClick(idx);
-              }}
-              color={idx === selectedIndex ? "accent" : "normal"}
-              className={styles.letterButton}
-              aria-label={`Буква ${l.letter}`}
-            >
-              <Typography
-                view={"p-44"}
-                tag={"span"}
-                weight={"semibold"}
-                color={"secondary"}
-                className={styles.letter}
+            <li className={styles.letterButtonWrapper} key={idx}>
+              <MenuButton
+                onClick={() => {
+                  handleLetterClick(idx);
+                }}
+                color={idx === selectedIndex ? "accent" : l.wowel ? "error" : "normal"}
+                className={styles.letterButton}
+                aria-label={`Буква ${l.letter}`}
               >
-                {l.letter.toUpperCase()}
-              </Typography>
-              {isAnimating && selectedIndex === idx && (
-                <span
-                  key={animationKey}
-                  className={styles.flyingLetter}
-                  onAnimationEnd={handleAnimationEnd}
-                  aria-hidden="true"
+                <Typography
+                  view={"p-44"}
+                  tag={"span"}
+                  weight={"semibold"}
+                  color={"secondary"}
+                  className={classNames(styles.letter)}
                 >
-                  {l.examples[0].emo}
-                </span>
-              )}
-            </MenuButton>
+                  {l.letter.toUpperCase()}
+                </Typography>
+                {isAnimating && selectedIndex === idx && (
+                  <span
+                    key={animationKey}
+                    className={styles.flyingLetter}
+                    onAnimationEnd={handleAnimationEnd}
+                    aria-hidden="true"
+                  >
+                    {l.examples[0].emo}
+                  </span>
+                )}
+              </MenuButton>
+            </li>
           ))}
-        </div>
+        </ul>
       }
       mainContentScroll
       footerContent={
-        <div className={styles.footerContentWrapper}>
+        <FooterControlsLayout type={"vertical"}>
           {!speak && <Instruction hint={"Браузер не поддерживает воспроизведение речи"} />}
-          <div style={{ width: "100%", display: "flex", alignItems: "center", columnGap: "8px" }}>
-            <NavigateButton type={"back"} onClick={handlePrevLetter} disabled={!canScrollPrev} />
-            {/* <MenuButton text={"Назад"} onClick={handlePrevLetter} disabled={!canScrollPrev} /> */}
-            <MenuButton text={"Меню"} onClick={() => setGameStep(GAME_STEPS_ENUM.MENU)} />
-            {/* <MenuButton text={"Вперёд"} onClick={handleNextLetter} disabled={!canScrollNext} /> */}
-            <NavigateButton type={"forward"} onClick={handleNextLetter} disabled={!canScrollNext} />
-          </div>
-        </div>
+          <FooterControlsLayout>
+            <NavigateButton
+              type={"back"}
+              onClick={handlePrevLetter}
+              disabled={!canScrollPrev}
+              fullWidth
+            />
+            <MenuButton
+              text={"Меню игры"}
+              onClick={() => setGameStep(GAME_STEPS_ENUM.MENU)}
+              textNoWrap
+            />
+            <NavigateButton
+              type={"forward"}
+              onClick={handleNextLetter}
+              disabled={!canScrollNext}
+              fullWidth
+            />
+          </FooterControlsLayout>
+        </FooterControlsLayout>
       }
     />
   );

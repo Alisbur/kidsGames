@@ -3,6 +3,8 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useEffect, useReducer, useState } from "react";
 
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
 import { useConfirm } from "../Modals/model/use-confirm";
@@ -49,8 +51,13 @@ export function Balls() {
     case STEP.INIT:
       return (
         <PageContentLayout
+          headerContent={
+            <Typography view={"title"} tag={"h2"} weight={"bold"} color={"primary"}>
+              Меню игры
+            </Typography>
+          }
           mainContent={
-            <>
+            <MenuItemListLayout>
               <MenuButton
                 className={styles.button}
                 text={"Играть"}
@@ -64,7 +71,7 @@ export function Balls() {
                 text={"Настройки"}
                 onClick={() => setStep(STEP.SETTINGS)}
               />
-            </>
+            </MenuItemListLayout>
           }
         />
       );
@@ -188,7 +195,7 @@ export function Balls() {
           mainContent={<>Тут будут результаты</>}
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", gap: "8px" }}>
+            <FooterControlsLayout>
               <MenuButton
                 className={styles.button}
                 text={"Меню игры"}
@@ -204,7 +211,7 @@ export function Balls() {
                   setStep(STEP.GAME);
                 }}
               />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );

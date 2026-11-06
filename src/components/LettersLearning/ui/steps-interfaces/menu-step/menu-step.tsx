@@ -1,7 +1,9 @@
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
+import { Typography } from "@/shared/ui/typography/typography";
 
 import { GAME_STEPS_ENUM } from "../../../enums/game-steps.enum";
 import styles from "./menu-step.module.scss";
@@ -25,8 +27,13 @@ export const MenuStep: FC<TMenuStepProps> = ({ setGameStep }) => {
 
   return (
     <PageContentLayout
+      headerContent={
+        <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
+          Меню игры
+        </Typography>
+      }
       mainContent={
-        <>
+        <MenuItemListLayout>
           <MenuButton
             className={styles.button}
             text={"Весь алфавит"}
@@ -34,7 +41,7 @@ export const MenuStep: FC<TMenuStepProps> = ({ setGameStep }) => {
           />
           <MenuButton className={styles.button} text={"Учить буквы"} onClick={handleGoToLetters} />
           <MenuButton className={styles.button} text={"Настройки"} onClick={handleGoToSettings} />
-        </>
+        </MenuItemListLayout>
       }
     />
   );

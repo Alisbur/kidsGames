@@ -1,9 +1,9 @@
 import { FC } from "react";
 
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
 
 import { TStory } from "../../types/story.type";
-import styles from "./StoryList.module.scss";
 
 type TStoryListProps = {
   stories: TStory[];
@@ -12,7 +12,7 @@ type TStoryListProps = {
 
 export const StoryList: FC<TStoryListProps> = ({ stories, selectStory }) => {
   return (
-    <div className={styles.storyList}>
+    <MenuItemListLayout>
       {stories.map((s) => (
         <MenuButton
           key={s.id}
@@ -22,6 +22,6 @@ export const StoryList: FC<TStoryListProps> = ({ stories, selectStory }) => {
           }}
         />
       ))}
-    </div>
+    </MenuItemListLayout>
   );
 };

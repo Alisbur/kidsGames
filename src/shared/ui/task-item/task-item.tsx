@@ -2,11 +2,13 @@ import { AnswerInput } from "@shared/ui/answer-input/answer-input";
 import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import classNames from "classnames";
+import { ChevronRight } from "lucide-react";
 import { FC, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
 import { TTaskSolution } from "@/shared/types/types";
 
+import { AnswerMark } from "../answer-mark/answer-mark";
 import styles from "./task-item.module.scss";
 
 type TTaskItemProps = {
@@ -159,16 +161,20 @@ export const TaskItem: FC<TTaskItemProps> = ({
 
           {isFocused && (
             <MenuButton
-              text={"Ответ"}
+              // text={"Ответ"}
               ref={buttonRef}
               onClick={handleAnswer}
               style={{
                 width: "fit-content",
-                height: "40px",
-                paddingInline: "16px",
+                maxHeight: "40px",
+                minHeight: "unset",
+                padding: "6px 10px",
               }}
               disabled={!value}
-            />
+              fullWidth={false}
+            >
+              <ChevronRight size={24} color={"white"} />{" "}
+            </MenuButton>
           )}
           {!isFocused && answer !== null && (
             <Typography
@@ -178,11 +184,15 @@ export const TaskItem: FC<TTaskItemProps> = ({
               className={styles.hint}
               color={solved === TASK_ITEM_SOLUTION_ENUM.CORRECT ? "success" : "error"}
             >
-              {solved === TASK_ITEM_SOLUTION_ENUM.INCORRECT
-                ? canModify
-                  ? "Попробуй ещё"
-                  : "Неверно"
-                : "Молодец!"}
+              {solved === TASK_ITEM_SOLUTION_ENUM.INCORRECT ? (
+                canModify ? (
+                  <AnswerMark value={"accent"} size={36} animated />
+                ) : (
+                  <AnswerMark value={"incorrect"} size={36} animated />
+                )
+              ) : (
+                <AnswerMark value={"correct"} size={36} animated />
+              )}
             </Typography>
           )}
         </div>

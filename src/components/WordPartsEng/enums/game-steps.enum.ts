@@ -1,0 +1,5 @@
+export enum GAME_STEPS_ENUM {
+  MENU = "MENU",
+  SETTINGS = "SETTINGS",
+  GAME = "GAME",
+}

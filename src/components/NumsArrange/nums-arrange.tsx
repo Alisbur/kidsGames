@@ -1,6 +1,8 @@
 import { useReducer, useState } from "react";
 
 import { getRandomFromArray } from "@/shared/helpers/get-random-from-array";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
@@ -12,7 +14,6 @@ import { EXAMPLE_TYPES_ENUM } from "./enums/example-types.enum";
 import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { generateNumsArrageTask } from "./helpers/generate-nums-arrange-task";
 import { settingsReducer } from "./helpers/settings-reducer";
-import styles from "./nums-arrange.module.scss";
 import { TNumsArrangeTaskExt } from "./types/nums-arrange-task.type";
 import { TSettingActions, TSettings } from "./types/settings.type";
 import { NumsArrangeSettings } from "./ui/nums-arrange-settings/nums-arrange-settings";
@@ -70,23 +71,14 @@ export default function NumsArrange() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Составь примеры
+              Меню игры
             </Typography>
           }
           mainContent={
-            <>
-              <MenuButton
-                className={styles.button}
-                text={"Начать игру"}
-                onClick={handleStartNewGame}
-              />
-
-              <MenuButton
-                className={styles.button}
-                text={"Настройки"}
-                onClick={() => setStep(STEP.SETTINGS)}
-              />
-            </>
+            <MenuItemListLayout>
+              <MenuButton text={"Начать игру"} onClick={handleStartNewGame} />
+              <MenuButton text={"Настройки"} onClick={() => setStep(STEP.SETTINGS)} />
+            </MenuItemListLayout>
           }
         />
       );
@@ -129,7 +121,6 @@ export default function NumsArrange() {
           footerContent={
             <div style={{ width: "100%", display: "flex", flexDirection: "column", rowGap: "8px" }}>
               <MenuButton
-                className={styles.button}
                 text={"Завершить"}
                 onClick={async () => {
                   if (tasks.some((t) => !t.solved)) {
@@ -151,9 +142,6 @@ export default function NumsArrange() {
       );
     }
     case STEP.END: {
-      // const total = tasks.length;
-      // const solved = tasks.filter((t) => t.solved).length;
-
       return (
         <PageContentLayout
           headerContent={
@@ -166,17 +154,16 @@ export default function NumsArrange() {
           }
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", gap: "8px" }}>
+            <FooterControlsLayout>
               <MenuButton
-                className={styles.button}
                 text={"Меню игры"}
                 onClick={() => {
                   setStep(STEP.INIT);
                 }}
               />
 
-              <MenuButton className={styles.button} text={"Ещё раз"} onClick={handleStartNewGame} />
-            </div>
+              <MenuButton text={"Ещё раз"} onClick={handleStartNewGame} />
+            </FooterControlsLayout>
           }
         />
       );

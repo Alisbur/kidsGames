@@ -6,15 +6,21 @@ type NavigateButtonProps = {
   onClick: () => void;
   type: "forward" | "back";
   disabled?: boolean;
+  fullWidth?: boolean;
 };
 
-export function NavigateButton({ onClick, type, disabled = false }: NavigateButtonProps) {
+export function NavigateButton({
+  onClick,
+  type,
+  disabled = false,
+  fullWidth = false,
+}: NavigateButtonProps) {
   return (
     <MenuButton
       onClick={onClick}
       disabled={disabled}
       aria-label={type === "forward" ? "Вперёд" : "Назад"}
-      fullWidth={false}
+      fullWidth={fullWidth}
     >
       {type === "forward" ? (
         <ChevronRight size={20} color={"white"} />

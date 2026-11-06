@@ -38,7 +38,13 @@ export const TranslationTaskCard: FC<TTranslationTaskCardProps> = ({
         {task[CARD_CONTENT_TYPE[gameType]]}
       </Typography>
       {children}
-      {resChecked && <AnswerMark value={task.solved} className={styles.answerMark} />}
+      {resChecked && (
+        <AnswerMark
+          value={task.solved ? "correct" : "incorrect"}
+          className={styles.answerMark}
+          animated
+        />
+      )}
     </div>
   );
 };

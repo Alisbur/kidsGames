@@ -4,6 +4,7 @@ import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useReducer, useState } from "react";
 
 import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
 import { TTaskSolution } from "@/shared/types/types";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
@@ -14,7 +15,6 @@ import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { TASKS_ACTIONS_ENUM } from "./enums/tasks-actions.enum";
 import { settingsReducer } from "./helpers/settings-reducer";
 import { tasksReducer } from "./helpers/tasks-reducer";
-import styles from "./tasks.module.scss";
 import { TSettings, TSettingsActions } from "./types/settings.type";
 import { TExtendedTask, TTaskActions } from "./types/task.type";
 import { Results } from "./ui/results/results";
@@ -49,13 +49,12 @@ export function Tasks() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Решаем задачи
+              Меню игры
             </Typography>
           }
           mainContent={
             <>
               <MenuButton
-                className={styles.button}
                 text={"Решать задачи"}
                 onClick={() => {
                   tasksDispatch({
@@ -66,11 +65,7 @@ export function Tasks() {
                 }}
               />
 
-              <MenuButton
-                className={styles.button}
-                text={"Настройки"}
-                onClick={() => setStep(STEP.SETTINGS)}
-              />
+              <MenuButton text={"Настройки"} onClick={() => setStep(STEP.SETTINGS)} />
             </>
           }
         />
@@ -116,7 +111,6 @@ export function Tasks() {
           mainDivider
           footerContent={
             <MenuButton
-              className={styles.button}
               text={"Завершить"}
               onClick={async () => {
                 if (
@@ -158,9 +152,8 @@ export function Tasks() {
           mainContent={<Results total={total} solved={solved} wrong={wrong} />}
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", gap: "8px" }}>
+            <FooterControlsLayout>
               <MenuButton
-                className={styles.button}
                 text={"Меню игры"}
                 onClick={() => {
                   setStep(STEP.INIT);
@@ -168,7 +161,6 @@ export function Tasks() {
               />
 
               <MenuButton
-                className={styles.button}
                 text={"Ещё раз"}
                 onClick={() => {
                   tasksDispatch({
@@ -178,7 +170,7 @@ export function Tasks() {
                   setStep(STEP.GAME);
                 }}
               />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );

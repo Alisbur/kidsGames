@@ -26,11 +26,10 @@ export const PageContentLayoutGameHeader: FC<TPageContentLayoutGameHeaderProps> 
       </Typography>
       {subtitle && (
         <Typography
-          view={"subtitle"}
+          view={"p-14"}
           tag={"p"}
           weight={"normal"}
           color={"muted"}
-          size={15}
           className={styles.subtitle}
         >
           {subtitle}

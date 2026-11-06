@@ -4,6 +4,8 @@ import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useReducer, useState } from "react";
 
 import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { TTaskSolution } from "@/shared/types/types";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
@@ -51,11 +53,11 @@ export function Count() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Решаем примеры
+              Меню игры
             </Typography>
           }
           mainContent={
-            <>
+            <MenuItemListLayout>
               <MenuButton
                 className={styles.button}
                 text={"Решать примеры"}
@@ -73,7 +75,7 @@ export function Count() {
                 text={"Настройки"}
                 onClick={() => setStep(STEP.SETTINGS)}
               />
-            </>
+            </MenuItemListLayout>
           }
         />
       );
@@ -160,7 +162,7 @@ export function Count() {
           mainContent={<Results total={total} solved={solved} wrong={wrong} />}
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", gap: "8px" }}>
+            <FooterControlsLayout>
               <MenuButton
                 className={styles.button}
                 text={"Меню игры"}
@@ -180,7 +182,7 @@ export function Count() {
                   setStep(STEP.GAME);
                 }}
               />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );

@@ -1,6 +1,8 @@
 import { useCallback, useReducer, useState } from "react";
 
 import { shuffleArray } from "@/shared/helpers/shuffle-array";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
 import { RatingStarsComponent } from "@/shared/ui/rating-stars-component/rating-stars-component";
@@ -62,11 +64,11 @@ export default function TranslationArrange() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Английские слова
+              Меню игры
             </Typography>
           }
           mainContent={
-            <>
+            <MenuItemListLayout>
               <MenuButton
                 className={styles.button}
                 text={"Начать игру"}
@@ -78,7 +80,7 @@ export default function TranslationArrange() {
                 text={"Настройки"}
                 onClick={() => setStep(STEP.SETTINGS)}
               />
-            </>
+            </MenuItemListLayout>
           }
         />
       );
@@ -151,7 +153,7 @@ export default function TranslationArrange() {
           mainContentScroll
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", gap: "8px" }}>
+            <FooterControlsLayout>
               <MenuButton
                 className={styles.button}
                 text={"Меню игры"}
@@ -161,7 +163,7 @@ export default function TranslationArrange() {
               />
 
               <MenuButton className={styles.button} text={"Ещё раз"} onClick={handleStartNewGame} />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );

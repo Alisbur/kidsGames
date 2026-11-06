@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
+
 import { TMenuItem } from "../../shared/types/types";
 import { MenuButton } from "../../shared/ui/menu-button/menu-button";
-import styles from "./Menu.module.scss";
 
 type MenuProps = {
   menuItems: TMenuItem[];
@@ -12,13 +13,13 @@ export function Menu({ menuItems }: MenuProps) {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <MenuItemListLayout>
       {menuItems.map(
         (item, idx) =>
           !!idx && (
             <MenuButton key={item.id} text={item.name} onClick={() => navigate(item.alias)} />
           ),
       )}
-    </div>
+    </MenuItemListLayout>
   );
 }

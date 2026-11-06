@@ -18,7 +18,7 @@ export const Instruction: FC<TInstructionProps> = ({ hint, centered = false, cla
       className={classNames(
         styles.instruction,
         { [styles.instruction_centered]: centered },
-        className ? className : "",
+        className,
       )}
     >
       {`💡  ${hint}`}

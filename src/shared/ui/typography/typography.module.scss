@@ -86,6 +86,10 @@
     color: $color-text-muted;
   }  
 
+  &_purple {
+    color: $purpleAccent;
+  }  
+
   &_normal {
     @include setFont($weight: $fw-400);
   }

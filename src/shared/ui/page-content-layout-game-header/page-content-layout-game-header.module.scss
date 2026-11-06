@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: $gap-s;
-  padding: 24px 16px;
+  padding: 24px 16px 16px 16px;
+  row-gap: $gap-xs;
 }
 
 .title {

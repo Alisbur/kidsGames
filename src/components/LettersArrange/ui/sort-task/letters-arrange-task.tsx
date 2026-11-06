@@ -6,7 +6,9 @@ import {
   DragOverlay,
   type DragStartEvent,
   KeyboardSensor,
+  MouseSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -58,7 +60,12 @@ export const LettersArrangeTask: FC<TLettersArrangeTaskProps> = ({
   }, [task.solved, handleCheck]);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(MouseSensor, {
+      activationConstraint: { distance: 5 },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 100, tolerance: 5 },
+    }),
     useSensor(KeyboardSensor),
   );
 

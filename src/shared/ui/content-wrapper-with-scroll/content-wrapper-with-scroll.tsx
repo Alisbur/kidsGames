@@ -17,6 +17,7 @@ export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
   preserveScrollPosition = true,
 }) => {
   const mainDivRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isMainDivOverflowed, setIsMainDivOverflowed] = useState(false);
   const [isMainDivScrolled, setIsMainDivScrolled] = useState(false);
   const [isMainDivScrolledToBottom, setIsMainDivScrolledToBottom] = useState(false);
@@ -29,30 +30,45 @@ export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
 
   useEffect(() => {
     const el = mainDivRef.current;
-    if (!el) return;
+    const content = contentRef.current;
+    if (!el || !content) return;
 
-    const handleScroll = () => {
-      const isScrolled = el.scrollTop > MIN_SCROLL_THRESHOLD;
-      const isScrolledToBottom =
-        el.scrollHeight - el.scrollTop - el.clientHeight <= MIN_SCROLL_THRESHOLD;
-      setIsMainDivScrolled(isScrolled);
-      setIsMainDivScrolledToBottom((prev) => {
-        if (isScrolledToBottom !== prev) return isScrolledToBottom;
-        return prev;
-      });
+    const updateOverflow = (): void => {
+      setIsMainDivOverflowed(el.scrollHeight > el.clientHeight);
     };
 
-    el.addEventListener("scroll", handleScroll);
+    const handleScroll = (): void => {
+      setIsMainDivScrolled(el.scrollTop > MIN_SCROLL_THRESHOLD);
+      setIsMainDivScrolledToBottom(
+        el.scrollHeight - el.scrollTop - el.clientHeight <= MIN_SCROLL_THRESHOLD,
+      );
+    };
 
-    const observer = new ResizeObserver(() => {
-      const hasYOverflow = el.scrollHeight > el.clientHeight;
-      setIsMainDivOverflowed(hasYOverflow);
+    updateOverflow();
+    handleScroll();
+
+    el.addEventListener("scroll", handleScroll, { passive: true });
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateOverflow();
+      handleScroll();
+    });
+    resizeObserver.observe(content);
+
+    const mutationObserver = new MutationObserver(() => {
+      updateOverflow();
+      handleScroll();
     });
 
-    observer.observe(el);
+    mutationObserver.observe(content, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
 
     return () => {
-      observer.disconnect();
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
       el.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -70,7 +86,7 @@ export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
           maxHeight: maxHeight ? `${maxHeight}px` : "auto",
         }}
       >
-        {children}
+        <div ref={contentRef}>{children}</div>
       </div>
       {isMainDivOverflowed && isMainDivScrolled && (
         <div className={classNames(styles.mainWrapper__topGradient)} />

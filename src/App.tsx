@@ -15,6 +15,8 @@ import { PjatnashkaPicPage } from "./pages/Pjatnashka-pic-page/Pjatnashka-pic-pa
 import { ShortStoriesPage } from "./pages/ShortStories-page/ShortStories-page";
 import { TasksPage } from "./pages/Tasks-page/Tasks-page";
 import { TranslationArrangePage } from "./pages/TranslationArrangePage/TranslationArrangePage";
+import { WordPartsEngPage } from "./pages/WordPartsEng-page/word-parts-eng-page";
+import { WordPartsRusPage } from "./pages/WordPartsRus-page/word-parts-rus-page";
 import { WordsPage } from "./pages/Words-page/Words-page";
 import { XOPage } from "./pages/XO-page/XO-page";
 import { useScreenOrientation } from "./shared/hooks/use-screen-orientation";
@@ -26,7 +28,6 @@ function App() {
   return (
     <div className={styles.App}>
       <OrientationBlocker orientation={orientation} />
-      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<MenuPage />} />
         <Route
@@ -101,14 +102,6 @@ function App() {
             </PageErrorBoundary>
           }
         />
-        {/* <Route
-          path="/letters"
-          element={
-            <PageErrorBoundary>
-              <LettersPage />
-            </PageErrorBoundary>
-          }
-        /> */}
         <Route
           path="/eng-words-arrange"
           element={
@@ -138,6 +131,22 @@ function App() {
           element={
             <PageErrorBoundary>
               <LettersLearningPage />
+            </PageErrorBoundary>
+          }
+        />
+        <Route
+          path="/word-parts-rus"
+          element={
+            <PageErrorBoundary>
+              <WordPartsRusPage />
+            </PageErrorBoundary>
+          }
+        />
+        <Route
+          path="/word-parts-eng"
+          element={
+            <PageErrorBoundary>
+              <WordPartsEngPage />
             </PageErrorBoundary>
           }
         />

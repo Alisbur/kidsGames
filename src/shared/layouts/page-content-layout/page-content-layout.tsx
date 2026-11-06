@@ -6,7 +6,7 @@ import { ContentWrapperWithScroll } from "@/shared/ui/content-wrapper-with-scrol
 import { Divider } from "../../ui/divider/divider";
 import styles from "./page-content-layout.module.scss";
 
-const GRADIENTS_TOTAL_HEIGHT = 32;
+const GRADIENTS_TOTAL_HEIGHT = 0;
 
 type TPageContentLayoutProps = {
   headerContent?: ReactNode;
@@ -37,7 +37,7 @@ export const PageContentLayout: FC<TPageContentLayoutProps> = ({
   useEffect(() => {
     const el = mainDivRef.current;
     if (!el) return;
-    setMainDivHeight(el.clientHeight - GRADIENTS_TOTAL_HEIGHT);
+    setMainDivHeight(el.clientHeight);
   }, [mainContent]);
 
   useEffect(() => {

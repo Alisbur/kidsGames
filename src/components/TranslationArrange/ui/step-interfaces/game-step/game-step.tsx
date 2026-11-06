@@ -13,6 +13,7 @@ import {
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 
 import { useConfirm } from "@/components/Modals/model/use-confirm";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { Instruction } from "@/shared/ui/instruction/instruction";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
@@ -220,7 +221,6 @@ export const GameStep: FC<TGameStepProps> = ({
       autoScroll={{
         layoutShiftCompensation: false,
       }}
-      // autoScroll={false}
     >
       <PageContentLayout
         withMainHeader={false}
@@ -242,7 +242,7 @@ export const GameStep: FC<TGameStepProps> = ({
         mainContentScroll
         mainDivider
         footerContent={
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", rowGap: "8px" }}>
+          <FooterControlsLayout type={"vertical"}>
             <Instruction hint={"Перетащи элементы на подходящие карточки"} />
             <Pool words={state.pool} tileContentType={TILE_CONTENT_DICT[settings.gameType]}>
               {state.pool.length === 0 ? (
@@ -288,7 +288,7 @@ export const GameStep: FC<TGameStepProps> = ({
                 }
               }}
             />
-          </div>
+          </FooterControlsLayout>
         }
       />
       <DragOverlay dropAnimation={null}>

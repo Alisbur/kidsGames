@@ -1,12 +1,13 @@
 import { useCallback, useState } from "react";
 
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
+import { NavigateButton } from "@/shared/ui/navigate-button/navigate-button";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 import { Typography } from "@/shared/ui/typography/typography";
 
 import { SHORT_STORIES } from "./constants/stories";
-import styles from "./ShortStories.module.scss";
 import { Story } from "./ui/Story/Story";
 import { StoryList } from "./ui/StoryList/StoryList";
 
@@ -41,13 +42,7 @@ export const ShortStories = () => {
     return (
       <PageContentLayout
         headerContent={
-          <Typography
-            view={"title"}
-            tag={"h2"}
-            weight={"bold"}
-            color={"primary"}
-            className={styles.title}
-          >
+          <Typography view={"title"} tag={"h2"} weight={"bold"} color={"primary"}>
             Оглавление
           </Typography>
         }
@@ -75,15 +70,21 @@ export const ShortStories = () => {
       preserveMainContentScrollPosition={false}
       mainDivider
       footerContent={
-        <div style={{ width: "100%", display: "flex", gap: "16px" }}>
-          <MenuButton text={"<<"} onClick={handlePrevStory} disabled={selectedStory === 0} />
-          <MenuButton text={"Меню"} onClick={() => setSelectedStory(null)} />
-          <MenuButton
-            text={">>"}
+        <FooterControlsLayout>
+          <NavigateButton
+            type={"back"}
+            onClick={handlePrevStory}
+            disabled={selectedStory === 0}
+            fullWidth
+          />
+          <MenuButton text={"Оглавление"} onClick={() => setSelectedStory(null)} />
+          <NavigateButton
+            type={"forward"}
             onClick={handleNextStory}
             disabled={selectedStory === SHORT_STORIES.length - 1}
+            fullWidth
           />
-        </div>
+        </FooterControlsLayout>
       }
     />
   );

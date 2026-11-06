@@ -28,7 +28,11 @@ export function Header() {
   return (
     <header className={styles.container}>
       <div className={styles.content}>
-        <NavigateButton onClick={async () => await handleRedirect()} type={"back"} />
+        {location.pathname !== "/" ? (
+          <NavigateButton onClick={async () => await handleRedirect()} type={"back"} />
+        ) : (
+          <span />
+        )}
         <Typography view={"title"} tag={"h1"} className={styles.title}>
           {MENU_ITEMS.find((item) => item.alias === location.pathname)?.name}
         </Typography>

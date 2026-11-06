@@ -4,6 +4,8 @@ import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useReducer, useState } from "react";
 
 import { TASK_ITEM_SOLUTION_ENUM } from "@/shared/enums/task-item-solution.enum";
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { TTaskSolution } from "@/shared/types/types";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
@@ -14,7 +16,6 @@ import { EXAMPLE_ACTIONS_ENUM } from "./enums/example-actions.enum";
 import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { examplesReducer } from "./helpers/examples-reducer";
 import { settingsReducer } from "./helpers/settings-reducer";
-import styles from "./mul-table.module.scss";
 import { TExample } from "./types/example.type";
 import { TExampleAction } from "./types/example-actions.type";
 import { TSettings } from "./types/settings.type";
@@ -51,13 +52,12 @@ export function MulTable() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Таблица умножения
+              Меню игры
             </Typography>
           }
           mainContent={
-            <>
+            <MenuItemListLayout>
               <MenuButton
-                className={styles.button}
                 text={"Решать примеры"}
                 onClick={() => {
                   examplesDispatch({
@@ -68,12 +68,8 @@ export function MulTable() {
                 }}
               />
 
-              <MenuButton
-                className={styles.button}
-                text={"Настройки"}
-                onClick={() => setStep(STEP.SETTINGS)}
-              />
-            </>
+              <MenuButton text={"Настройки"} onClick={() => setStep(STEP.SETTINGS)} />
+            </MenuItemListLayout>
           }
         />
       );
@@ -118,7 +114,6 @@ export function MulTable() {
           mainDivider
           footerContent={
             <MenuButton
-              className={styles.button}
               text={"Завершить"}
               onClick={async () => {
                 if (
@@ -160,9 +155,8 @@ export function MulTable() {
           mainContent={<Results total={total} solved={solved} wrong={wrong} />}
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", gap: "8px" }}>
+            <FooterControlsLayout>
               <MenuButton
-                className={styles.button}
                 text={"Меню игры"}
                 onClick={() => {
                   setStep(STEP.INIT);
@@ -170,7 +164,6 @@ export function MulTable() {
               />
 
               <MenuButton
-                className={styles.button}
                 text={"Ещё раз"}
                 onClick={() => {
                   examplesDispatch({
@@ -180,7 +173,7 @@ export function MulTable() {
                   setStep(STEP.GAME);
                 }}
               />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );

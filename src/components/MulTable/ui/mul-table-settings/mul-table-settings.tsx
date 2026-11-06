@@ -1,7 +1,5 @@
-import { ListChecks, ListRestart } from "lucide-react";
+import { ListChecks } from "lucide-react";
 import { FC } from "react";
-
-import { MenuButton } from "@/shared/ui/menu-button/menu-button";
 
 import { CheckBoxButton } from "../../../../shared/ui/checkbox-button/checkbox-button";
 import { Typography } from "../../../../shared/ui/typography/typography";
@@ -36,27 +34,21 @@ export const MulTableSettings: FC<TMulTableSettingsProps> = ({ settings, setSett
           >
             Первый множитель
           </Typography>
-          <MenuButton
-            onClick={() => {
-              setSettings({ type: ACTIONS.SELECT_ALL_BASE_VALUES });
-            }}
+
+          <CheckBoxButton
+            checked={BASE_VALUES.every((v) => settings.baseValues.includes(v))}
             title="Выбрать все"
             className={styles.optionsHeader__button}
-            fullWidth={false}
+            onClick={() =>
+              setSettings({
+                type: BASE_VALUES.every((v) => settings.baseValues.includes(v))
+                  ? ACTIONS.RESET_BASE_VALUES
+                  : ACTIONS.SELECT_ALL_BASE_VALUES,
+              })
+            }
           >
             <ListChecks color="white" size={20} />
-          </MenuButton>
-
-          <MenuButton
-            onClick={() => {
-              setSettings({ type: ACTIONS.RESET_BASE_VALUES });
-            }}
-            title="Сбросить настройки"
-            className={styles.optionsHeader__button}
-            fullWidth={false}
-          >
-            <ListRestart color="white" size={20} />
-          </MenuButton>
+          </CheckBoxButton>
         </div>
         <div className={styles.options}>
           {BASE_VALUES.map((bv) => (

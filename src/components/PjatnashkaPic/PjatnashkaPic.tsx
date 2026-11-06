@@ -6,6 +6,8 @@ import { MenuButton } from "@shared/ui/menu-button/menu-button";
 import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
 import { useConfirm } from "../Modals/model/use-confirm";
@@ -17,7 +19,6 @@ import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
 import { GAME_TYPES_ENUM } from "./enums/game-types.enum";
 import { fieldStateReducer } from "./helpers/field-state-reducer";
 import { settingsReducer } from "./helpers/settings-reducer";
-import styles from "./PjatnashkaPic.module.scss";
 import { TFieldState } from "./types/field-state.type";
 import { TGameActions } from "./types/game-actions.type";
 import { TGameSettingsActions } from "./types/game-settings-actions.type";
@@ -99,25 +100,16 @@ export function PjatnashkaPic() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Игра-головоломка
+              Меню игры
             </Typography>
           }
           mainContentScroll={false}
           mainContent={
-            <>
-              <MenuButton className={styles.button} text={"Игра с цифрами"} onClick={initNewGame} />
-              <MenuButton
-                className={styles.button}
-                text={"Игра с картинкой"}
-                onClick={initNewGameWithPic}
-              />
-
-              <MenuButton
-                className={styles.button}
-                text={"Настройки"}
-                onClick={() => setStep(STEP.SETTINGS)}
-              />
-            </>
+            <MenuItemListLayout>
+              <MenuButton text={"Игра с цифрами"} onClick={initNewGame} />
+              <MenuButton text={"Игра с картинкой"} onClick={initNewGameWithPic} />
+              <MenuButton text={"Настройки"} onClick={() => setStep(STEP.SETTINGS)} />
+            </MenuItemListLayout>
           }
         />
       );
@@ -134,7 +126,6 @@ export function PjatnashkaPic() {
           mainDivider
           footerContent={
             <MenuButton
-              className={styles.button}
               text={"Назад"}
               onClick={() => {
                 setStep(STEP.INIT);
@@ -177,10 +168,9 @@ export function PjatnashkaPic() {
           }
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", columnGap: "16px" }}>
+            <FooterControlsLayout>
               {!isShuffleDone ? (
                 <MenuButton
-                  className={styles.button}
                   text={isShuffleRunning ? "Перемешиваю..." : "Начать"}
                   color={"accent"}
                   onClick={() => setShuffleIsRunning(true)}
@@ -189,7 +179,6 @@ export function PjatnashkaPic() {
               ) : (
                 settings.gameType === GAME_TYPES_ENUM.PICTURE && (
                   <MenuButton
-                    className={styles.button}
                     text={"Подсказка"}
                     onClick={() => {
                       openModal({
@@ -211,7 +200,6 @@ export function PjatnashkaPic() {
               )}
 
               <MenuButton
-                className={styles.button}
                 text={"Завершить"}
                 onClick={async () => {
                   const ans = await confirm({
@@ -223,7 +211,7 @@ export function PjatnashkaPic() {
                   }
                 }}
               />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );
@@ -239,17 +227,16 @@ export function PjatnashkaPic() {
           mainContent={<div>Здесь будет контент</div>}
           mainDivider
           footerContent={
-            <div style={{ width: "100%", display: "flex", gap: "8px" }}>
+            <FooterControlsLayout>
               <MenuButton
-                className={styles.button}
                 text={"Меню игры"}
                 onClick={() => {
                   setStep(STEP.INIT);
                 }}
               />
 
-              <MenuButton className={styles.button} text={"Ещё раз"} onClick={initNewGame} />
-            </div>
+              <MenuButton text={"Ещё раз"} onClick={initNewGame} />
+            </FooterControlsLayout>
           }
         />
       );

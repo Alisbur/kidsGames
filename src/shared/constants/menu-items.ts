@@ -6,9 +6,14 @@ export const MENU_ITEMS = [
   },
   {
     id: 1,
-    name: "Читать по слогам",
-    alias: "/words",
+    name: "Читать по-слогам",
+    alias: "/word-parts-rus",
   },
+  // {
+  //   id: 1,
+  //   name: "Читать по слогам",
+  //   alias: "/words",
+  // },
   {
     id: 2,
     name: "Читать истории",
@@ -73,5 +78,10 @@ export const MENU_ITEMS = [
     id: 14,
     name: "Английский алфавит",
     alias: "/eng-alphabet",
+  },
+  {
+    id: 16,
+    name: "Учимся читать по-английски",
+    alias: "/word-parts-eng",
   },
 ];

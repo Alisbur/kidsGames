@@ -17,7 +17,7 @@ export const Results: FC<TResultsProps> = ({ tasks }) => {
           <Typography view={"p-18"} tag={"p"} weight={"semibold"}>
             {t.eng} - {t.rus}
           </Typography>
-          <AnswerMark value={t.solved} />
+          <AnswerMark value={t.solved ? "correct" : "incorrect"} />
         </div>
       ))}
     </div>

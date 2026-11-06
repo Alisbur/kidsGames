@@ -9,9 +9,8 @@
 .pool {
   width: 100%;
   display: flex;
-  min-width: fit-content;
   flex: 0 0 auto;
-  gap: $gap;
+  gap: $gap-m;
   justify-content: flex-start;
   padding: 16px;
   background: $color-surface-alt;

@@ -1,5 +1,7 @@
 import { useEffect, useReducer } from "react";
 
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
+import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 import { Typography } from "@/shared/ui/typography/typography";
@@ -109,11 +111,11 @@ export function XO() {
         <PageContentLayout
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Крестики-нолики
+              Меню игры
             </Typography>
           }
           mainContent={
-            <>
+            <MenuItemListLayout>
               <MenuButton
                 className={styles.button}
                 text={"Играть с компьютером"}
@@ -156,7 +158,7 @@ export function XO() {
                   })
                 }
               />
-            </>
+            </MenuItemListLayout>
           }
         />
       );
@@ -221,7 +223,7 @@ export function XO() {
           }
           mainDivider
           footerContent={
-            <div className={styles.actionBar}>
+            <FooterControlsLayout>
               <MenuButton
                 onClick={() => {
                   gameStateDispatch({ type: GAME_STATE_ACTIONS_ENUM.START });
@@ -247,7 +249,7 @@ export function XO() {
                   });
                 }}
               />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );
@@ -269,7 +271,7 @@ export function XO() {
           }
           mainDivider
           footerContent={
-            <div className={styles.actionBar}>
+            <FooterControlsLayout>
               <MenuButton
                 className={styles.button}
                 text={"Меню игры"}
@@ -292,7 +294,7 @@ export function XO() {
                   });
                 }}
               />
-            </div>
+            </FooterControlsLayout>
           }
         />
       );

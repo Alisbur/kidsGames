@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { Instruction } from "@/shared/ui/instruction/instruction";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
@@ -104,55 +105,56 @@ export const AnalogClock = ({ initialTime = new Date() }) => {
               }
             />
           </ClockFace>
-
+        </div>
+      }
+      footerContent={
+        <FooterControlsLayout type={"vertical"}>
           <Instruction
             hint={"Чтобы изменить время перетащите стрелки за синий или красный кружок"}
             centered
           />
-        </div>
-      }
-      footerContent={
-        <div className={styles.clock__controls}>
-          <MenuButton
-            color={"muted"}
-            text={"-1 час"}
-            onClick={() => {
-              setTime({ ...time, hours: time.hours === 0 ? 23 : time.hours - 1 });
-            }}
-          />
+          <FooterControlsLayout>
+            <MenuButton
+              color={"muted"}
+              text={"-1 час"}
+              onClick={() => {
+                setTime({ ...time, hours: time.hours === 0 ? 23 : time.hours - 1 });
+              }}
+            />
 
-          <MenuButton
-            color={"muted"}
-            text={"-1 мин"}
-            onClick={() => {
-              const totalMinutes = time.hours * 60 + time.minutes - 1;
-              let newHours = Math.floor(totalMinutes / 60);
-              let newMinutes = totalMinutes % 60;
-              if (newHours < 0) newHours = 23;
-              if (newMinutes < 0) newMinutes = 59;
-              setTime({ hours: newHours, minutes: newMinutes });
-            }}
-          />
-          <MenuButton color={"muted"} onClick={handleResetTime} text={"Сброс"} />
-          <MenuButton
-            color={"muted"}
-            text={"+1 мин"}
-            onClick={() => {
-              const totalMinutes = time.hours * 60 + time.minutes + 1;
-              let newHours = Math.floor(totalMinutes / 60);
-              const newMinutes = totalMinutes % 60;
-              if (newHours >= 24) newHours = 0;
-              setTime({ hours: newHours, minutes: newMinutes });
-            }}
-          />
-          <MenuButton
-            color={"muted"}
-            text={"+1 час"}
-            onClick={() => {
-              setTime({ ...time, hours: time.hours === 23 ? 0 : time.hours + 1 });
-            }}
-          />
-        </div>
+            <MenuButton
+              color={"muted"}
+              text={"-1 мин"}
+              onClick={() => {
+                const totalMinutes = time.hours * 60 + time.minutes - 1;
+                let newHours = Math.floor(totalMinutes / 60);
+                let newMinutes = totalMinutes % 60;
+                if (newHours < 0) newHours = 23;
+                if (newMinutes < 0) newMinutes = 59;
+                setTime({ hours: newHours, minutes: newMinutes });
+              }}
+            />
+            <MenuButton color={"muted"} onClick={handleResetTime} text={"Сброс"} />
+            <MenuButton
+              color={"muted"}
+              text={"+1 мин"}
+              onClick={() => {
+                const totalMinutes = time.hours * 60 + time.minutes + 1;
+                let newHours = Math.floor(totalMinutes / 60);
+                const newMinutes = totalMinutes % 60;
+                if (newHours >= 24) newHours = 0;
+                setTime({ hours: newHours, minutes: newMinutes });
+              }}
+            />
+            <MenuButton
+              color={"muted"}
+              text={"+1 час"}
+              onClick={() => {
+                setTime({ ...time, hours: time.hours === 23 ? 0 : time.hours + 1 });
+              }}
+            />
+          </FooterControlsLayout>
+        </FooterControlsLayout>
       }
     />
   );

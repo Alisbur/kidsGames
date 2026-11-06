@@ -13,6 +13,7 @@ type MenuButtonProps = {
   children?: ReactNode;
   fullWidth?: boolean;
   color?: "normal" | "accent" | "error" | "muted";
+  textNoWrap?: boolean;
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
@@ -26,6 +27,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
       fullWidth = true,
       color = "normal",
       children,
+      textNoWrap = true,
       ...props
     },
     ref,
@@ -48,7 +50,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
           <Typography
             view={"button"}
             color={color === "muted" ? "muted" : "secondary"}
-            className={textClassName ?? ""}
+            className={classNames(styles.text, { [styles.text_nowrap]: textNoWrap }, textClassName)}
           >
             {text}
           </Typography>

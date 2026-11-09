@@ -2,7 +2,6 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   base: "/kidsGames/",
@@ -11,12 +10,12 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@assets": path.resolve(__dirname, "./src/assets"),
-      "@pages": path.resolve(__dirname, "./src/pages"),
-      "@styles": path.resolve(__dirname, "./src/shared/styles"),
-      "@components": path.resolve(__dirname, "./src/components"),
-      "@shared": path.resolve(__dirname, "./src/shared"),
+      "@": path.resolve(import.meta.dirname, "./src"),
+      "@assets": path.resolve(import.meta.dirname, "./src/assets"),
+      "@pages": path.resolve(import.meta.dirname, "./src/pages"),
+      "@styles": path.resolve(import.meta.dirname, "./src/shared/styles"),
+      "@components": path.resolve(import.meta.dirname, "./src/components"),
+      "@shared": path.resolve(import.meta.dirname, "./src/shared"),
     },
   },
 });

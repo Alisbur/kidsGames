@@ -1,21 +1,11 @@
 import pics from "@assets/images";
 import { getRandomFromArray } from "@shared/helpers/get-random-from-array";
 import { useCroppedImage } from "@shared/hooks/use-cropped-image";
-import { PageContentLayout } from "@shared/layouts/page-content-layout/page-content-layout";
-import { MenuButton } from "@shared/ui/menu-button/menu-button";
-import { Typography } from "@shared/ui/typography/typography";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
-import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
-import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
-import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
-
-import { useConfirm } from "../Modals/model/use-confirm";
-import { useModals } from "../Modals/model/use-modals";
 import { INIT_SETTINGS } from "./constants/init-settings";
 import { GAME_ACTIONS_ENUM } from "./enums/game-actions.enum";
-import { GAME_SETTINGS_ACTIONS_ENUM } from "./enums/game-settings-actions.enum";
-import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
+import { GAME_STEPS_ENUM as STEP } from "./enums/game-steps.enum";
 import { GAME_TYPES_ENUM } from "./enums/game-types.enum";
 import { fieldStateReducer } from "./helpers/field-state-reducer";
 import { settingsReducer } from "./helpers/settings-reducer";
@@ -23,8 +13,10 @@ import { TFieldState } from "./types/field-state.type";
 import { TGameActions } from "./types/game-actions.type";
 import { TGameSettingsActions } from "./types/game-settings-actions.type";
 import { TSettings } from "./types/settings.type";
-import { GameField } from "./ui/game-field/game-field";
-import { PjatnashkaSettings } from "./ui/pjatnashka-settings/pjatnashka-settings";
+import { GameStep } from "./ui/steps-interfaces/game-step/game-step";
+import { MenuStep } from "./ui/steps-interfaces/menu-step/menu-step";
+import { ResultsStep } from "./ui/steps-interfaces/results-step/results";
+import { SettingsStep } from "./ui/steps-interfaces/settings-step/settings-step";
 
 const BG_IMAGES = [
   pics.story_ezhik,
@@ -49,13 +41,12 @@ export function PjatnashkaPic() {
     (state: TFieldState, action: TGameActions) => TFieldState
   >(fieldStateReducer, []);
 
-  const [step, setStep] = useState<STEP>(STEP.INIT);
+  const [step, setStep] = useState<STEP>(STEP.MENU);
   const [isShuffleDone, setIsShuffleDone] = useState(false);
   const [isShuffleRunning, setShuffleIsRunning] = useState(false);
   const [imgUrl, setImageUrl] = useState<string | null>(null);
   const { croppedUrl, cropImage, isLoading, resetCrop } = useCroppedImage();
-  const { confirm } = useConfirm();
-  const { openModal } = useModals();
+  const [currentSettings, setCurrentSettings] = useState<TSettings>(INIT_SETTINGS);
 
   useEffect(() => {
     if (isShuffleDone) setShuffleIsRunning(false);
@@ -65,185 +56,72 @@ export function PjatnashkaPic() {
     if (imgUrl) cropImage({ img: imgUrl, maxW: IMG_MAX_CROP_SIZE, maxH: IMG_MAX_CROP_SIZE });
   }, [imgUrl, cropImage]);
 
-  const initNewGame = useCallback(() => {
-    settingsDispatch({
-      type: GAME_SETTINGS_ACTIONS_ENUM.SET_GAME_TYPE,
-      payload: GAME_TYPES_ENUM.NUMBERS,
-    });
-    setIsShuffleDone(false);
-    setImageUrl(null);
-    fieldStateDispatch({
-      type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
-      payload: settings,
-    });
-    setStep(STEP.GAME);
-  }, [resetCrop, settings]);
+  const initNewGame = useCallback(
+    (newSettings: TSettings) => {
+      setIsShuffleDone(false);
+      resetCrop();
 
-  const initNewGameWithPic = useCallback(() => {
-    settingsDispatch({
-      type: GAME_SETTINGS_ACTIONS_ENUM.SET_GAME_TYPE,
-      payload: GAME_TYPES_ENUM.PICTURE,
-    });
-    resetCrop();
-    setImageUrl(getRandomFromArray(BG_IMAGES));
-    setIsShuffleDone(false);
-    fieldStateDispatch({
-      type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
-      payload: settings,
-    });
-    setStep(STEP.GAME);
-  }, [settings]);
+      switch (newSettings.gameType) {
+        case GAME_TYPES_ENUM.NUMBERS: {
+          setImageUrl(null);
+          break;
+        }
+        case GAME_TYPES_ENUM.PICTURE: {
+          setImageUrl(getRandomFromArray(BG_IMAGES));
+          setIsShuffleDone(false);
+          break;
+        }
+        default: {
+          const _exhaustiveCheck: never = newSettings.gameType;
+          if (_exhaustiveCheck) throw new Error("Exhaustive check failed");
+        }
+      }
+      setCurrentSettings({ ...newSettings });
+      fieldStateDispatch({
+        type: GAME_ACTIONS_ENUM.GENERATE_INIT_FIELDSTATE,
+        payload: newSettings,
+      });
+      setStep(STEP.GAME);
+    },
+    [resetCrop],
+  );
 
   switch (step) {
-    case STEP.INIT:
-      return (
-        <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Меню игры
-            </Typography>
-          }
-          mainContentScroll={false}
-          mainContent={
-            <MenuItemListLayout>
-              <MenuButton text={"Игра с цифрами"} onClick={initNewGame} />
-              <MenuButton text={"Игра с картинкой"} onClick={initNewGameWithPic} />
-              <MenuButton text={"Настройки"} onClick={() => setStep(STEP.SETTINGS)} />
-            </MenuItemListLayout>
-          }
-        />
-      );
+    case STEP.MENU:
+      return <MenuStep initNewGame={initNewGame} setStep={setStep} />;
 
-    case STEP.SETTINGS:
+    case STEP.SETTINGS: {
       return (
-        <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Настройки
-            </Typography>
-          }
-          mainContent={<PjatnashkaSettings settings={settings} setSettings={settingsDispatch} />}
-          mainDivider
-          footerContent={
-            <MenuButton
-              text={"Назад"}
-              onClick={() => {
-                setStep(STEP.INIT);
-              }}
-            />
-          }
-        />
-      );
-    case STEP.GAME: {
-      return (
-        <PageContentLayout
-          withMainHeader={false}
-          headerContent={
-            <PageContentLayoutGameHeader
-              title={
-                (settings.gameType === GAME_TYPES_ENUM.NUMBERS && "Расставь числа по порядку") ||
-                (settings.gameType === GAME_TYPES_ENUM.PICTURE && "Собери картинку") ||
-                "Пятнашка"
-              }
-            />
-          }
-          headerDivider
-          mainContent={
-            <GameField
-              settings={settings}
-              fieldState={fieldState}
-              setNewFieldState={(id: number) => {
-                fieldStateDispatch({
-                  type: GAME_ACTIONS_ENUM.MOVE_PIECE,
-                  payload: id,
-                });
-              }}
-              onGameOver={() => setStep(STEP.END)}
-              isShuffleDone={isShuffleDone}
-              setIsShuffleDone={setIsShuffleDone}
-              isShuffleRunning={isShuffleRunning}
-              imgUrl={croppedUrl}
-              isLoading={isLoading}
-            />
-          }
-          mainDivider
-          footerContent={
-            <FooterControlsLayout>
-              {!isShuffleDone ? (
-                <MenuButton
-                  text={isShuffleRunning ? "Перемешиваю..." : "Начать"}
-                  color={"accent"}
-                  onClick={() => setShuffleIsRunning(true)}
-                  disabled={isShuffleRunning}
-                />
-              ) : (
-                settings.gameType === GAME_TYPES_ENUM.PICTURE && (
-                  <MenuButton
-                    text={"Подсказка"}
-                    onClick={() => {
-                      openModal({
-                        modalType: "info_modal",
-                        modalProps: {
-                          title: "Подсказка",
-                          content: (
-                            <img
-                              src={croppedUrl}
-                              style={{ maxWidth: "100%", maxHeight: "300px", aspectRatio: "1/1" }}
-                            />
-                          ),
-                        },
-                      });
-                    }}
-                    disabled={isShuffleRunning}
-                  />
-                )
-              )}
-
-              <MenuButton
-                text={"Завершить"}
-                onClick={async () => {
-                  const ans = await confirm({
-                    title: "Завершить?",
-                    content: "Головоломка ещё не решена, точно выйти?",
-                  });
-                  if (ans) {
-                    setStep(STEP.END);
-                  }
-                }}
-              />
-            </FooterControlsLayout>
-          }
+        <SettingsStep
+          settings={settings}
+          settingsDispatch={settingsDispatch}
+          setStep={setStep}
+          initNewGame={initNewGame}
         />
       );
     }
-    case STEP.END: {
-      return (
-        <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Результаты
-            </Typography>
-          }
-          mainContent={<div>Здесь будет контент</div>}
-          mainDivider
-          footerContent={
-            <FooterControlsLayout>
-              <MenuButton
-                text={"Меню игры"}
-                onClick={() => {
-                  setStep(STEP.INIT);
-                }}
-              />
 
-              <MenuButton text={"Ещё раз"} onClick={initNewGame} />
-            </FooterControlsLayout>
-          }
+    case STEP.GAME:
+      return (
+        <GameStep
+          settings={currentSettings}
+          isLoading={isLoading}
+          isShuffleRunning={isShuffleRunning}
+          croppedUrl={croppedUrl}
+          fieldState={fieldState}
+          fieldStateDispatch={fieldStateDispatch}
+          isShuffleDone={isShuffleDone}
+          setIsShuffleDone={setIsShuffleDone}
+          setShuffleIsRunning={setShuffleIsRunning}
+          setStep={setStep}
         />
       );
+    case STEP.RESULTS: {
+      return <ResultsStep initNewGame={() => initNewGame(currentSettings)} setStep={setStep} />;
     }
     default: {
       const _exhaustiveCheck: never = step;
-      throw new Error(`Unhandled step: ${_exhaustiveCheck}`);
+      if (_exhaustiveCheck) throw new Error(`Unhandled step: ${_exhaustiveCheck}`);
     }
   }
 }

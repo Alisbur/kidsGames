@@ -9,11 +9,4 @@ export type TMenuItem = {
 
 export type TImageItem = keyof typeof pics;
 
-export type TWordItem = {
-  id: number;
-  word: string;
-  parts: string[];
-  image: TImageItem;
-};
-
 export type TTaskSolution = TASK_ITEM_SOLUTION_ENUM | null;

@@ -24,6 +24,7 @@ type PieceProps = {
   fieldRows?: number;
   showIndex?: boolean;
   isLoading?: boolean;
+  transition: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
 export const Piece = ({
@@ -44,6 +45,7 @@ export const Piece = ({
   fieldRows = 1,
   showIndex = false,
   isLoading = true,
+  transition = false,
   ...rest
 }: PieceProps) => {
   const positionStyle = {
@@ -51,6 +53,7 @@ export const Piece = ({
     transform: `translate(${(size + span) * x}px, ${(size + span) * y}px)`,
     width: size,
     height: size,
+    transition: transition ? "transform 0.3s" : "none",
   };
 
   const backgroundStyle = useMemo(() => {
@@ -76,7 +79,7 @@ export const Piece = ({
           backgroundRepeat: "no-repeat",
         }
       : {};
-  }, [fieldCols, fieldRows, imageUrl, imageWidth, imageHeight]);
+  }, [fieldCols, fieldRows, imageUrl, imageWidth, imageHeight, size]);
 
   const combinedStyle = { ...positionStyle, ...backgroundStyle };
 

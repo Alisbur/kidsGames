@@ -17,27 +17,20 @@ import { TasksPage } from "./pages/Tasks-page/Tasks-page";
 import { TranslationArrangePage } from "./pages/TranslationArrangePage/TranslationArrangePage";
 import { WordPartsEngPage } from "./pages/WordPartsEng-page/word-parts-eng-page";
 import { WordPartsRusPage } from "./pages/WordPartsRus-page/word-parts-rus-page";
-import { WordsPage } from "./pages/Words-page/Words-page";
 import { XOPage } from "./pages/XO-page/XO-page";
-import { useScreenOrientation } from "./shared/hooks/use-screen-orientation";
+import { useFontsReady } from "./shared/hooks/use-fonts-ready";
+import { AppLoader } from "./shared/ui/app-loader/app-loader";
 import { OrientationBlocker } from "./shared/ui/orientation-blocker/orientation-blocker";
 
 function App() {
-  const orientation = useScreenOrientation();
+  const fontsReady = useFontsReady();
+
+  if (!fontsReady) return <AppLoader title={"Загрузка"} />;
 
   return (
     <div className={styles.App}>
-      <OrientationBlocker orientation={orientation} />
       <Routes>
         <Route path="/" element={<MenuPage />} />
-        <Route
-          path="/words"
-          element={
-            <PageErrorBoundary>
-              <WordsPage />
-            </PageErrorBoundary>
-          }
-        />
         <Route
           path="/xo"
           element={
@@ -152,6 +145,7 @@ function App() {
         />
       </Routes>
       <ModalRoot />
+      <OrientationBlocker />
     </div>
   );
 }

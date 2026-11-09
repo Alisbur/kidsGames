@@ -1,14 +1,14 @@
 // components/OrientationBlocker/OrientationBlocker.tsx
-import React from "react";
+
+import { useScreenOrientation } from "@/shared/hooks/use-screen-orientation";
 
 import styles from "./orientation-blocker.module.scss";
 
-interface OrientationBlockerProps {
-  orientation: "portrait" | "landscape" | "unknown";
-}
+export const OrientationBlocker = () => {
+  const orientation = useScreenOrientation();
 
-export const OrientationBlocker: React.FC<OrientationBlockerProps> = ({ orientation }) => {
   if (orientation !== "landscape") return null;
+  if (typeof document === "undefined") return null;
 
   return (
     <div className={styles.overlay}>

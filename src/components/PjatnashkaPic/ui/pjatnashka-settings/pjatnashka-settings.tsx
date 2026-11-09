@@ -1,11 +1,13 @@
 import { CheckBoxButton } from "@shared/ui/checkbox-button/checkbox-button";
 import { Typography } from "@shared/ui/typography/typography";
-import { FC } from "react";
+import { Dispatch, FC } from "react";
 
 import { FIELD_OPTIONS_NAMES } from "../../constants/field-options";
+import { GAME_TYPES_NAMES } from "../../constants/game-types";
 import { SHUFFLE_OPTIONS_NAMES } from "../../constants/shuffle-options";
 import { FIELD_SIZES_ENUM } from "../../enums/field-sizes.enum";
 import { GAME_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../enums/game-settings-actions.enum";
+import { GAME_TYPES_ENUM } from "../../enums/game-types.enum";
 import { SHUFFLE_OPTIONS_ENUM } from "../../enums/shuffle-options.enum";
 import { TGameSettingsActions } from "../../types/game-settings-actions.type";
 import { TSettings } from "../../types/settings.type";
@@ -13,13 +15,13 @@ import styles from "./pjatnashka-settings.module.scss";
 
 type TPjatnashkaSettingsProps = {
   settings: TSettings;
-  setSettings: (value: TGameSettingsActions) => void;
+  setSettings: Dispatch<TGameSettingsActions>;
 };
 
 export const PjatnashkaSettings: FC<TPjatnashkaSettingsProps> = ({ settings, setSettings }) => {
   return (
     <div className={styles.wrapper}>
-      {/* <div className={styles.optionsBlock}>
+      <div className={styles.optionsBlock}>
         <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
           Тип игры
         </Typography>
@@ -41,7 +43,7 @@ export const PjatnashkaSettings: FC<TPjatnashkaSettingsProps> = ({ settings, set
             </CheckBoxButton>
           ))}
         </div>
-      </div> */}
+      </div>
 
       <div className={styles.optionsBlock}>
         <Typography view={"subtitle"} tag={"h4"} color={"primary"}>

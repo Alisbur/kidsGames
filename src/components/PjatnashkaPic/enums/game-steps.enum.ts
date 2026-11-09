@@ -1,6 +1,6 @@
-export enum GAME_STEPS {
-  INIT = "INIT",
+export enum GAME_STEPS_ENUM {
+  MENU = "MENU",
   SETTINGS = "SETTINGS",
   GAME = "GAME",
-  END = "END",
+  RESULTS = "RESULTS",
 }

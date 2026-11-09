@@ -1,7 +1,8 @@
-import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 import { useModals } from "@/components/Modals/model/use-modals";
 import { useImageSize } from "@/shared/hooks/useImageSize";
+import { AppLoader } from "@/shared/ui/app-loader/app-loader";
 
 import { useElementDimensions } from "../../../../shared/hooks/useElementDimensions";
 import { FIELD_OPTIONS_SIZES } from "../../constants/field-options";
@@ -38,15 +39,28 @@ export const GameField: FC<TGameFieldProps> = ({
   isLoading,
 }) => {
   const { openModal } = useModals();
-  const fieldRef = useRef(null);
-  const { elementWidth, elementHeight } = useElementDimensions(fieldRef);
-  const [pieceSize, setPieceSize] = useState(80);
+  const [pieceSize, setPieceSize] = useState(0);
   const [isGameActive, setIsGameActive] = useState(false);
   const [shuffleCount, setShuffleCount] = useState(0);
+  const [pieceTransition, setPieceTransition] = useState(false);
+
+  const fieldRef = useRef<HTMLDivElement | null>(null);
 
   const { width: imageWidth, height: imageHeight, loading } = useImageSize(imgUrl!);
+  const { elementWidth, elementHeight } = useElementDimensions(fieldRef, {
+    observeMutations: false,
+  });
 
   const positions = new Map<number, { x: number; y: number }>();
+
+  useEffect(() => {
+    if (!elementWidth || !elementHeight) return;
+    const timeout = window.setTimeout(() => {
+      setPieceTransition(true);
+    });
+
+    return () => window.clearTimeout(timeout);
+  }, [elementWidth, elementHeight]);
 
   useEffect(() => {
     if (!isShuffleDone) return;
@@ -76,13 +90,15 @@ export const GameField: FC<TGameFieldProps> = ({
     return () => clearTimeout(timer);
   }, [fieldState, isGameActive]);
 
-  useLayoutEffect(() => {
-    if (elementHeight && elementWidth) {
-      setPieceSize(Math.round(Math.min(elementWidth, elementHeight) / fieldState[0].length - SPAN));
-    }
-  }, [elementWidth, elementHeight, setPieceSize]);
+  useEffect(() => {
+    if (!fieldRef.current || !elementHeight || !elementWidth) return;
 
-  useLayoutEffect(() => {
+    const newSize = Math.round(Math.min(elementWidth, elementHeight) / fieldState[0].length - SPAN);
+
+    setPieceSize(newSize);
+  }, [elementWidth, elementHeight, setPieceSize, fieldState]);
+
+  useEffect(() => {
     if (!isShuffleRunning) return;
     (async () => {
       if (shuffleCount >= SHUFFLE_OPTIONS[settings.shuffleType]) {
@@ -116,15 +132,20 @@ export const GameField: FC<TGameFieldProps> = ({
     setIsGameActive(flag);
   }
 
+  const showLoader = isLoading || !pieceTransition || !pieceSize;
+
   return (
     <div
       className={styles.field}
       ref={fieldRef}
       style={{
-        transform: `translate(-${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px, -${(fieldState[0].length * (pieceSize + SPAN) - SPAN - pieceSize) / 2}px)`,
+        maxWidth: pieceSize ? `${Math.min(elementWidth, elementHeight)}px` : undefined,
+        maxHeight: pieceSize ? `${Math.min(elementWidth, elementHeight)}px` : undefined,
       }}
     >
-      {!!pieceSize &&
+      {showLoader ? (
+        <AppLoader />
+      ) : (
         [...positions.keys()]
           .sort((a, b) => a - b)
           .map((id) => {
@@ -144,6 +165,7 @@ export const GameField: FC<TGameFieldProps> = ({
                 fieldRows={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldH}
                 disabled={isShuffleDone && !isGameActive}
                 gameType={settings.gameType}
+                transition={pieceTransition}
                 isLoading={loading || isLoading}
                 onClick={() => {
                   if (isGameActive) setNewFieldState(id);
@@ -154,7 +176,8 @@ export const GameField: FC<TGameFieldProps> = ({
                 winColor={isShuffleDone && !isGameActive}
               />
             );
-          })}
+          })
+      )}
     </div>
   );
 };

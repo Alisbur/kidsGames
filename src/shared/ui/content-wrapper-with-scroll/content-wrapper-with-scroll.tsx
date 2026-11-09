@@ -86,7 +86,9 @@ export const ContentWrapperWithScroll: FC<ContentWrapperWithScrollProps> = ({
           maxHeight: maxHeight ? `${maxHeight}px` : "auto",
         }}
       >
-        <div ref={contentRef}>{children}</div>
+        <div ref={contentRef} style={{ position: "relative" }}>
+          {children}
+        </div>
       </div>
       {isMainDivOverflowed && isMainDivScrolled && (
         <div className={classNames(styles.mainWrapper__topGradient)} />

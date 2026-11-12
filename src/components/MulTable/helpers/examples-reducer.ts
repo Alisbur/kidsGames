@@ -35,8 +35,7 @@ export const examplesReducer = (state: TExample[], action: TExampleAction) => {
           examples[rand] = temp;
         }
       }
-
-      return examples;
+      return examples.slice(0, action.payload.quantity);
     }
     case EXAMPLE_ACTIONS_ENUM.SET_SOLVED: {
       const newState = [...state];

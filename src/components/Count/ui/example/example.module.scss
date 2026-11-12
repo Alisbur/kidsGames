@@ -10,7 +10,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
   border: 2px solid rgba(128, 128, 128, 0.2);
   border-radius: $border-radius-m;
   cursor: pointer;
@@ -42,11 +41,11 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: $gap-12;
 }
 
 .part {
-  @include setFont(26px, $whiteText, 600, 120%, $font-raleway);
+  @include setFont(30px, $whiteText, 600, 120%, $font-raleway);
   color: $exampleColor;
 
   &_accent {
@@ -58,7 +57,7 @@
   }
 
   @media (max-width: $screen-xs) {
-    font-size: 20px;
+    font-size: 24px;
   }
 }
 
@@ -69,14 +68,4 @@
 
 .button {
   width: fit-content;
-}
-
-.hint {
-  width: 100%;
-  overflow-wrap: normal;
-  text-align: right;
-
-  @media (max-width: $screen-xs) {
-    font-size: 14px;
-  }
 }

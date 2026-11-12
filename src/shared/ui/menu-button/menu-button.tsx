@@ -4,6 +4,9 @@ import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { Typography } from "../typography/typography";
 import styles from "./menu-button.module.scss";
 
+export type TMenuButtonTrigger = "shaking" | "glowing" | "blinking";
+export type TMenuButtonColor = "normal" | "accent" | "error" | "muted";
+
 type MenuButtonProps = {
   onClick: () => void;
   text?: string;
@@ -12,8 +15,9 @@ type MenuButtonProps = {
   textClassName?: string;
   children?: ReactNode;
   fullWidth?: boolean;
-  color?: "normal" | "accent" | "error" | "muted";
+  color?: TMenuButtonColor;
   textNoWrap?: boolean;
+  trigger?: TMenuButtonTrigger;
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
@@ -28,6 +32,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
       color = "normal",
       children,
       textNoWrap = true,
+      trigger,
       ...props
     },
     ref,
@@ -39,13 +44,20 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
         className={classNames(
           styles.button,
           styles[`button_${color}`],
-          { [styles.button_fullWidth]: fullWidth },
+          {
+            [styles.button_fullWidth]: fullWidth,
+            [styles[`button_${trigger}`]]: trigger || !disabled,
+          },
           className,
         )}
         onClick={onClick}
         disabled={disabled}
         {...props}
       >
+        {trigger === "glowing" && !disabled && (
+          <span className={styles.shineContainer} aria-hidden="true" />
+        )}
+
         {text && (
           <Typography
             view={"button"}
@@ -60,3 +72,5 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
     );
   },
 );
+
+MenuButton.displayName = "MenuButton";

@@ -1,17 +1,22 @@
 import classNames from "classnames";
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
 
+import { MenuButton, TMenuButtonColor, TMenuButtonTrigger } from "../menu-button/menu-button";
 import styles from "./checkbox-button.module.scss";
 
 type TCheckBoxButtonProps = {
   fullWidth?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
   checked?: boolean;
-  onClick: (e: React.MouseEvent) => void;
+  onClick: () => void;
   checkedStyle?: string;
   unCheckedStyle?: string;
+  checkedColor?: TMenuButtonColor;
+  unCheckedColor?: TMenuButtonColor;
   className?: string;
   disabled?: boolean;
+  trigger?: TMenuButtonTrigger;
+  color?: TMenuButtonColor;
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const CheckBoxButton = forwardRef<HTMLButtonElement, TCheckBoxButtonProps>(
@@ -25,29 +30,34 @@ export const CheckBoxButton = forwardRef<HTMLButtonElement, TCheckBoxButtonProps
       unCheckedStyle = "",
       className = "",
       disabled = false,
+      checkedColor = "accent",
+      unCheckedColor = "normal",
+      trigger,
+      color,
       ...rest
     },
     ref,
   ) => {
     return (
-      <button
+      <MenuButton
         ref={ref}
         onClick={onClick}
+        color={checked ? checkedColor : unCheckedColor}
+        role="checkbox"
+        aria-checked={checked}
         className={classNames(
           styles.button,
-          {
-            [styles.button_fullWidth]: fullWidth,
-            [styles.button_checked]: checked,
-          },
-          unCheckedStyle ? unCheckedStyle : null,
-          checkedStyle ? checkedStyle : null,
+          checked ? checkedStyle : unCheckedStyle,
+          { [styles.button_darkText]: color === "muted" },
           className,
         )}
         disabled={disabled}
+        fullWidth={fullWidth}
+        trigger={trigger}
         {...rest}
       >
         {children}
-      </button>
+      </MenuButton>
     );
   },
 );

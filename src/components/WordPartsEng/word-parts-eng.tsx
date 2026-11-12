@@ -38,8 +38,14 @@ export const WordPartsEng = () => {
   }, [selectedVoice]);
 
   useEffect(() => {
-    setWords(shuffleArray(WORDS_DICT.filter((w) => w.wordEng.length <= settings.maxLen)));
-  }, [settings.maxLen]);
+    setWords(
+      shuffleArray(
+        WORDS_DICT.filter(
+          (w) => w.wordEng.length <= settings.maxLen && w.wordEng.length >= settings.minLen,
+        ),
+      ),
+    );
+  }, [settings.maxLen, settings.minLen]);
 
   const handleNextWord = () => {
     setActiveIdx((prev) => (activeIdx === words.length - 1 ? 0 : prev + 1));

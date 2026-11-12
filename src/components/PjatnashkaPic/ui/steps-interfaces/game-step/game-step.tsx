@@ -83,6 +83,7 @@ export const GameStep: FC<TGameStepProps> = ({
               color={"accent"}
               onClick={() => setShuffleIsRunning(true)}
               disabled={isShuffleRunning}
+              trigger={!isShuffleRunning ? "blinking" : undefined}
             />
           ) : (
             settings.gameType === GAME_TYPES_ENUM.PICTURE && (

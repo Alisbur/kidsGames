@@ -18,6 +18,7 @@ type TPageContentLayoutProps = {
   footerDivider?: boolean;
   preserveMainContentScrollPosition?: boolean;
   withMainHeader?: boolean;
+  mainHeaderWithNav?: boolean;
 };
 
 export const PageContentLayout: FC<TPageContentLayoutProps> = ({
@@ -30,6 +31,7 @@ export const PageContentLayout: FC<TPageContentLayoutProps> = ({
   footerDivider = false,
   preserveMainContentScrollPosition = true,
   withMainHeader = true,
+  mainHeaderWithNav = true,
 }) => {
   const [mainDivHeight, setMainDivHeight] = useState(0);
   const mainDivRef = useRef<HTMLDivElement>(null);
@@ -59,7 +61,7 @@ export const PageContentLayout: FC<TPageContentLayoutProps> = ({
 
   return (
     <>
-      {withMainHeader && <Header />}
+      {withMainHeader && <Header mainHeaderWithNav={mainHeaderWithNav} />}
       <main className={styles.wrapper}>
         {headerContent ? (
           <section className={styles.headerContent}>

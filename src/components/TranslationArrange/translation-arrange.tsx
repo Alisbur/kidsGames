@@ -5,6 +5,7 @@ import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/fo
 import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 import { RatingStarsComponent } from "@/shared/ui/rating-stars-component/rating-stars-component";
 import { Typography } from "@/shared/ui/typography/typography";
 
@@ -88,11 +89,9 @@ export default function TranslationArrange() {
     case STEP.SETTINGS:
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Настройки
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={
             <TranslationArrangeSettings settings={settings} setSettings={settingsDispatch} />
           }

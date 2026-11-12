@@ -8,7 +8,7 @@ export const OPERATION_VARIANTS: EXAMPLE_TYPES_ENUM[] = [
   EXAMPLE_TYPES_ENUM.DIV,
 ];
 
-export const QUANTITY_VARIANTS = [5, 10, 15, 25]; // Не используется
+export const QUANTITY_VARIANTS = [5, 10, 15, 25];
 
 export const LIMIT_VARIANTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

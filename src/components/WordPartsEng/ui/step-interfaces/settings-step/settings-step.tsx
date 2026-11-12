@@ -3,16 +3,11 @@ import { Typography } from "@shared/ui/typography/typography";
 import classNames from "classnames";
 import { Dispatch, FC, SetStateAction } from "react";
 
-// import {
-//   MAX_WORD_LEN_OPTIONS,
-//   MAX_WORD_LEN_OPTIONS_NAMES,
-// } from "@/components/WordPartsEng/constants/settings-options";
-// import { SET_SETTINGS_ACTIONS_ENUM } from "@/components/WordPartsEng/enums/set-settings-actions.enum";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
 import { GAME_STEPS_ENUM } from "../../../enums/game-steps.enum";
-// import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../../enums/set-settings-actions.enum";
 import { TSettings, TSettingsActions } from "../../../types/settings.type";
 import styles from "./settings-step.module.scss";
 
@@ -21,55 +16,24 @@ type TSettingsStepProps = {
   setSettings: (value: TSettingsActions) => void;
   voices: SpeechSynthesisVoice[];
   selectedVoice: SpeechSynthesisVoice | null;
-  setSelectedVoice: (voice: SpeechSynthesisVoice) => void;
+  setSelectedVoice: (voice: SpeechSynthesisVoice | null) => void;
   setGameStep: Dispatch<SetStateAction<GAME_STEPS_ENUM>>;
   speak: ((input: string | string[], pause?: number) => void) | null;
 };
 
 export const SettingsStep: FC<TSettingsStepProps> = ({
-  // settings,
-  // setSettings,
   voices,
   selectedVoice,
   setSelectedVoice,
   setGameStep,
-  // speak,
 }) => {
   return (
     <PageContentLayout
-      headerContent={
-        <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-          Настройки
-        </Typography>
-      }
+      headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+      withMainHeader={false}
+      headerDivider
       mainContent={
         <div className={styles.wrapper}>
-          {/* <div className={styles.optionsBlock}>
-            <div className={styles.optionsHeader}>
-              <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
-                Максимальная длина слов
-              </Typography>
-            </div>
-
-            <div className={styles.options}>
-              {MAX_WORD_LEN_OPTIONS.map((l) => (
-                <CheckBoxButton
-                  key={l}
-                  checked={settings.maxLen === l}
-                  fullWidth
-                  onClick={() => {
-                    setSettings({
-                      type: SET_SETTINGS_ACTIONS_ENUM.SET_MAX_WORDS_LENGTH,
-                      payload: l,
-                    });
-                  }}
-                >
-                  {MAX_WORD_LEN_OPTIONS_NAMES[l.toString()]}
-                </CheckBoxButton>
-              ))}
-            </div>
-          </div> */}
-
           <div className={styles.optionsBlock}>
             <div className={styles.optionsHeader}>
               <Typography view={"subtitle"} tag={"h4"} color={"primary"}>
@@ -78,20 +42,31 @@ export const SettingsStep: FC<TSettingsStepProps> = ({
             </div>
             <div className={classNames(styles.options, styles.options_1col)}>
               {voices.length ? (
-                voices.map((v, idx) => (
+                <>
+                  {voices.map((v, idx) => (
+                    <CheckBoxButton
+                      key={idx}
+                      checked={
+                        v.name === selectedVoice?.name && v.voiceURI === selectedVoice?.voiceURI
+                      }
+                      fullWidth
+                      onClick={() => {
+                        setSelectedVoice(v);
+                      }}
+                    >
+                      {v.name}
+                    </CheckBoxButton>
+                  ))}
                   <CheckBoxButton
-                    key={idx}
-                    checked={
-                      v.name === selectedVoice?.name && v.voiceURI === selectedVoice?.voiceURI
-                    }
+                    checked={selectedVoice === null}
                     fullWidth
                     onClick={() => {
-                      setSelectedVoice(v);
+                      setSelectedVoice(null);
                     }}
                   >
-                    {v.name}
+                    Без звука
                   </CheckBoxButton>
-                ))
+                </>
               ) : (
                 <Typography view={"p-16"} tag={"p"} color={"error"} weight={"semibold"}>
                   Браузер не поддерживает воспроизведение речи! Попробуйте установить языковые

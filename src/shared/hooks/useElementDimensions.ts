@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { RefObject, useCallback, useEffect, useState } from "react";
 
 type TElementDimensions = {
   elementWidth: number;
@@ -33,7 +33,7 @@ const INITIAL: TElementDimensions = {
  *  - появление элемента в DOM (если ref был null при монтировании).
  */
 export function useElementDimensions<T extends HTMLElement>(
-  ref: React.RefObject<T | null>,
+  ref: RefObject<T | null>,
   options: TUseElementDimensionsOptions = {},
 ): TElementDimensions {
   const { observeMutations = false, observeWindowResize = true } = options;

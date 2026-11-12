@@ -86,11 +86,9 @@ export default function NumsArrange() {
     case STEP.SETTINGS:
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Настройки
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={<NumsArrangeSettings settings={settings} setSettings={settingsDispatch} />}
           mainContentScroll={true}
           mainDivider
@@ -144,11 +142,9 @@ export default function NumsArrange() {
     case STEP.END: {
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Результаты
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Результаты"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={
             <Results total={tasks.length} solved={tasks.filter((t) => t.solved).length} />
           }

@@ -135,48 +135,43 @@ export const GameField: FC<TGameFieldProps> = ({
   const showLoader = isLoading || !pieceTransition || !pieceSize;
 
   return (
-    <div
-      className={styles.field}
-      ref={fieldRef}
-      style={{
-        maxWidth: pieceSize ? `${Math.min(elementWidth, elementHeight)}px` : undefined,
-        maxHeight: pieceSize ? `${Math.min(elementWidth, elementHeight)}px` : undefined,
-      }}
-    >
+    <div className={styles.fieldWrapper} ref={fieldRef}>
       {showLoader ? (
         <AppLoader />
       ) : (
-        [...positions.keys()]
-          .sort((a, b) => a - b)
-          .map((id) => {
-            const pos = positions.get(id)!;
-            return (
-              <Piece
-                key={id}
-                idx={id}
-                size={pieceSize}
-                x={pos.x}
-                y={pos.y}
-                span={SPAN}
-                imageUrl={imgUrl || ""}
-                imageWidth={imageWidth}
-                imageHeight={imageHeight}
-                fieldCols={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW}
-                fieldRows={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldH}
-                disabled={isShuffleDone && !isGameActive}
-                gameType={settings.gameType}
-                transition={pieceTransition}
-                isLoading={loading || isLoading}
-                onClick={() => {
-                  if (isGameActive) setNewFieldState(id);
-                }}
-                onTouchEnd={() => {
-                  if (isGameActive) setNewFieldState(id);
-                }}
-                winColor={isShuffleDone && !isGameActive}
-              />
-            );
-          })
+        <div className={styles.field}>
+          {[...positions.keys()]
+            .sort((a, b) => a - b)
+            .map((id) => {
+              const pos = positions.get(id)!;
+              return (
+                <Piece
+                  key={id}
+                  idx={id}
+                  size={pieceSize}
+                  x={pos.x}
+                  y={pos.y}
+                  span={SPAN}
+                  imageUrl={imgUrl || ""}
+                  imageWidth={imageWidth}
+                  imageHeight={imageHeight}
+                  fieldCols={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldW}
+                  fieldRows={FIELD_OPTIONS_SIZES[settings.fieldSizeType].fieldH}
+                  disabled={isShuffleDone && !isGameActive}
+                  gameType={settings.gameType}
+                  transition={pieceTransition}
+                  isLoading={loading || isLoading}
+                  onClick={() => {
+                    if (isGameActive) setNewFieldState(id);
+                  }}
+                  onTouchEnd={() => {
+                    if (isGameActive) setNewFieldState(id);
+                  }}
+                  winColor={isShuffleDone && !isGameActive}
+                />
+              );
+            })}
+        </div>
       )}
     </div>
   );

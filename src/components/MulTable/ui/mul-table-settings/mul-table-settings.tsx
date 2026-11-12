@@ -1,13 +1,15 @@
 import { ListChecks } from "lucide-react";
 import { FC } from "react";
 
+import { Instruction } from "@/shared/ui/instruction/instruction";
+
 import { CheckBoxButton } from "../../../../shared/ui/checkbox-button/checkbox-button";
 import { Typography } from "../../../../shared/ui/typography/typography";
 import {
   CAN_MODIFY_ANSWER_NAMES,
   SHOULD_SHUFFLE_EXAMPLES_OPTIONS_NAMES,
 } from "../../constants/option-names";
-import { BASE_VALUES, LIMIT_VARIANTS } from "../../constants/settings-options";
+import { BASE_VALUES, LIMIT_VARIANTS, QUANTITY_VARIANTS } from "../../constants/settings-options";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "../../enums/can-modify-answer.enum";
 import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../enums/set-settings-actions.enum";
 import { SHOULD_SHUFFLE_EXAMPLES_ENUM } from "../../enums/should-shuffle-examples.enum";
@@ -24,6 +26,41 @@ type TMulTableSettingsProps = {
 export const MulTableSettings: FC<TMulTableSettingsProps> = ({ settings, setSettings }) => {
   return (
     <div className={styles.wrapper}>
+      <div className={styles.optionsBlock}>
+        <div className={styles.optionsHeader}>
+          <Typography
+            view={"subtitle"}
+            tag={"h4"}
+            color={"primary"}
+            className={styles.optionsHeader__text}
+          >
+            Количество примеров
+          </Typography>
+        </div>
+        <div className={styles.options}>
+          {QUANTITY_VARIANTS.map((qv) => (
+            <CheckBoxButton
+              key={qv}
+              checked={settings.quantity === qv}
+              fullWidth
+              onClick={() => {
+                setSettings({
+                  type: ACTIONS.SET_QUANTITY,
+                  payload: qv,
+                });
+              }}
+            >
+              {qv}
+            </CheckBoxButton>
+          ))}
+        </div>
+        <Instruction
+          hint={
+            "Если количество примеров меньше количества их возможных вариантов, то рекомендуется ПЕРЕМЕШАТЬ ПРИМЕРЫ"
+          }
+        />
+      </div>
+
       <div className={styles.optionsBlock}>
         <div className={styles.optionsHeader}>
           <Typography

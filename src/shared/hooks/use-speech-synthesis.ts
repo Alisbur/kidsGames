@@ -7,7 +7,7 @@ type TUseSpeechSynthesis = {
   cancel: () => void;
   voices: SpeechSynthesisVoice[];
   selectedVoice: SpeechSynthesisVoice | null;
-  setSelectedVoice: (voice: SpeechSynthesisVoice) => void;
+  setSelectedVoice: (voice: SpeechSynthesisVoice | null) => void;
 };
 
 const normalizeLangTag = (tag: string): string => tag.toLowerCase().replace(/_/g, "-");

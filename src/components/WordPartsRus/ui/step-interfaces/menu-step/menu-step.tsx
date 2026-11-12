@@ -1,12 +1,12 @@
 import { Dispatch, FC, SetStateAction } from "react";
 
-import { SET_SETTINGS_ACTIONS_ENUM } from "@/components/WordPartsEng/enums/set-settings-actions.enum";
 import { MenuItemListLayout } from "@/shared/layouts/menu-items-list-layout/menu-items-list-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
 import { Typography } from "@/shared/ui/typography/typography";
 
 import { GAME_STEPS_ENUM } from "../../../enums/game-steps.enum";
+import { SET_SETTINGS_ACTIONS_ENUM } from "../../../enums/set-settings-actions.enum";
 import { TSettingsActions } from "../../../types/settings.type";
 
 type TMenuStepProps = {

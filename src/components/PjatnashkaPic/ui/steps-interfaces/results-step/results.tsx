@@ -3,7 +3,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { FooterControlsLayout } from "@/shared/layouts/footer-controls-layout/footer-controls-layout";
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
-import { Typography } from "@/shared/ui/typography/typography";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
 import { GAME_STEPS_ENUM } from "../../../enums/game-steps.enum";
 
@@ -15,11 +15,9 @@ type TResultsStepProps = {
 export const ResultsStep: FC<TResultsStepProps> = ({ initNewGame, setStep }) => {
   return (
     <PageContentLayout
-      headerContent={
-        <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-          Результаты
-        </Typography>
-      }
+      headerContent={<PageContentLayoutGameHeader title={"Результаты"} />}
+      withMainHeader={false}
+      headerDivider
       mainContent={<div>Здесь будет контент</div>}
       mainDivider
       footerContent={

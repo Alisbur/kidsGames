@@ -25,23 +25,26 @@ export const MenuStep: FC<TMenuStepProps> = ({ setGameStep, setSettings }) => {
       mainContent={
         <MenuItemListLayout>
           <MenuButton
-            text={"Простые слова"}
+            text={"Простые слова из 3 букв"}
             onClick={() => {
               setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MAX_WORDS_LENGTH, payload: 3 });
+              setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MIN_WORDS_LENGTH, payload: 3 });
               setGameStep(GAME_STEPS_ENUM.GAME);
             }}
           />
           <MenuButton
-            text={"Слова (до 4 букв)"}
+            text={"Слова из 4 букв"}
             onClick={() => {
               setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MAX_WORDS_LENGTH, payload: 4 });
+              setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MIN_WORDS_LENGTH, payload: 4 });
               setGameStep(GAME_STEPS_ENUM.GAME);
             }}
           />
           <MenuButton
-            text={"Слова (до 5 букв)"}
+            text={"Слова из 5 и более букв"}
             onClick={() => {
-              setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MAX_WORDS_LENGTH, payload: 5 });
+              setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MAX_WORDS_LENGTH, payload: 7 });
+              setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MIN_WORDS_LENGTH, payload: 5 });
               setGameStep(GAME_STEPS_ENUM.GAME);
             }}
           />
@@ -49,6 +52,7 @@ export const MenuStep: FC<TMenuStepProps> = ({ setGameStep, setSettings }) => {
             text={"Все слова"}
             onClick={() => {
               setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MAX_WORDS_LENGTH, payload: 7 });
+              setSettings({ type: SET_SETTINGS_ACTIONS_ENUM.SET_MIN_WORDS_LENGTH, payload: 0 });
               setGameStep(GAME_STEPS_ENUM.GAME);
             }}
           />

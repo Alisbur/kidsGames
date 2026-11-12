@@ -1,7 +1,9 @@
 import classNames from "classnames";
-import { forwardRef, InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from "react";
 
 import styles from "./answer-input.module.scss";
+
+const MIN_INPUT_WIDTH = 60;
 
 type TAnswerInputProps = {
   initValue?: string;
@@ -29,6 +31,10 @@ export const AnswerInput = forwardRef<HTMLInputElement, TAnswerInputProps>(
     },
     ref,
   ) => {
+    const [sizerSize, setSizerSize] = useState(0);
+
+    const sizerRef = useRef<HTMLSpanElement>(null);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (inputMode === "numeric") {
         if (e.target.value === "" || !isNaN(parseInt(e.target.value))) {
@@ -40,26 +46,38 @@ export const AnswerInput = forwardRef<HTMLInputElement, TAnswerInputProps>(
       }
     };
 
+    useEffect(() => {
+      const el = sizerRef.current;
+
+      if (!el) return;
+      setSizerSize(el.clientWidth);
+    }, [value]);
+
     return (
-      <input
-        inputMode={inputMode}
-        maxLength={Math.max(maxLength || 0, 2) || undefined}
-        type="text"
-        value={value}
-        ref={ref}
-        onChange={handleChange}
-        style={{ width: `${value.length * 20 + 10}px` }}
-        disabled={disabled}
-        className={classNames(
-          styles.input,
-          {
-            [styles.input_correct]: isCorrect,
-            [styles.input_incorrect]: isCorrect !== null && !isCorrect,
-          },
-          className,
-        )}
-        {...rest}
-      />
+      <>
+        <span aria-hidden={true} className={styles.sizer} ref={sizerRef}>
+          {value}
+        </span>
+        <input
+          inputMode={inputMode}
+          maxLength={Math.max(maxLength || 0, 2) || undefined}
+          type="text"
+          value={value}
+          ref={ref}
+          onChange={handleChange}
+          style={{ width: `${Math.max(MIN_INPUT_WIDTH, sizerSize)}px` }}
+          disabled={disabled}
+          className={classNames(
+            styles.input,
+            {
+              [styles.input_correct]: isCorrect,
+              [styles.input_incorrect]: isCorrect !== null && !isCorrect,
+            },
+            className,
+          )}
+          {...rest}
+        />
+      </>
     );
   },
 );

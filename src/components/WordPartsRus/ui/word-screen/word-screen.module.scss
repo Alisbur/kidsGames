@@ -49,6 +49,8 @@
   letter-spacing: 0.1em;
   white-space: nowrap;
   overflow: hidden;
+  pointer-events: "none";
+  -webkit-tap-highlight-color: transparent;
 }
 
 .emoWrapper {
@@ -62,7 +64,6 @@
   position: absolute;
   left: 60%;
   top: 60%;
-  // transform: translate(-50%, -10%);
   opacity: 0.5;
   animation: hand 800ms linear forwards;
 }

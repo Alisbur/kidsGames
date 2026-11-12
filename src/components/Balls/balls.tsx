@@ -79,11 +79,9 @@ export function Balls() {
     case STEP.SETTINGS:
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Настройки
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={<BallsSettings settings={settings} setSettings={settingsDispatch} />}
           mainDivider
           footerContent={
@@ -187,11 +185,9 @@ export function Balls() {
     case STEP.END: {
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Результаты
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Результаты"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={<>Тут будут результаты</>}
           mainDivider
           footerContent={

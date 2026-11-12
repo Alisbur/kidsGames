@@ -11,9 +11,11 @@ import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-gam
 
 import { useConfirm } from "../Modals/model/use-confirm";
 import { INIT_SETTINGS } from "./constants/init-settings";
+import { MUL_TABLE_MENU_ITEMS } from "./constants/menu-items";
 import { CAN_MODIFY_ANSWER_OPTIONS_ENUM } from "./enums/can-modify-answer.enum";
 import { EXAMPLE_ACTIONS_ENUM } from "./enums/example-actions.enum";
 import { GAME_STEPS as STEP } from "./enums/game-steps.enum";
+import { SHOULD_SHUFFLE_EXAMPLES_ENUM } from "./enums/should-shuffle-examples.enum";
 import { examplesReducer } from "./helpers/examples-reducer";
 import { settingsReducer } from "./helpers/settings-reducer";
 import { TExample } from "./types/example.type";
@@ -28,6 +30,8 @@ export function MulTable() {
   const [settings, settingsDispatch] = useReducer<
     (state: TSettings, action: TSettingAction) => TSettings
   >(settingsReducer, INIT_SETTINGS);
+
+  const [currentSettings, setCurrentSettings] = useState<TSettings>(INIT_SETTINGS);
 
   const [examples, examplesDispatch] = useReducer<
     (state: TExample[], action: TExampleAction) => TExample[]
@@ -50,13 +54,65 @@ export function MulTable() {
     case STEP.INIT:
       return (
         <PageContentLayout
+          key={"init"}
           headerContent={
             <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
               Меню игры
             </Typography>
           }
+          preserveMainContentScrollPosition={true}
           mainContent={
             <MenuItemListLayout>
+              <div
+                style={{
+                  width: "100%",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  columnGap: "12px",
+                  rowGap: "12px",
+                }}
+              >
+                {MUL_TABLE_MENU_ITEMS.map((el) => (
+                  <MenuButton
+                    key={el.id}
+                    text={el.title}
+                    onClick={() => {
+                      examplesDispatch({
+                        type: EXAMPLE_ACTIONS_ENUM.GENERATE_EXAMPLES,
+                        payload: el.settings,
+                      });
+                      setCurrentSettings(el.settings);
+                      setStep(STEP.THEORY);
+                    }}
+                  />
+                ))}
+              </div>
+              <MenuButton text={"Настраиваемый режим"} onClick={() => setStep(STEP.SETTINGS)} />
+            </MenuItemListLayout>
+          }
+          mainContentScroll
+          mainDivider
+        />
+      );
+
+    case STEP.SETTINGS:
+      return (
+        <PageContentLayout
+          key={"settings"}
+          headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+          withMainHeader={false}
+          headerDivider
+          mainContent={<MulTableSettings settings={settings} setSettings={settingsDispatch} />}
+          mainContentScroll={true}
+          mainDivider
+          footerContent={
+            <FooterControlsLayout>
+              <MenuButton
+                text={"Меню игры"}
+                onClick={() => {
+                  setStep(STEP.INIT);
+                }}
+              />
               <MenuButton
                 text={"Решать примеры"}
                 onClick={() => {
@@ -64,42 +120,25 @@ export function MulTable() {
                     type: EXAMPLE_ACTIONS_ENUM.GENERATE_EXAMPLES,
                     payload: settings,
                   });
+                  setCurrentSettings(settings);
                   setStep(STEP.GAME);
                 }}
               />
-
-              <MenuButton text={"Настройки"} onClick={() => setStep(STEP.SETTINGS)} />
-            </MenuItemListLayout>
-          }
-        />
-      );
-
-    case STEP.SETTINGS:
-      return (
-        <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Настройки
-            </Typography>
-          }
-          mainContent={<MulTableSettings settings={settings} setSettings={settingsDispatch} />}
-          mainContentScroll={true}
-          mainDivider
-          footerContent={
-            <MenuButton
-              text={"Назад"}
-              onClick={() => {
-                setStep(STEP.INIT);
-              }}
-            />
+            </FooterControlsLayout>
           }
         />
       );
     case STEP.GAME: {
       return (
         <PageContentLayout
+          key={"game"}
           withMainHeader={false}
-          headerContent={<PageContentLayoutGameHeader title={"Реши примеры"} />}
+          headerContent={
+            <PageContentLayoutGameHeader
+              title={"Реши примеры"}
+              subtitle={`${examples.filter((e) => e.solved).length} / ${examples.length}`}
+            />
+          }
           headerDivider
           mainContent={examples.map((ex, i) => (
             <Example
@@ -140,19 +179,23 @@ export function MulTable() {
         />
       );
     }
-    case STEP.END: {
-      const total = examples.length;
-      const solved = examples.filter((e) => e.solved === TASK_ITEM_SOLUTION_ENUM.CORRECT).length;
-      const wrong = total - solved;
-
+    case STEP.THEORY: {
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Результаты
-            </Typography>
+          key={"theory"}
+          withMainHeader={false}
+          headerContent={<PageContentLayoutGameHeader title={"Запомни"} />}
+          headerDivider
+          mainContent={
+            <MenuItemListLayout>
+              {examples.map((ex, i) => (
+                <Typography key={i} view={"p-32"} tag={"div"} weight={"semibold"} color={"muted"}>
+                  {`${ex.firstItem} × ${ex.secondItem} = ${ex.result}`}
+                </Typography>
+              ))}
+            </MenuItemListLayout>
           }
-          mainContent={<Results total={total} solved={solved} wrong={wrong} />}
+          mainContentScroll
           mainDivider
           footerContent={
             <FooterControlsLayout>
@@ -164,15 +207,66 @@ export function MulTable() {
               />
 
               <MenuButton
-                text={"Ещё раз"}
+                text={"Решать примеры"}
                 onClick={() => {
+                  const newSettings = {
+                    ...currentSettings,
+                    shouldShuffleExamples: SHOULD_SHUFFLE_EXAMPLES_ENUM.YES,
+                  };
+
                   examplesDispatch({
                     type: EXAMPLE_ACTIONS_ENUM.GENERATE_EXAMPLES,
-                    payload: settings,
+                    payload: newSettings,
                   });
+                  setCurrentSettings(newSettings);
                   setStep(STEP.GAME);
                 }}
               />
+            </FooterControlsLayout>
+          }
+        />
+      );
+    }
+    case STEP.END: {
+      const total = examples.length;
+      const solved = examples.filter((e) => e.solved === TASK_ITEM_SOLUTION_ENUM.CORRECT).length;
+      const wrong = total - solved;
+
+      return (
+        <PageContentLayout
+          key={"end"}
+          headerContent={<PageContentLayoutGameHeader title={"Результаты"} />}
+          withMainHeader={false}
+          headerDivider
+          mainContent={<Results total={total} solved={solved} wrong={wrong} />}
+          mainDivider
+          footerContent={
+            <FooterControlsLayout type={"vertical"}>
+              <MenuButton
+                text={"Меню игры"}
+                onClick={() => {
+                  setStep(STEP.INIT);
+                }}
+              />
+              <FooterControlsLayout>
+                <MenuButton
+                  text={"Настройки"}
+                  onClick={() => {
+                    setStep(STEP.SETTINGS);
+                  }}
+                />
+
+                <MenuButton
+                  text={"Ещё раз"}
+                  onClick={() => {
+                    examplesDispatch({
+                      type: EXAMPLE_ACTIONS_ENUM.GENERATE_EXAMPLES,
+                      payload: currentSettings,
+                    });
+                    setStep(STEP.GAME);
+                  }}
+                />
+              </FooterControlsLayout>
             </FooterControlsLayout>
           }
         />

@@ -166,11 +166,9 @@ export function XO() {
     case GAME_STEPS.SETTINGS:
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Настройки
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={<XOGameSettings setSettings={settingsDispatch} settings={settings} />}
           mainContentScroll
           mainDivider
@@ -257,11 +255,9 @@ export function XO() {
     case GAME_STEPS.END: {
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Результаты
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Результаты"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={
             <Results
               stats={gameState.stats}

@@ -110,6 +110,8 @@ export const WordScreen: FC<TWordScreenProps> = ({ word, speak }) => {
     }
   }, [selectedIdx, wordParts]);
 
+  const firstNotSpelledPartIdx: number | null = wordParts.findIndex((el) => !el.done);
+
   return (
     <section className={styles.wrapper}>
       <div
@@ -139,41 +141,35 @@ export const WordScreen: FC<TWordScreenProps> = ({ word, speak }) => {
       </div>
       <div className={styles.partsWrapper} ref={partsDivRef}>
         {partLetterSize &&
-          wordParts.map((p, idx) => (
-            <CheckBoxButton
-              key={idx}
-              checked={selectedIdx === idx}
-              onClick={() => handlePartClick(idx)}
-              className={styles.part}
-              aria-label={`${!p.done ? "Добавить и произнести" : "Убрать"} букву ${p.part}`}
-              aria-pressed={p.done}
-            >
-              <Typography
-                size={partLetterSize}
-                tag={"span"}
-                color={"secondary"}
-                weight={"semibold"}
+          wordParts.map((p, idx) => {
+            return (
+              <CheckBoxButton
+                key={idx}
+                checked={selectedIdx === idx}
+                onClick={() => handlePartClick(idx)}
+                className={styles.part}
+                aria-label={`${!p.done ? "Добавить и произнести" : "Убрать"} букву ${p.part}`}
+                aria-pressed={p.done}
+                trigger={idx === firstNotSpelledPartIdx ? "glowing" : undefined}
               >
-                {p.part}
-              </Typography>
-            </CheckBoxButton>
-          ))}
+                <Typography
+                  size={partLetterSize}
+                  tag={"span"}
+                  color={"secondary"}
+                  weight={"semibold"}
+                >
+                  {p.part}
+                </Typography>
+              </CheckBoxButton>
+            );
+          })}
       </div>
-      <div style={{ width: "100%", height: "100%" }} ref={divRef}>
-        <button
-          type="button"
-          aria-label="Произнести собранное слово"
-          className={styles.bigWordPart}
-          onClick={() => {
-            speak?.(wordParts.map((el) => (el.done ? el.part : "")).join(""));
-          }}
-        >
-          {bigLetterSize && (
-            <Typography size={bigLetterSize} tag={"span"} color={"secondary"} weight={"semibold"}>
-              {wordParts[selectedIdx].part}
-            </Typography>
-          )}
-        </button>
+      <div className={styles.bigWordPart} ref={divRef}>
+        {bigLetterSize && (
+          <Typography size={bigLetterSize} tag={"span"} color={"secondary"} weight={"semibold"}>
+            {wordParts[selectedIdx].part}
+          </Typography>
+        )}
       </div>
     </section>
   );

@@ -83,11 +83,9 @@ export function Count() {
     case STEP.SETTINGS:
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Настройки
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={<CountSettings settings={settings} setSettings={settingsDispatch} />}
           mainContentScroll={true}
           mainDivider
@@ -154,11 +152,9 @@ export function Count() {
 
       return (
         <PageContentLayout
-          headerContent={
-            <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-              Результаты
-            </Typography>
-          }
+          headerContent={<PageContentLayoutGameHeader title={"Результаты"} />}
+          withMainHeader={false}
+          headerDivider
           mainContent={<Results total={total} solved={solved} wrong={wrong} />}
           mainDivider
           footerContent={

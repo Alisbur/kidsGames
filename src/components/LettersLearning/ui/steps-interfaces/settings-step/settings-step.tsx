@@ -5,6 +5,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 
 import { PageContentLayout } from "@/shared/layouts/page-content-layout/page-content-layout";
 import { MenuButton } from "@/shared/ui/menu-button/menu-button";
+import { PageContentLayoutGameHeader } from "@/shared/ui/page-content-layout-game-header/page-content-layout-game-header";
 
 import { GAME_STEPS_ENUM } from "../../../enums/game-steps.enum";
 // import { SET_SETTINGS_ACTIONS_ENUM as ACTIONS } from "../../../enums/set-settings-actions.enum";
@@ -32,11 +33,9 @@ export const SettingsStep: FC<TSettingsStepProps> = ({
 }) => {
   return (
     <PageContentLayout
-      headerContent={
-        <Typography view={"title"} tag={"h2"} weight={"semibold"} color={"primary"}>
-          Настройки
-        </Typography>
-      }
+      headerContent={<PageContentLayoutGameHeader title={"Настройки"} />}
+      withMainHeader={false}
+      headerDivider
       mainContent={
         <div className={styles.wrapper}>
           <div className={styles.optionsBlock}>

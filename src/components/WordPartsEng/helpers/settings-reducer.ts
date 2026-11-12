@@ -9,7 +9,12 @@ export const settingsReducer = (state: TSettings, action: TSettingsActions): TSe
       return { ...state, voice: action.payload };
     }
     case ACTIONS.SET_MAX_WORDS_LENGTH: {
+      if (action.payload < state.minLen) return { ...state, maxLen: state.minLen };
       return { ...state, maxLen: action.payload };
+    }
+    case ACTIONS.SET_MIN_WORDS_LENGTH: {
+      if (action.payload > state.maxLen) return { ...state, minLen: state.maxLen };
+      return { ...state, minLen: action.payload };
     }
     default: {
       const _exhaustiveCheck: never = type;

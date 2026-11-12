@@ -138,7 +138,7 @@ export const TaskItem: FC<TTaskItemProps> = ({
         >
           <AnswerInput
             ref={inputRef}
-            maxLength={correctAnswer.toString().length + 2}
+            maxLength={correctAnswer.toString().length + 1}
             value={value}
             tabIndex={-1}
             setValue={setValue}
@@ -161,7 +161,6 @@ export const TaskItem: FC<TTaskItemProps> = ({
 
           {isFocused && (
             <MenuButton
-              // text={"Ответ"}
               ref={buttonRef}
               onClick={handleAnswer}
               style={{
@@ -172,6 +171,7 @@ export const TaskItem: FC<TTaskItemProps> = ({
               }}
               disabled={!value}
               fullWidth={false}
+              color={"accent"}
             >
               <ChevronRight size={24} color={"white"} />{" "}
             </MenuButton>

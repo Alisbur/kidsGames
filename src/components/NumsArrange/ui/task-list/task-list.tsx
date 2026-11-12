@@ -1,6 +1,7 @@
 import { FC, useRef } from "react";
 
 import { useElementDimensions } from "@/shared/hooks/useElementDimensions";
+import { AppLoader } from "@/shared/ui/app-loader/app-loader";
 
 import { TNumsArrangeTaskExt } from "../../types/nums-arrange-task.type";
 import { TSettings } from "../../types/settings.type";
@@ -24,17 +25,21 @@ export const TaskList: FC<TTaskListProps<TNumsArrangeTaskExt>> = ({
 
   return (
     <div className={styles.wrapper} ref={divRef}>
-      {tasks.map((t) => (
-        <NumsArrangeTask
-          task={t}
-          key={t.id}
-          parentWidth={boardSize.elementWidth}
-          setSolved={() => {
-            setSolved(t.id);
-          }}
-          extraTilesQuantity={settings.extraTilesQuantity}
-        />
-      ))}
+      {boardSize.elementWidth ? (
+        tasks.map((t) => (
+          <NumsArrangeTask
+            task={t}
+            key={t.id}
+            parentWidth={boardSize.elementWidth}
+            setSolved={() => {
+              setSolved(t.id);
+            }}
+            extraTilesQuantity={settings.extraTilesQuantity}
+          />
+        ))
+      ) : (
+        <AppLoader />
+      )}
     </div>
   );
 };
